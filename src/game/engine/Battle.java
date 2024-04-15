@@ -164,6 +164,8 @@ public class Battle
 	  public void refillApproachingTitans() {
 		  int battlePhaseIndex = this.getBattlePhase().ordinal();
 		  for (int i=0;i<PHASES_APPROACHING_TITANS[battlePhaseIndex].length;i++){
+			  
+			  
 			  int code = PHASES_APPROACHING_TITANS[battlePhaseIndex][i];
 			  TitanRegistry reg = titansArchives.get(code);
 			  int baseHealth = reg.getBaseHealth();
@@ -172,6 +174,7 @@ public class Battle
 			  int speed= reg.getSpeed();
 			  int resourcesValue = reg.getResourcesValue();
 			  int dangerLevel = reg.getDangerLevel();
+			  
 			  if (code == AbnormalTitan.TITAN_CODE) {
 				  approachingTitans.add(new AbnormalTitan(code,baseHealth,baseDamage,heightInMeters,speed,resourcesValue,dangerLevel) );
 			  }else if (code ==ArmoredTitan.TITAN_CODE) {
@@ -195,10 +198,11 @@ public class Battle
 	    	this.resourcesGathered = response.getRemainingResources();
 	    }
 	    
-	    //updated scores w dl gad3ana
+	    //updated dl gad3ana
 	    public void passTurn() {
+	    	
 	    	moveTitans();
-	    	this.score += performWeaponsAttacks();
+	    	performWeaponsAttacks();
 	    	performTitansAttacks();
 	    	addTurnTitansToLane();
 	    	finalizeTurns();
@@ -227,7 +231,7 @@ public class Battle
 	    	}
 	    }
 	    
-	    
+	    ////updated scores and resourcesGathered
 	    private int performWeaponsAttacks() {
 	    	int resources = 0;
 	    	for (Lane lane : originalLanes) {
@@ -235,6 +239,8 @@ public class Battle
 	    		resources +=lane.performLaneWeaponsAttacks();
 	    		
 	    	}
+	    	this.resourcesGathered += resources;
+	    	this.score+= score;
 	    	return resources;
 	    }
 	    

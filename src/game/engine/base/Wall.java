@@ -28,7 +28,7 @@ public class Wall implements Attackee {
 	}
 
 	//not deducted from player resources if destroyed
-	public int getResourceValue() {
+	public int getResourcesValue() {
 		return -1;
 	}
 

@@ -16,9 +16,9 @@ public class Lane implements Comparable<Lane> {
 	//READ and WRITE 
 	private int dangerLevel;
 	
-	private final PriorityQueue<Titan> titans; //how does it get filled? 
+	private final PriorityQueue<Titan> titans; //closest to base is front of pq
 	
-	private final ArrayList<Weapon> weapons; //how does it get filled?
+	private final ArrayList<Weapon> weapons; 
 
 	public Lane(Wall laneWall) {
 		this.laneWall = laneWall;
@@ -33,11 +33,67 @@ public class Lane implements Comparable<Lane> {
 		return  this.dangerLevel - other.dangerLevel;
 	}
 	
-	public int getDangerlevel() {return this.dangerLevel;}
-	
+	public int getDangerLevel() {return this.dangerLevel;}
+	public void setDangerLevel(int DangerLevel) {this.dangerLevel=DangerLevel;}
 	public Wall getLaneWall() {return this.laneWall;}
 	public PriorityQueue<Titan> getTitans(){return this.titans;}
 	public ArrayList<Weapon> getWeapons(){return this.weapons;}
+	
+	public void addTitan(Titan titan) {this.titans.add(titan);}
+	public void addWeapon(Weapon weapon) {this.weapons.add(weapon);}
+	public void moveLaneTitans() {
+		Stack<Titan> removedTitans = new Stack<Titan>();
+		while (!titans.isEmpty()) {
+			Titan titan = titans.remove();
+			 if (!titan.hasReachedTarget()) titan.move();
+			removedTitans.push(titan);
+		}
+		while (!removedTitans.isEmpty()) {
+			titans.add(removedTitans.pop());
+		}
+		
+	}
+	
+	public int performLaneTitansAttacks() {
+		Stack<Titan> removedTitans = new Stack<Titan>();
+		int resourcesGathered =0;
+		while (!titans.isEmpty() && titans.peek().hasReachedTarget()) {
+			Titan titan = titans.remove();
+			resourcesGathered += titan.attack(getLaneWall());
+			removedTitans.push(titan);
+		}
+		while (!removedTitans.isEmpty()) {
+			titans.add(removedTitans.pop());
+		}
+		return resourcesGathered;
+		
+	}
+	
+	public int performLaneWeaponsAttacks() {
+		int resourcesGathered =0;
+		for (Weapon weapon : weapons) {
+			resourcesGathered+= weapon.turnAttack(titans);
+		}
+		return resourcesGathered;
+	}
+	public boolean isLaneLost() {
+		return laneWall.isDefeated();
+	}
+	public void updateDangerLevel() {
+		Stack<Titan> removedTitans = new Stack<Titan>();
+		int cumulativeDangerLevel =0;
+		while (!titans.isEmpty()) {
+			Titan titan = titans.remove();
+			cumulativeDangerLevel+= titan.getDangerLevel();
+			removedTitans.push(titan);
+		}
+		while (!removedTitans.isEmpty()) {
+			titans.add(removedTitans.pop());
+		}
+		
+		this.setDangerLevel(cumulativeDangerLevel);
+		
+	}
 	
 	
 

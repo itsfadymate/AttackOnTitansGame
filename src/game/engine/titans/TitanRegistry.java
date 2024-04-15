@@ -25,10 +25,14 @@ public class TitanRegistry {
 	
 	public int getCode() {return this.code;}
 	public int getBaseHealth() {return this.baseHealth;}
-	public int getBaseDAmage() {return this.baseDamage;}
+	public int getBaseDamage() {return this.baseDamage;}
 	public int getHeightInMeters() {return this.heightInMeters;}
 	public int getSpeed() {return this.speed;}
 	public int getResourcesValue() {return this.resourcesValue;}
 	public int getDangerLevel() {return this.dangerLevel;}
-
+	public String toString(){
+		return "code"+ code + "  BaseHealth" +baseHealth + "  baseDamage"+baseDamage +"  heightInMeters"+ heightInMeters
+				+ "   speed"+ speed +"  resourcesValue"+ resourcesValue + "  dangerLevel" +dangerLevel;
+	}
+	
 }

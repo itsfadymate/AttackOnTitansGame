@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import game.engine.titans.*;
 import game.engine.weapons.VolleySpreadCannon;
@@ -13,8 +15,8 @@ public  class DataLoader {
     private final static String TITANS_FILE_NAME = "titans.csv";
     private final static String WEAPONS_FILE_NAME = "weapons.csv";
 	
-	public static HashMap<Integer,TitanRegistry> readTitanregistry() throws IOException{
-		    HashMap<Integer,TitanRegistry> hm = new HashMap<>();
+	public static HashMap<Integer,TitanRegistry> readTitanRegistry() throws IOException{
+		    HashMap<Integer,TitanRegistry> hm = new HashMap<Integer,TitanRegistry>();
 		
 			BufferedReader bf = new BufferedReader(new FileReader(TITANS_FILE_NAME));
 			String line;
@@ -43,24 +45,32 @@ public  class DataLoader {
 	}
     
 	public static HashMap<Integer,WeaponRegistry> readWeaponRegistry() throws IOException{
-		    HashMap<Integer,WeaponRegistry> hm = new HashMap<>();
+		    HashMap<Integer,WeaponRegistry> hm = new HashMap<Integer,WeaponRegistry>();
 		
 			BufferedReader bf = new BufferedReader(new FileReader(WEAPONS_FILE_NAME));
 			String line;
+		
 			while ((line = bf.readLine())!=null) {
+				
 				String[] lineData = line.split(",");
 				WeaponRegistry registry;
+				
 				int code = Integer.parseInt(lineData[0]);
 				int price = Integer.parseInt(lineData[1]);
-				int damage = Integer.parseInt(lineData[2]);
-				String name = lineData[3];
-				if (code == VolleySpreadCannon.WEAPON_CODE) {
-					int minRange = Integer.parseInt(lineData[4]);
-					int maxRange = Integer.parseInt(lineData[5]);
-				    registry = new WeaponRegistry(code,price,damage,name,minRange,maxRange);
-				}else {
-					registry = new WeaponRegistry(code,price,damage,name);
-				}
+		        if (lineData.length==2) {
+		        	registry = new WeaponRegistry(code,price);
+		        }else if (lineData.length==4) {
+		        	int damage = Integer.parseInt(lineData[2]);
+		        	String name = lineData[3];
+		        	registry = new WeaponRegistry(code,price,damage,name);
+		        }else{
+		        	int damage = Integer.parseInt(lineData[2]);
+		        	String name = lineData[3];
+		        	int minRange = Integer.parseInt(lineData[4]);
+		        	int maxRange = Integer.parseInt(lineData[5]);
+		        	registry = new WeaponRegistry(code,price,damage,name,minRange,maxRange);
+		  	
+		        }
 				hm.put(code, registry);
 				
 		    }
@@ -68,5 +78,17 @@ public  class DataLoader {
 		
 		    return hm;
 	}
-	
+	public static void main(String[] args){
+		try {
+			HashMap<Integer,TitanRegistry> hm = readTitanRegistry();
+			for(Entry<Integer, TitanRegistry>  entry: hm.entrySet())
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+			HashMap<Integer,WeaponRegistry> hm2 = readWeaponRegistry();
+			for(Map.Entry<Integer,WeaponRegistry >  entry: hm2.entrySet())
+				System.out.println(entry.getKey() + " : " + entry.getValue());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

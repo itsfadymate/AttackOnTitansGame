@@ -1,5 +1,10 @@
 package game.engine.weapons;
 
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+import game.engine.titans.Titan;
+
 public class VolleySpreadCannon extends Weapon {
 	private final int minRange;
 	private final int maxRange;
@@ -11,7 +16,22 @@ public class VolleySpreadCannon extends Weapon {
 		this.maxRange = maxRange;
 		
 	}
-	//unRequested getters
+	public int turnAttack(PriorityQueue<Titan> laneTitans) {
+		ArrayList<Titan> attackedTitans = new ArrayList<>();
+		int resourcesGathered =0;
+		while (!laneTitans.isEmpty()) {
+			Titan titan = laneTitans.remove();
+			if (titan.getDistance() >= getMinRange() && titan.getDistance() <= getMaxRange())
+				resourcesGathered += this.attack(titan);
+			if (titan.isDefeated()) continue;
+			attackedTitans.add(titan);
+		}
+		for (Titan titan : attackedTitans) {
+			laneTitans.add(titan);
+		}
+		return resourcesGathered;
+	}
+	
 	public int getMinRange() {return this.minRange;}
 	public int getMaxRange() {return this.maxRange;}
 

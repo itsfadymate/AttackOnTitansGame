@@ -5,6 +5,19 @@ public interface Attackee {
    
    public void setCurrentHealth(int health);
    
-   public int getResourceValue();
+   public int getResourcesValue();
+   
+   public default boolean isDefeated() {
+	   return getCurrentHealth()<=0;
+   }
+   
+   public default int takeDamage(int Damage) {
+	   int currHealth = getCurrentHealth();
+	   int newHealth = currHealth - Damage;
+	   setCurrentHealth(newHealth);
+	   if (isDefeated())
+	     return getResourcesValue();
+	   else return 0;
+   }
    
 }

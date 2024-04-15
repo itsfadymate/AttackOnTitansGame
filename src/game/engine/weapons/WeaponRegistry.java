@@ -44,5 +44,22 @@ public class WeaponRegistry {
 	public String getName() {return this.name;}
 	public int getMinRange() {return this.minRange;}
 	public int getMaxRange() {return this.maxRange;}
+	public Weapon buildWeapon() {
+		Weapon weapon = null;
+		if (code == PiercingCannon.WEAPON_CODE) {
+			weapon = new PiercingCannon(damage);
+		}else if (code ==SniperCannon.WEAPON_CODE) {
+			weapon = new SniperCannon(damage);
+		}else if (code ==VolleySpreadCannon.WEAPON_CODE) {
+			weapon = new VolleySpreadCannon(damage,minRange,maxRange);
+		}else if (code == WallTrap.WEAPON_CODE) {
+			weapon = new WallTrap(damage);	
+		}
+		return weapon;
+	}
+	public String toString() {
+		return "code: " + code + " price: " + price + " damage: " + damage + " name: "+ name+
+				" minRange: " + minRange + " maxRange " + maxRange; 
+	}
 	
 }

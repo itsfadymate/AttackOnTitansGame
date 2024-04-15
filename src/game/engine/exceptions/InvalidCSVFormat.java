@@ -1,4 +1,4 @@
-package engine.exceptions;
+package game.engine.exceptions;
 
 import java.io.IOException;
 

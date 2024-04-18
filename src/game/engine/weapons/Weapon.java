@@ -17,4 +17,6 @@ public abstract class Weapon implements Attacker {
 		return baseDamage;
 	}
     public int getBaseDamage() {return baseDamage;}
+    
+    public abstract String toString();
 }

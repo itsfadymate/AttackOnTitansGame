@@ -18,5 +18,11 @@ public class SniperCannon extends Weapon {
 	    laneTitans.add(titan);
 	    return 0;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "	SniperCannon, Damage: " + getBaseDamage();
+	}
 
 }

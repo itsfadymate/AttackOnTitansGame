@@ -34,5 +34,11 @@ public class VolleySpreadCannon extends Weapon {
 	
 	public int getMinRange() {return this.minRange;}
 	public int getMaxRange() {return this.maxRange;}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "	VolleySpreadCannon, Damage: " + getBaseDamage();
+	}
 
 }

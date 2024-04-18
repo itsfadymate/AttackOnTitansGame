@@ -31,5 +31,8 @@ public class Wall implements Attackee {
 	public int getResourcesValue() {
 		return -1;
 	}
+	public String toString() {
+		return "wallHealth: " + this.getCurrentHealth() + " isDefeated? " + this.isDefeated() ;
+	}
 
 }

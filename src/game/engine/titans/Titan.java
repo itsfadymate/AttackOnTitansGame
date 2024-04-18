@@ -76,4 +76,7 @@ public abstract class Titan implements Attackee,Attacker,Mobil,Comparable<Titan>
 
 	  public int getDangerLevel() {return this.dangerLevel;}
       
+	  public  String toString() {
+		  return "titan at distance: " + getDistance() + ", health: " +  getCurrentHealth() + ", speed: " + getSpeed() + ", damage: " + getDamage();
+	  }
 }

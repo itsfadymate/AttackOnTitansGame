@@ -24,5 +24,11 @@ public class WallTrap extends Weapon {
 		laneTitans.add(titan);
 		return 0;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "	WallTrap, Damage: " + getBaseDamage();
+	}
 
 }

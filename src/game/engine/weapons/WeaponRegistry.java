@@ -13,7 +13,7 @@ public class WeaponRegistry {
 		this.code = code;
 		this.price = price;
 		this.damage = 0;
-		this.name = "";
+		this.name = null;
 		this.minRange = 0;
 		this.maxRange = 0;
 	}
@@ -57,9 +57,9 @@ public class WeaponRegistry {
 		}
 		return weapon;
 	}
-	public String toString() {
-		return "code: " + code + " price: " + price + " damage: " + damage + " name: "+ name+
-				" minRange: " + minRange + " maxRange " + maxRange; 
-	}
+	/*public String toString() {
+		return "(code: " + code + " price: " + price + " damage: " + damage + " name: "+ name+
+				" minRange: " + minRange + " maxRange " + maxRange+")"; 
+	}*/
 	
 }

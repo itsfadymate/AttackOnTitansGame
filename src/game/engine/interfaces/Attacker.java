@@ -9,8 +9,11 @@ public interface Attacker {
      * @return resource value obtained if target is destroyed and 0 otherwise
      */
     public default int attack(Attackee target) {
-    	target.takeDamage(getDamage());
-    	if (target.isDefeated()) return target.getResourcesValue();
-    	else return 0;
+    	//System.out.println("		attacking " + target );
+    	int ret =  target.takeDamage(getDamage());
+    	//System.out.println("		End of attack, resources = " + ret);
+    	return ret;
+
+    	
     }
 }

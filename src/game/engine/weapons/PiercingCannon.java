@@ -16,8 +16,10 @@ public class PiercingCannon extends Weapon {
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
 		int resourcesGathered =0;
 		ArrayList<Titan> attackedTitans = new ArrayList<Titan>(5);
+		int ub = laneTitans.size() >=5? 5 : laneTitans.size();
 		//attack first 5 titans
-		for (int i=1;i<=5;i++) {
+		for (int i=1;i<=ub;i++) {
+			
 			Titan titan = laneTitans.remove();
 			resourcesGathered += attack(titan);
 			if (titan.isDefeated()) continue;
@@ -30,6 +32,11 @@ public class PiercingCannon extends Weapon {
 		}
 		return resourcesGathered;
 		
+	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "	PiercingCannon, Damage: " + getBaseDamage();
 	}
 
 }

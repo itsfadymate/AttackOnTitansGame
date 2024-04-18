@@ -42,10 +42,12 @@ public class Lane implements Comparable<Lane> {
 	public void addTitan(Titan titan) {this.titans.add(titan);}
 	public void addWeapon(Weapon weapon) {this.weapons.add(weapon);}
 	public void moveLaneTitans() {
+		if (this.isLaneLost()) return;
 		Stack<Titan> removedTitans = new Stack<Titan>();
 		while (!titans.isEmpty()) {
 			Titan titan = titans.remove();
-			 if (!titan.hasReachedTarget()) titan.move();
+			 if (!titan.hasReachedTarget()) 
+				 titan.move();
 			removedTitans.push(titan);
 		}
 		while (!removedTitans.isEmpty()) {
@@ -55,6 +57,7 @@ public class Lane implements Comparable<Lane> {
 	}
 	
 	public int performLaneTitansAttacks() {
+		//System.out.println("	invoking laneTitansAttacks...");
 		Stack<Titan> removedTitans = new Stack<Titan>();
 		int resourcesGathered =0;
 		while (!titans.isEmpty() && titans.peek().hasReachedTarget()) {
@@ -65,6 +68,7 @@ public class Lane implements Comparable<Lane> {
 		while (!removedTitans.isEmpty()) {
 			titans.add(removedTitans.pop());
 		}
+		//System.out.println("	End of performLaneTitansAttacks... resourcesGathered= " + resourcesGathered);
 		return resourcesGathered;
 		
 	}
@@ -79,7 +83,8 @@ public class Lane implements Comparable<Lane> {
 	public boolean isLaneLost() {
 		return laneWall.isDefeated();
 	}
-	public void updateDangerLevel() {
+	public void updateLaneDangerLevel() {
+		if (this.isLaneLost()) return;
 		Stack<Titan> removedTitans = new Stack<Titan>();
 		int cumulativeDangerLevel =0;
 		while (!titans.isEmpty()) {
@@ -93,6 +98,25 @@ public class Lane implements Comparable<Lane> {
 		
 		this.setDangerLevel(cumulativeDangerLevel);
 		
+	}
+	
+	public void consoleRepresntLane() {
+		for (Object o : titans.toArray()) {
+			Titan t = (Titan) o;
+			System.out.println(t);
+			
+		}
+		System.out.println();
+		for (Weapon w : weapons) {
+			System.out.println(w);
+		}
+		System.out.println("	wallhealth: " + getLaneWall().getCurrentHealth());
+		this.updateLaneDangerLevel();
+		System.out.println("	lane dangerLevel: " + this.getDangerLevel());
+		System.out.println("	lane is " + (this.isLaneLost()? " sadly " :" not yet ") + "lost" );
+		System.out.println();
+		System.out.println();
+		System.out.println();
 	}
 	
 	

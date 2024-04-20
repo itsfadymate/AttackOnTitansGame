@@ -272,7 +272,7 @@ public class Battle
 	    
 	    }
 	    
-	    //do we update numberof turns before or after?
+	    //do we update number of turns before or after?
 	    private void finalizeTurns() {
 	    	//System.out.println("finalizeTurns has been called noOfTurns : " + this.numberOfTurns);
 	    	this.numberOfTurns++;

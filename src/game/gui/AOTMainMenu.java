@@ -2,6 +2,7 @@ package game.gui;
 
 import javafx.scene.text.Font;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.nio.file.Files;
 
@@ -14,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -22,17 +24,18 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
 public class AOTMainMenu extends Application {
-	public final static double menuWidth = 700;
-	public final static double menuHeight = 500;
+	private  static double menuWidth = 1024;
+	private static double menuHeight = 728;
 	private final int buttonWidth = 300;
 	private final Font buttonFont = new Font("Arial",20);
 	private final Insets defaultInset = new Insets(30, 0, 30, 0);
-	private final String imageUrl = "\\wallPaper474by296.png";
-
+	private final String backgroundImageUrl = "Images/wallPaper1920by1200.jpg";
+    private final String titleImageUrl = "Images/Title2.png";
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -46,14 +49,6 @@ public class AOTMainMenu extends Application {
 		
 		// TODO Auto-generated method stub
 		BorderPane root= new BorderPane();
-			BorderPane TopPane = new BorderPane();
-				Label Title = new Label("Attack on Titans");
-				//Title.setBackground(Background.fill(Color.DARKGREEN));
-				Title.setFont(new Font("Arial",24));
-			TopPane.setCenter(Title);
-			TopPane.setPadding(defaultInset);
-			//TopPane.setBackground(Background.fill(Color.RED));
-	       
 			
 				VBox centerPane = new VBox();
 					Button PlayButton = createButton("Play");
@@ -65,19 +60,41 @@ public class AOTMainMenu extends Application {
 				centerPane.setAlignment(Pos.CENTER);
 				centerPane.setSpacing(20);
 				
+				BorderPane TopPane = new BorderPane();
 		try {
-			Image image = new Image(imageUrl);
-			    
-				BackgroundImage backgroundImage = new BackgroundImage(image, 
+              Image bgImage = new Image(getClass().getResourceAsStream(backgroundImageUrl));    
+				BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
                         BackgroundRepeat.NO_REPEAT, 
                         BackgroundRepeat.NO_REPEAT, 
                         BackgroundPosition.CENTER, 
                         new BackgroundSize(menuWidth, menuHeight, false, false, true, false));
-	    
 	    root.setBackground(new Background(backgroundImage));
 	    }catch(Exception e) {
 	    	e.printStackTrace();
+	    	System.out.println("failed to load background Image");
+	    	root.setBackground(Background.fill(Color.RED));
 	    }
+		
+		try {
+			Image titleImage = new Image(getClass().getResourceAsStream(titleImageUrl));
+		
+            ImageView titleView = new ImageView();
+            titleView.setImage(titleImage);
+            
+            TopPane.setCenter(titleView);
+            TopPane.setTranslateY(50);
+            //BorderPane.setAlignment(TopPane, Pos.BASELINE_CENTER);
+            
+		}catch (Exception e) {
+			e.printStackTrace();
+			Label Title = new Label("Attack on Titans");
+			//Title.setBackground(Background.fill(Color.DARKGREEN));
+			Title.setFont(new Font("Arial",24));
+			TopPane.setCenter(Title);
+			TopPane.setPadding(defaultInset);
+			root.setTop(Title);
+		}
+		
 	    root.setTop(TopPane);
 		root.setCenter(centerPane);
 		
@@ -124,6 +141,7 @@ public class AOTMainMenu extends Application {
 		stage.setScene(s);
 		stage.setTitle("AttackOnTitans");
 		stage.setTitle("Attack On Titans");
+		stage.setResizable(false);
 		stage.show();
 		
 	}
@@ -133,6 +151,12 @@ public class AOTMainMenu extends Application {
 		b.setFont(buttonFont);
 		return b;
 	}
-	
+	public static void setDimensions(double width,double height) {
+		menuWidth = width;
+		menuHeight = height;
+	}
+	public static double getmenuWidth() {return menuWidth;}
+	public static double getmenuHeight() {return menuHeight;}
 
+    
 }

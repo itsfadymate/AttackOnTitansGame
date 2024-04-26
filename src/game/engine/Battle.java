@@ -5,22 +5,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Stack;
-
 import game.engine.base.Wall;
 import game.engine.dataloader.DataLoader;
 import game.engine.exceptions.InsufficientResourcesException;
 import game.engine.exceptions.InvalidLaneException;
 import game.engine.lanes.Lane;
-import game.engine.titans.AbnormalTitan;
-import game.engine.titans.ArmoredTitan;
-import game.engine.titans.ColossalTitan;
-import game.engine.titans.PureTitan;
 import game.engine.titans.Titan;
 import game.engine.titans.TitanRegistry;
-import game.engine.weapons.PiercingCannon;
-import game.engine.weapons.SniperCannon;
-import game.engine.weapons.VolleySpreadCannon;
-import game.engine.weapons.WallTrap;
 import game.engine.weapons.factory.FactoryResponse;
 import game.engine.weapons.factory.WeaponFactory;
 
@@ -183,19 +174,14 @@ public class Battle
 	    	FactoryResponse response = weaponFactory.buyWeapon(resourcesGathered, weaponCode);
 	    	this.resourcesGathered = response.getRemainingResources();
 	    	lane.addWeapon(response.getWeapon());
-	    	passTurn();
+	    	performTurn();
 	    	
 	    }
 	    
 	    //updated dl gad3ana
 	    public void passTurn() {
-	    	
-	    	moveTitans();
-	    	performWeaponsAttacks();
-	    	performTitansAttacks();
-	    	addTurnTitansToLane();
-	    	finalizeTurns();
-	    	updateLanesDangerLevels();
+	    	performTurn();
+	    
 	    }
 	    
 	    //TODO: figure out specifics
@@ -277,11 +263,11 @@ public class Battle
 	    	//System.out.println("finalizeTurns has been called noOfTurns : " + this.numberOfTurns);
 	    	this.numberOfTurns++;
 	    	if (this.numberOfTurns<15) {
-	    		this.battlePhase = battlePhase.EARLY;
+	    		this.battlePhase = BattlePhase.EARLY;
 	    	}else if (this.numberOfTurns<30) {
-	    		this.battlePhase = battlePhase.INTENSE;
+	    		this.battlePhase = BattlePhase.INTENSE;
 	    	}else if (this.numberOfTurns>=30  ) {
-	    		this.battlePhase = battlePhase.GRUMBLING;	
+	    		this.battlePhase = BattlePhase.GRUMBLING;	
 	    	}
 	    
 	    	if (this.numberOfTurns>30 && this.numberOfTurns%5==0)
@@ -291,21 +277,22 @@ public class Battle
 	    }
 	    
 	    private void performTurn() {
-	    	passTurn();
+	    	moveTitans();
+	    	performWeaponsAttacks();
+	    	performTitansAttacks();
+	    	addTurnTitansToLane();
+	    	updateLanesDangerLevels();
+	    	finalizeTurns();
 	    }
 	    
 	    public boolean isGameOver() {
 	    	return lanes.size()==0;
 	    }	
 	    
-	    public void consoleRepresentLanes() {
-	    	for (Lane l : originalLanes) {
-	    		
-	    	}
-	    }
+	   
 	    
 	    public static void main(String[] args) throws IOException {
-	    	Battle b = new Battle(1,0,5,3,5);
+	    	/*Battle b = new Battle(1,0,5,3,5);
 	    	ArrayList<Lane> ol = b.getOriginalLanes();
 	    	b.refillApproachingTitans();
 	    	b.addTurnTitansToLane();
@@ -315,7 +302,7 @@ public class Battle
 	    		b.passTurn();
 	    		consoleRepresentLanes(ol);
 	    	}
-	    	
+	    	*/
 	    	/*ArrayList<Lane> ol = b.getOriginalLanes();
 	    	
 	    	consoleRepresentLanes(ol);

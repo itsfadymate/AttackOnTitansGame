@@ -1,6 +1,7 @@
 package game.gui;
 
 
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -25,6 +26,10 @@ public class settings  {
 	private static String soundTrack = "soundtrack 1";
 
 	
+	
+	
+
+	
 	public static void switchToSettings(Stage stage,Scene previousScene) {
 		// TODO Auto-generated method stub
 		
@@ -32,31 +37,10 @@ public class settings  {
 			
 		
 		
-		ComboBox<difficulty> difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Medium,difficulty.Hard),difficulty.Easy,0);	
-		ComboBox<Integer> laneBox= addSelectionUI(settings,"Number of lanes: ",FXCollections.observableArrayList(4,5,6,7,8),4,1);	
-		ComboBox<String> soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),"soundTrack 1",2);
-		ComboBox<String> resolutionBox = addSelectionUI(settings,"Resolution: ",FXCollections.observableArrayList("700x600","1024x728","1280x728","1360x1080","fullscreen"),"1024x720",3);
+		ComboBox<difficulty> difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Medium,difficulty.Hard),difficultyLevel,0);	
+		ComboBox<Integer> laneBox= addSelectionUI(settings,"Number of lanes: ",FXCollections.observableArrayList(4,5,6,7,8),noOfLanes,1);	
+		ComboBox<String> soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),soundTrack,2);
 		
-		
-		resolutionBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
-		    System.out.print("New selection: " + newValue);
-		    
-		    System.out.println("	choice: "  );
-		    if (resolutionBox.getValue().equals("700x600")) {
-		    	AOTMainMenu.setDimensions(700, 600);
-		    }else if (resolutionBox.getValue().equals("1024x728")) {
-		    	AOTMainMenu.setDimensions(1024, 728);
-		    }else if (resolutionBox.getValue().equals("1280x728")) {
-		    	AOTMainMenu.setDimensions(1280, 728);
-		    }else if (resolutionBox.getValue().equals("1360x1080")) {
-		    	AOTMainMenu.setDimensions(1360, 728);
-		    }else if (resolutionBox.getValue().equals("fullScreen")) {
-		    	//implemnt
-		    }
-		    System.out.println("updated menu height: " + AOTMainMenu.getmenuHeight() + " updated " + AOTMainMenu.getmenuWidth());
-		    }
-		   
-		);
 		settings.setAlignment(Pos.CENTER);
 		settings.setPadding(insets);
 		settings.setGridLinesVisible(false);
@@ -72,10 +56,7 @@ public class settings  {
 				difficultyLevel = difficultyBox.getValue();
 				noOfLanes = laneBox.getValue();
 				soundTrack = soundTrackBox.getValue();
-				stage.setHeight(AOTMainMenu.getmenuHeight());
-				stage.setWidth(AOTMainMenu.getmenuWidth());
 				stage.setScene(previousScene);
-				System.out.println("diff: " + difficultyLevel + " Lane number: " + noOfLanes +  "dimensions: " + stage.getWidth() + "x" + stage.getHeight());
 			}
 
 		 });
@@ -93,7 +74,7 @@ public class settings  {
 		label.setFont(labelFont);
 		ComboBox<T> box = new ComboBox<T>();
 		box.setItems(choices);
-		box.setValue(choices.get(0));		
+		box.setValue(defaultValue);		
 		settings.add(label,0,rowNum);
 		settings.add(box, 1, rowNum);
 		return box;
@@ -101,6 +82,11 @@ public class settings  {
     public static int getnoOfLanes() {return noOfLanes;}
     public static difficulty getDifficulty() { return difficultyLevel;}
     public static String getSoundTrack() {return soundTrack;}
+   
+
+
+
+	
 	
 }
 

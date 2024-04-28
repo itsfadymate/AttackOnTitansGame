@@ -10,8 +10,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -24,13 +29,14 @@ public class settings  {
 	private static difficulty difficultyLevel = difficulty.Medium;
 	private static int noOfLanes = 4;
 	private static String soundTrack = "soundtrack 1";
+	private static String backgroundImageURL = "Images/background2.png";
 
 	
 	
 	
 
 	
-	public static void switchToSettings(Stage stage,Scene previousScene) {
+	public void switchToSettings(Stage stage,Scene previousScene) {
 		// TODO Auto-generated method stub
 		
 		GridPane settings = new GridPane();
@@ -46,9 +52,11 @@ public class settings  {
 		settings.setGridLinesVisible(false);
 
 		BorderPane SceneLayout = new BorderPane();
-			Button backButton = new Button("Back");
-				backButton.setTranslateX(5);
-				backButton.setTranslateY(5);
+			MenuItem backButton = new MenuItem("Back",15,10);
+				//backButton.setTranslateX(5);
+				//backButton.setTranslateY(5);
+			    backButton.setAlignment(Pos.CENTER_LEFT);
+			  //  backButton.setPadding(insets);
 				backButton.setOnMouseClicked( new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent arg0) {
@@ -60,10 +68,19 @@ public class settings  {
 			}
 
 		 });
-		   
+		
 		SceneLayout.setTop(backButton);
 		SceneLayout.setCenter(settings);
+		try {
+			Image bgImage = new Image(getClass().getResourceAsStream(backgroundImageURL));    
+            BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
+            	    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
+            	    new BackgroundSize(AOTMainMenu.getmenuWidth(), AOTMainMenu.getmenuHeight(), true, true, true, false));
+            SceneLayout.setBackground(new Background(backgroundImage));
+		}catch(Exception e) {
+			System.out.println("couldn't find settings background");
 		SceneLayout.setBackground(Background.fill(Color.BLUEVIOLET));
+		}
 
 
 		stage.setScene(new Scene(SceneLayout,AOTMainMenu.getmenuWidth(),AOTMainMenu.getmenuHeight()));

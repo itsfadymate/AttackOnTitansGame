@@ -1,6 +1,8 @@
 package game.gui;
 
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,8 +25,14 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.geometry.*;
 
@@ -32,11 +40,10 @@ public class AOTMainMenu extends Application {
 	
 	private static double menuWidth = 1120;
 	private static double menuHeight = 728;
-	private final int buttonWidth = 300;
-	private final Font buttonFont = new Font("Arial",20);
 	private final Insets defaultInset = new Insets(30, 0, 30, 0);
 	private final String backgroundImageUrl = "Images/wallPaper1920by1200.jpg";
     private final String titleImageUrl = "Images/Title4.png";
+    private static settings setting = new settings();
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -51,13 +58,13 @@ public class AOTMainMenu extends Application {
 		// TODO Auto-generated method stub
 		BorderPane root= new BorderPane();
 			
-				VBox centerPane = new VBox();
-					Button PlayButton = createButton("Play");
+				MenuBox centerPane = new MenuBox();
+					MenuItem PlayButton = new MenuItem("Play");
 				
-					Button viewHighScoresButton = createButton("LeaderBoards");
-					Button howToPlayButton = createButton("How to Play?");
-					Button SettingsButton = createButton("Settings");
-					Button QuitButton = createButton("Quit");
+					MenuItem viewHighScoresButton =new MenuItem("LeaderBoards");
+					MenuItem howToPlayButton = new MenuItem("How to Play?");
+					MenuItem SettingsButton = new MenuItem("Settings");
+					MenuItem QuitButton = new MenuItem("Quit");
 				centerPane.getChildren().addAll(PlayButton,viewHighScoresButton,howToPlayButton,SettingsButton,QuitButton);
 				//centerPane.setBackground(Background.fill(Color.BLUEVIOLET));
 				centerPane.setAlignment(Pos.CENTER);
@@ -106,7 +113,7 @@ public class AOTMainMenu extends Application {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				settings.switchToSettings(stage, s);
+				setting.switchToSettings(stage, s);
 			}
 			
 		});
@@ -127,12 +134,6 @@ public class AOTMainMenu extends Application {
 		stage.setResizable(false);
 		stage.show();
 		
-	}
-	private Button createButton(String buttonTxt) {
-		Button b =new Button(buttonTxt);
-		b.setPrefWidth(buttonWidth);
-		b.setFont(buttonFont);
-		return b;
 	}
 	public static void setDimensions(double width,double height) {
 		menuWidth = width;
@@ -177,6 +178,25 @@ public class AOTMainMenu extends Application {
     }
 	public static double getmenuWidth() {return menuWidth;}
 	public static double getmenuHeight() {return menuHeight;}
+	
+	 private static class MenuBox extends VBox {
+	        public MenuBox(MenuItem... items) {
+	           // getChildren().add(createSeparator());
+
+	            for (MenuItem item : items) {
+	                getChildren().addAll(item, createSeparator());
+	            }
+	        }
+
+	        private Line createSeparator() {
+	            Line sep = new Line();
+	            sep.setEndX(200);
+	            sep.setStroke(Color.DARKGREY);
+	            return sep;
+	        }
+	  }
+
+	 
 
     
 }

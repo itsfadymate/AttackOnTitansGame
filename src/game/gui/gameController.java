@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class gameController extends Application {
 	private Stage mainstage;
 
-	private final int windowWidth = 1100;
+	private final int windowWidth = 1280;
 	private final int windowHeight = 715;
 	
 	private final GameView gameView = new GameView();
@@ -38,11 +38,9 @@ public class gameController extends Application {
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				
-					//scene = FXMLLoader.load(getClass().getResource("gameView.fxml"));
-				
-				//mainstage.setScene(gameView);
+				mainstage.setScene(gameView);
 			}
-	
+	                
 			
 		});
 		mainMenu.setleaderBoardsButtonOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -69,21 +67,23 @@ public class gameController extends Application {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				//mainstage.setHeight(1280);
+				//mainstage.setWidth(720);
 				mainstage.setScene(setting);
+				
 			}
 			
 		});
-		mainMenu.setPlayButtonOnMouseClicked(new EventHandler<MouseEvent>() {
+        mainMenu.setQuitButtonOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				mainstage.close();
+				mainstage.setScene(setting);
 			}
 			
 		});
-
-		setting.setBackButtonOnMouseClicked(new EventHandler<>() {
+       setting.setBackButtonOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {

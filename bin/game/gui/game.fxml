@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="730.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView id="wall1" fitHeight="730.0" fitWidth="1280.0" layoutY="1.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/laneScenery.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView id="wall1" fx:id="wall1" fitHeight="184.0" fitWidth="221.0" layoutX="206.0" layoutY="192.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/wallElement.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="184.0" fitWidth="221.0" layoutX="180.0" layoutY="264.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/wallElement.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="184.0" fitWidth="221.0" layoutX="158.0" layoutY="335.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/wallElement.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="184.0" fitWidth="221.0" layoutX="137.0" layoutY="411.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/wallElement.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="184.0" fitWidth="221.0" layoutX="111.0" layoutY="482.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/wallElement.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="154.0" fitWidth="287.0" layoutX="24.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Images/AnchorWall.png" />
+         </image>
+      </ImageView>
+      <HBox layoutX="12.0" layoutY="-1.0" prefHeight="176.0" prefWidth="704.0" spacing="20.0">
+         <children>
+            <StackPane prefHeight="200.0" prefWidth="148.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+                  <VBox alignment="CENTER" prefHeight="186.0" prefWidth="166.0" StackPane.alignment="TOP_RIGHT">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="166.0" text="Resources">
+                           <font>
+                              <Font name="Comic Sans MS" size="32.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <StackPane prefHeight="82.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a8b1b9" height="68.0" stroke="#120e39" strokeLineCap="ROUND" strokeType="INSIDE" width="146.0" />
+                              <Label text="0">
+                                 <font>
+                                    <Font size="56.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <StackPane prefHeight="200.0" prefWidth="148.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+                        <VBox alignment="CENTER" prefHeight="186.0" prefWidth="166.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="166.0" text="TURN">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="44.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefWidth="200.0" />
+                              <StackPane prefHeight="82.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a8b1b9" height="68.0" stroke="#120e39" strokeLineCap="ROUND" strokeType="INSIDE" width="146.0" />
+                                    <Label text="0">
+                                       <font>
+                                          <Font size="56.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="200.0" prefWidth="148.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+                  <VBox alignment="CENTER" prefHeight="186.0" prefWidth="166.0" StackPane.alignment="TOP_RIGHT">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="166.0" text="Score">
+                           <font>
+                              <Font size="53.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <StackPane prefHeight="82.0" prefWidth="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a8b1b9" height="68.0" stroke="#120e39" strokeLineCap="ROUND" strokeType="INSIDE" width="146.0" />
+                              <Label text="0">
+                                 <font>
+                                    <Font size="56.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </VBox>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <StackPane prefHeight="200.0" prefWidth="148.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="176.0" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+                        <VBox alignment="CENTER" prefHeight="186.0" prefWidth="166.0">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="67.0" prefWidth="166.0" text="Phase">
+                                 <font>
+                                    <Font name="Comic Sans MS" size="44.0" />
+                                 </font>
+                              </Label>
+                              <Separator prefWidth="200.0" />
+                              <StackPane prefHeight="82.0" prefWidth="200.0">
+                                 <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#a8b1b9" height="68.0" stroke="#120e39" strokeLineCap="ROUND" strokeType="INSIDE" width="146.0" />
+                                    <Label text="Early">
+                                       <font>
+                                          <Font size="56.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </StackPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+               </children>
+            </StackPane>
+         </children>
+      </HBox>
+      <StackPane layoutX="734.0" prefHeight="200.0" prefWidth="560.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#796e2e" height="200.0" stroke="BLACK" strokeType="INSIDE" width="558.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="211.0" prefWidth="158.0" />
+                  <Button mnemonicParsing="false" prefHeight="219.0" prefWidth="144.0" />
+                  <Button mnemonicParsing="false" prefHeight="217.0" prefWidth="142.0" />
+                  <Button mnemonicParsing="false" prefHeight="201.0" prefWidth="172.0" />
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+      <Button layoutX="6.0" layoutY="188.0" mnemonicParsing="false" prefHeight="191.0" prefWidth="187.0" style="-fx-background-color: #55FF; -fx-border-radius: 200; -fx-background-radius: 200; -fx-border-color: #F30F; -fx-border-width: 5;" text="End Turn" textFill="#570000">
+         <font>
+            <Font name="Comic Sans MS" size="29.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

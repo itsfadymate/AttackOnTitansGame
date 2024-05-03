@@ -16,4 +16,5 @@ module Team81 {
 	requires javafx.controls;
 	requires javafx.base;
 	requires java.base;
+	requires javafx.fxml;
 }

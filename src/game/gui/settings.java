@@ -45,7 +45,7 @@ public class settings extends Scene  {
 
 
 		ComboBox<difficulty> difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Hard),difficultyLevel,0);	
-		ComboBox<Integer> laneBox= addSelectionUI(settings,"Number of lanes: ",FXCollections.observableArrayList(3,5),noOfLanes,1);	
+		
 		ComboBox<String> soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),soundTrack,2);
 
 		settings.setAlignment(Pos.CENTER);
@@ -53,7 +53,7 @@ public class settings extends Scene  {
 		settings.setGridLinesVisible(false);
 
 		
-		 backButton = new MenuItem("Back",15,10);
+		 backButton = new MenuItem("Back",35,10);
 		
 		backButton.setAlignment(Pos.CENTER_LEFT);
 		

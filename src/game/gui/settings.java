@@ -2,10 +2,13 @@ package game.gui;
 
 
 
+import java.io.FileInputStream;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -23,69 +26,60 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 //TODO: fix lanky resizing and image resizing and implement leaderBoards
-public class settings  {
+public class settings extends Scene  {
 	private final static Font labelFont = new Font("BOLD",24);
 	private final static javafx.geometry.Insets insets = new javafx.geometry.Insets(20,0,20,0);
-	private static difficulty difficultyLevel = difficulty.Medium;
-	private static int noOfLanes = 4;
+	private static MenuItem backButton;
+	private static difficulty difficultyLevel = difficulty.Hard;
+	private static int noOfLanes = 5;
 	private static String soundTrack = "soundtrack 1";
-	private static String backgroundImageURL = "Images/background2.png";
-
+	private final static String backgroundImageURL = "src/game/gui/Images/background2.png";
 	
-	
-	
-
-	
-	public void switchToSettings(Stage stage,Scene previousScene) {
-		// TODO Auto-generated method stub
-		
+	public settings(int width,int height) {
+		super(createRoot(width,height),width,height);
+	}
+	private static Parent createRoot(int width,int height) {
+		BorderPane root = new BorderPane();
 		GridPane settings = new GridPane();
-			
-		
-		
-		ComboBox<difficulty> difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Medium,difficulty.Hard),difficultyLevel,0);	
-		ComboBox<Integer> laneBox= addSelectionUI(settings,"Number of lanes: ",FXCollections.observableArrayList(4,5,6,7,8),noOfLanes,1);	
+
+
+
+		ComboBox<difficulty> difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Hard),difficultyLevel,0);	
+		ComboBox<Integer> laneBox= addSelectionUI(settings,"Number of lanes: ",FXCollections.observableArrayList(3,5),noOfLanes,1);	
 		ComboBox<String> soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),soundTrack,2);
-		
+
 		settings.setAlignment(Pos.CENTER);
 		settings.setPadding(insets);
 		settings.setGridLinesVisible(false);
 
-		BorderPane SceneLayout = new BorderPane();
-			MenuItem backButton = new MenuItem("Back",15,10);
-				//backButton.setTranslateX(5);
-				//backButton.setTranslateY(5);
-			    backButton.setAlignment(Pos.CENTER_LEFT);
-			  //  backButton.setPadding(insets);
-				backButton.setOnMouseClicked( new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				difficultyLevel = difficultyBox.getValue();
-				noOfLanes = laneBox.getValue();
-				soundTrack = soundTrackBox.getValue();
-				stage.setScene(previousScene);
-			}
-
-		 });
 		
-		SceneLayout.setTop(backButton);
-		SceneLayout.setCenter(settings);
+		 backButton = new MenuItem("Back",15,10);
+		
+		backButton.setAlignment(Pos.CENTER_LEFT);
+		
+		root.setTop(backButton);
+		root.setCenter(settings);
 		try {
-			Image bgImage = new Image(getClass().getResourceAsStream(backgroundImageURL));    
-            BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
-            	    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
-            	    new BackgroundSize(AOTMainMenu.getmenuWidth(), AOTMainMenu.getmenuHeight(), true, true, true, false));
-            SceneLayout.setBackground(new Background(backgroundImage));
+			Image bgImage = new Image(new FileInputStream(backgroundImageURL));    
+			BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
+					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
+					new BackgroundSize(width,height, true, true, true, false));
+			root.setBackground(new Background(backgroundImage));
 		}catch(Exception e) {
 			System.out.println("couldn't find settings background");
-		SceneLayout.setBackground(Background.fill(Color.BLUEVIOLET));
+			root.setBackground(Background.fill(Color.BLUEVIOLET));
 		}
-
-
-		stage.setScene(new Scene(SceneLayout,AOTMainMenu.getmenuWidth(),AOTMainMenu.getmenuHeight()));
 		
+		return root;
+	
 	}
+	
+	
+	public void setBackButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.backButton.setOnMouseClicked(e);
+	}
+	
+	
 	private static <T> ComboBox<T>  addSelectionUI(GridPane settings,String labelTxt,ObservableList<T> choices,T defaultValue,int rowNum) {
 		Label label = new Label(labelTxt);
 		label.setFont(labelFont);
@@ -96,9 +90,9 @@ public class settings  {
 		settings.add(box, 1, rowNum);
 		return box;
 	}
-    public static int getnoOfLanes() {return noOfLanes;}
-    public static difficulty getDifficulty() { return difficultyLevel;}
-    public static String getSoundTrack() {return soundTrack;}
+    public  int getnoOfLanes() {return noOfLanes;}
+    public  difficulty getDifficulty() { return difficultyLevel;}
+    public  String getSoundTrack() {return soundTrack;}
    
 
 

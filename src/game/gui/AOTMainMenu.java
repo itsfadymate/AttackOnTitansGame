@@ -1,20 +1,11 @@
 package game.gui;
 
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.nio.file.Files;
-
-import javax.imageio.ImageIO;
-
-import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,137 +16,72 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.geometry.*;
+import java.io.FileInputStream;
 
-public class AOTMainMenu extends Application {
+public class AOTMainMenu extends Scene {
 	
-	private static double menuWidth = 1120;
-	private static double menuHeight = 728;
-	private final Insets defaultInset = new Insets(30, 0, 30, 0);
-	private final String backgroundImageUrl = "Images/wallPaper1920by1200.jpg";
-    private final String titleImageUrl = "Images/Title4.png";
-    private static settings setting = new settings();
+	private final static Insets defaultInset = new Insets(30, 0, 30, 0);
+	private final static String backgroundImageUrl = "src/game/gui/Images/wallPaper1920by1200.jpg";
+    private final static String titleImageUrl = "src/game/gui/Images/Title4.png";
+    
+    private static MenuItem PlayButton; 
+    private static MenuItem viewHighScoresButton; 
+    private static MenuItem howToPlayButton; 
+    private static MenuItem SettingsButton; 
+    private static MenuItem QuitButton; 
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-         AOTMainMenu.launch(args);
+	
+	public AOTMainMenu(int width,int height) {
+		super(createRoot(width,height),width,height);
 	}
-
-	@Override
-	public void start(Stage stage) throws Exception {
-		
-		
-		
+	
+	private static Parent createRoot(int width,int height) {
 		// TODO Auto-generated method stub
-		BorderPane root= new BorderPane();
-			
-				MenuBox centerPane = new MenuBox();
-					MenuItem PlayButton = new MenuItem("Play");
-				
-					MenuItem viewHighScoresButton =new MenuItem("LeaderBoards");
-					MenuItem howToPlayButton = new MenuItem("How to Play?");
-					MenuItem SettingsButton = new MenuItem("Settings");
-					MenuItem QuitButton = new MenuItem("Quit");
-				centerPane.getChildren().addAll(PlayButton,viewHighScoresButton,howToPlayButton,SettingsButton,QuitButton);
-				//centerPane.setBackground(Background.fill(Color.BLUEVIOLET));
-				centerPane.setAlignment(Pos.CENTER);
-				centerPane.setSpacing(20);
-				
-				BorderPane TopPane = new BorderPane();
-				setbackgroundImage(root);
-				setTitleImage(TopPane);
-		
-	    root.setTop(TopPane);
+		BorderPane root = new BorderPane();
+		MenuBox centerPane = new MenuBox();
+			PlayButton = new MenuItem("Play");
+			viewHighScoresButton =new MenuItem("LeaderBoards");
+		    howToPlayButton = new MenuItem("How to Play?");
+		    SettingsButton = new MenuItem("Settings");
+			QuitButton = new MenuItem("Quit");
+		centerPane.getChildren().addAll(PlayButton,viewHighScoresButton,howToPlayButton,SettingsButton,QuitButton);
+		centerPane.setAlignment(Pos.CENTER);
+		centerPane.setSpacing(20);
+	
+		BorderPane TopPane = new BorderPane();
+		setbackgroundImage(root,width,height);
+		setTitleImage(TopPane);
+
+		root.setTop(TopPane);
 		root.setCenter(centerPane);
-		
-		
-		
-		Scene s = new Scene(root);
-		
-		PlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		viewHighScoresButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				LeaderBoardPage.switchToLeaderBoards(stage,s);
-			}
-			
-		});
-		howToPlayButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				 
-			}
-			
-		});		
-		SettingsButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				setting.switchToSettings(stage, s);
-			}
-			
-		});
-		QuitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				stage.close();
-			}
-			
-		});
-
-		stage.setHeight(menuHeight);
-		stage.setWidth(menuWidth);
-		stage.setScene(s);
-		stage.setTitle("AttackOnTitans");
-		stage.setResizable(false);
-		stage.show();
-		
+		return root;
 	}
-	public static void setDimensions(double width,double height) {
-		menuWidth = width;
-		menuHeight = height;
-	}
-	public  void setbackgroundImage(BorderPane root) {
+
+	public static  void setbackgroundImage(BorderPane root,int width,int height) {
+		root.setBackground(Background.fill(Color.BLACK));
 		try {
-            Image bgImage = new Image(getClass().getResourceAsStream(backgroundImageUrl));    
+			FileInputStream inStream = new FileInputStream(backgroundImageUrl);
+            Image bgImage = new Image(inStream);    
             BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
             	    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
-            	    new BackgroundSize(menuWidth, menuHeight, true, true, true, false));
+            	    new BackgroundSize(width, height, true, true, true, false));
             root.setBackground(new Background(backgroundImage));
 
 	    }catch(Exception e) {
 	    	e.printStackTrace();
 	    	System.out.println("failed to load background Image");
-	    	root.setBackground(Background.fill(Color.RED));
+	    	root.setBackground(Background.fill(Color.CYAN));
 	    }
 	}
-    public  void setTitleImage(BorderPane TopPane ) {
+    private static  void setTitleImage(BorderPane TopPane ) {
     	try {
-			Image titleImage = new Image(getClass().getResourceAsStream(titleImageUrl));
+    		FileInputStream inStream = new FileInputStream(titleImageUrl);
+			Image titleImage = new Image(inStream);
 		
             ImageView titleView = new ImageView();
             titleView.setImage(titleImage);
@@ -163,10 +89,10 @@ public class AOTMainMenu extends Application {
             TopPane.setCenter(titleView);
             TopPane.setTranslateY(50);
             
-            //BorderPane.setAlignment(TopPane, Pos.BASELINE_CENTER);
             
 		}catch (Exception e) {
 			e.printStackTrace();
+			System.out.println("failed to load title Image");
 			Label Title = new Label("Attack on Titans");
 			//Title.setBackground(Background.fill(Color.DARKGREEN));
 			Title.setFont(new Font("Arial",24));
@@ -176,9 +102,23 @@ public class AOTMainMenu extends Application {
 		}
 		
     }
-	public static double getmenuWidth() {return menuWidth;}
-	public static double getmenuHeight() {return menuHeight;}
 	
+ public void setPlayButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.PlayButton.setOnMouseClicked(e);
+	}
+	public void setleaderBoardsButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.viewHighScoresButton.setOnMouseClicked(e);
+	}
+	public void sethowtoPlayButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.howToPlayButton.setOnMouseClicked(e);
+	}
+	public void setsettingsButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.SettingsButton.setOnMouseClicked(e);
+	}
+	public void setQuitButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.QuitButton.setOnMouseClicked(e);
+	}
+
 	 private static class MenuBox extends VBox {
 	        public MenuBox(MenuItem... items) {
 	           // getChildren().add(createSeparator());

@@ -2,7 +2,6 @@ module Team81 {
 	exports game.engine.dataloader;
 	exports game.engine.weapons;
 	exports game.engine.lanes;
-	exports game.gui;
 	exports game.tests;
 	exports game.engine.exceptions;
 	exports game.engine.interfaces;
@@ -10,10 +9,11 @@ module Team81 {
 	exports game.engine;
 	exports game.engine.base;
 	exports game.engine.titans;
+	exports game.gui;
 
-	requires java.desktop;
-	requires javafx.base;
-	requires javafx.controls;
-	requires javafx.graphics;
 	requires junit;
+	requires javafx.graphics;
+	requires javafx.controls;
+	requires javafx.base;
+	requires java.base;
 }

@@ -14,7 +14,7 @@ public class gameController extends Application {
 	private Stage mainstage;
 
 	private final int windowWidth = 1280;
-	private final int windowHeight = 715;
+	private final int windowHeight = 760;
 	
 	private final GameView gameView = new GameView();
     private final AOTMainMenu mainMenu = new AOTMainMenu(windowWidth,windowHeight);

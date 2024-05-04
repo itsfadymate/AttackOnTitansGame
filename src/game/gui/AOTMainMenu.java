@@ -69,7 +69,7 @@ public class AOTMainMenu extends Scene {
             Image bgImage = new Image(inStream);    
             BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
             	    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
-            	    new BackgroundSize(width, height, true, true, true, false));
+            	    new BackgroundSize(width, height, false, false, true, true));
             root.setBackground(new Background(backgroundImage));
 
 	    }catch(Exception e) {

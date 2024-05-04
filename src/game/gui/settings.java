@@ -27,7 +27,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 //TODO: fix lanky resizing and image resizing and implement leaderBoards
 public class settings extends Scene  {
-	private final static Font labelFont = new Font("BOLD",24);
+	private final static Font labelFont = new Font("BOLD",35);
 	private final static javafx.geometry.Insets insets = new javafx.geometry.Insets(20,0,20,0);
 	private static MenuItem backButton;
 	private static difficulty difficultyLevel = difficulty.Hard;
@@ -63,7 +63,7 @@ public class settings extends Scene  {
 			Image bgImage = new Image(new FileInputStream(backgroundImageURL));    
 			BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
 					BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
-					new BackgroundSize(width,height, true, true, true, false));
+					new BackgroundSize(width,height, false, false, true, true));
 			root.setBackground(new Background(backgroundImage));
 		}catch(Exception e) {
 			System.out.println("couldn't find settings background");
@@ -83,9 +83,12 @@ public class settings extends Scene  {
 	private static <T> ComboBox<T>  addSelectionUI(GridPane settings,String labelTxt,ObservableList<T> choices,T defaultValue,int rowNum) {
 		Label label = new Label(labelTxt);
 		label.setFont(labelFont);
+		label.setPrefSize(200, 50);
 		ComboBox<T> box = new ComboBox<T>();
 		box.setItems(choices);
-		box.setValue(defaultValue);		
+		box.setValue(defaultValue);	
+		box.setPrefSize(200, 50);
+		
 		settings.add(label,0,rowNum);
 		settings.add(box, 1, rowNum);
 		return box;

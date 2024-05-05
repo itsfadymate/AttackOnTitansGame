@@ -93,8 +93,15 @@ public class settings extends Scene  {
 		settings.add(box, 1, rowNum);
 		return box;
 	}
-    public  int getnoOfLanes() {return noOfLanes;}
-    public  difficulty getDifficulty() { return difficultyLevel;}
+    public  int getnoOfLanes() {
+       if (this.difficultyLevel==difficulty.Hard) return 5;
+       return 3;
+    }
+    public int getInitialResourcesperLane() {
+    	 if (this.difficultyLevel==difficulty.Hard) return 125;
+         return 250;
+    }
+   
     public  String getSoundTrack() {return soundTrack;}
    
 

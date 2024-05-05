@@ -17,4 +17,5 @@ module Team81 {
 	requires javafx.base;
 	requires java.base;
 	requires javafx.fxml;
+	opens game.gui to javafx.fxml;
 }

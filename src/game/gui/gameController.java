@@ -1,103 +1,138 @@
 package game.gui;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-import javafx.application.Application;
+import game.engine.Battle;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class gameController extends Application {
-	private Stage mainstage;
+public class GameController implements Initializable{
+	@FXML
+	private ImageView backgroundImage;
+	@FXML
+	private Label scoreLabel;
+	@FXML
+	private Label turnLabel;
+	@FXML
+	private Label resourcesLabel;
+	@FXML
+	private Label phaseLabel;
+	@FXML
+	private Button endTurnButton;
+    @FXML
+    private Button weaponShopInfoButton;
 
-	private final int windowWidth = 1280;
-	private final int windowHeight = 760;
+	private Battle battle;
 	
-	private final GameView gameView = new GameView();
-    private final AOTMainMenu mainMenu = new AOTMainMenu(windowWidth,windowHeight);
-    private final settings setting = new settings(windowWidth,windowHeight);
-	
+	public GameController() {
+		System.out.println("empty GameView constructor was called");
+	}
+
+	public void setBattle(Battle b) {
+		this.battle = b;
+		updateLabels();
+	}
+
+
+	public void buyWeaponOne(ActionEvent e) {
+		System.out.println("user is trying to buy the first weapon");
+	}
+	public void onEndTurn(ActionEvent e) {
+		System.out.println("EndTurn was clicked");
+		battle.passTurn();
+		updateBattleView();
+		battle.setScore(battle.getScore()+10);
+	}
+    
+	private void updateBattleView() {
+
+		//TODO:drawTitans();
+		//TODO: updateWalls();
+		updateLabels();
+	}
+
+	private void updateLabels() {
+
+		scoreLabel.setText("score: " + battle.getScore());
+		resourcesLabel.setText("resources: " + battle.getResourcesGathered());
+		phaseLabel.setText("Phase: "+ battle.getBattlePhase());
+		turnLabel.setText("Turn: "+battle.getNumberOfTurns());
+	}
 
 	@Override
-	public void start(Stage arg0) throws Exception {
-		
-		mainstage = new Stage();
-		mainstage.setHeight(windowHeight);
-		mainstage.setWidth(windowWidth);
-		mainstage.setScene(mainMenu);
-		mainstage.setTitle("AttackOnTitans");
-		mainstage.setResizable(false);
-		
-		// set main menu button functionalities
-		mainMenu.setPlayButtonOnMouseClicked(new EventHandler<MouseEvent>() {
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		endTurnButton.setOnMouseEntered(new EventHandler<>() {
 
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
+				System.out.println("entered the holy button");
+				endTurnButton.setStyle("-fx-background-radius: 30; -fx-background-color: #bec626;");
+			}
+			
+		});
+		endTurnButton.setOnMouseExited(new EventHandler<>() {
+
+			@Override
+			public void handle(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				System.out.println("exited the holy button");
+				endTurnButton.setStyle("-fx-background-radius: 30; -fx-background-color: #755a00;");
+			}
+			
+		});
+	    weaponShopInfoButton.setOnAction(new EventHandler<>() {
+
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				Stage weaponshopstage = new Stage();
+				try {
+					FXMLLoader loader = new FXMLLoader(GameController.class.getResource("weaponShop.fxml"));
+					Parent root = loader.load();
+					weaponshopstage.setScene(new Scene(root));
+					weaponshopstage.setResizable(false);
+					weaponshopstage.show();
+					weaponShopController wsc = loader.getController();
+					wsc.setValues(battle.getWeaponFactory().getWeaponShop());
+					
+					
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					Alert a = new Alert(AlertType.ERROR);
+					a.setTitle("Error");
+					a.setContentText("failed to show weaponShop info");
+					a.show();
+				}
 				
-				mainstage.setScene(gameView);
 			}
-	                
-			
-		});
-		mainMenu.setleaderBoardsButtonOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-				
-			}
-			
-		});
-		mainMenu.sethowtoPlayButtonOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
-		mainMenu.setsettingsButtonOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				//mainstage.setHeight(1280);
-				//mainstage.setWidth(720);
-				mainstage.setScene(setting);
-				
-			}
-			
-		});
-        mainMenu.setQuitButtonOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				mainstage.setScene(setting);
-			}
-			
-		});
-       setting.setBackButtonOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				mainstage.setScene(mainMenu);
-			}
-			
-		});
-		
-	
-		mainstage.show();
+	    	
+	    });
 	}
-	public static void main(String[] args) {
-		launch(args);
-	}
+
+
+
 
 }

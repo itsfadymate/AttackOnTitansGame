@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="500.0" prefWidth="746.0" style="-fx-background-color: #1F8F00;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.weaponShopController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="180.0">
+         <children>
+            <Label fx:id="name1" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="125.0" prefWidth="182.0" text="Anti Titan Shell" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="104.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Images/cannon%201.png" />
+               </image></ImageView>
+            <Label fx:id="price1" prefHeight="62.0" prefWidth="200.0" text="Price: 25" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="248.0" prefHeight="62.0" prefWidth="200.0" text="Type: Piercing Cannon" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="damage1" layoutX="10.0" layoutY="248.0" prefHeight="62.0" prefWidth="200.0" text="Damage: 10" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="373.0" prefHeight="24.0" prefWidth="180.0" text="Description: Attacks the" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="18.0" prefWidth="178.0" text="closest 5 titans to the wall on " textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="22.0" prefWidth="182.0" text="to the wall on the weapon’s lane." textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator layoutX="10.0" layoutY="72.0" orientation="VERTICAL" prefHeight="500.0" style="-fx-background-size: 30;" />
+      <VBox prefHeight="200.0" prefWidth="180.0">
+         <children>
+            <Label fx:id="name2" alignment="CENTER" prefHeight="129.0" prefWidth="180.0" text="Long Range Spear" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="87.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/XBow1.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Label fx:id="price2" prefHeight="62.0" prefWidth="200.0" text="Price: 25" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Sniper Cannon" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="damage2" prefHeight="62.0" prefWidth="200.0" text="Damage: 35" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="22.0" prefWidth="180.0" text="Description: Attacks the first " textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="10.0" prefWidth="175.0" text="closest titan to the wall on the" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="15.0" prefWidth="172.0" text="weapon’s lane." textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator layoutX="10.0" layoutY="72.0" orientation="VERTICAL" prefHeight="500.0" style="-fx-background-size: 30;" />
+      <VBox prefHeight="200.0" prefWidth="180.0">
+         <children>
+            <Label fx:id="name3" alignment="CENTER" prefHeight="125.0" prefWidth="182.0" text="Proximity Trap" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="110.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/Spring%20Trap%201.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Label fx:id="price4" prefHeight="62.0" prefWidth="200.0" text="Price: 100" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Wall Trap" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="damage4" prefHeight="62.0" prefWidth="200.0" text="Damage: 5" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="180.0" text="Description: Attack all the" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="15.0" prefWidth="192.0" text="titans in between the weapon’s" textFill="WHITE" />
+            <Label prefHeight="13.0" prefWidth="182.0" text="min and max ranges on the" textFill="WHITE" />
+            <Label prefHeight="10.0" prefWidth="177.0" text="weapon’s lane." textFill="WHITE" />
+         </children>
+      </VBox>
+      <Separator orientation="VERTICAL" prefHeight="500.0" style="-fx-background-size: 30;" />
+      <VBox prefHeight="200.0" prefWidth="180.0">
+         <children>
+            <Label fx:id="name4" alignment="CENTER" prefHeight="125.0" prefWidth="182.0" text="Wall Spread Cannon" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="18.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="100.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Images/multi%20cannon%201.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Label fx:id="price3" prefHeight="62.0" prefWidth="200.0" text="Price: 75" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Volley Spread Cannon" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="damage3" prefHeight="66.0" prefWidth="180.0" text="Damage: 100" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="180.0" text="Description: Attacks only one" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="2.0" prefWidth="172.0" text="the walls (if more than one  " textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font>
+            </Label>
+            <Label prefHeight="13.0" prefWidth="170.0" text="have already reached only the" textFill="WHITE" />
+            <Label prefHeight="12.0" prefWidth="169.0" text="first one is attacked)" textFill="WHITE" />
+         </children>
+      </VBox>
+   </children>
+</HBox>

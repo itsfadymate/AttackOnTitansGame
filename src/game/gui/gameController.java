@@ -17,16 +17,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class GameController implements Initializable{
 	@FXML
-	private ImageView backgroundImage;
+	private ImageView bgImage;
 	@FXML
 	private Label scoreLabel;
 	@FXML
@@ -47,7 +53,21 @@ public class GameController implements Initializable{
 	}
 
 	public void setBattle(Battle b) {
-		this.battle = b;
+		try {
+			this.battle = b;
+			System.out.println("start of gameController initialization");
+			Image bgImage = new Image(getClass().getResourceAsStream("Images/threelanes.png"));
+			
+			if (b.getOriginalLanes().size()==5) {
+			   bgImage = new Image(getClass().getResourceAsStream("Images/fivelanes.png"));
+			}
+			this.bgImage = new ImageView(bgImage);
+			System.out.println("loaded bgImage successfully");
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("could not load image of lanes" + e.getMessage());
+		}
 		updateLabels();
 	}
 

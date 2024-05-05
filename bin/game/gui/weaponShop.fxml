@@ -103,18 +103,18 @@
          </children>
       </VBox>
       <Separator layoutX="10.0" layoutY="72.0" orientation="VERTICAL" prefHeight="500.0" style="-fx-background-size: 30;" />
-      <VBox prefHeight="200.0" prefWidth="180.0">
+      <VBox fx:id="volleySpreadvbox" prefHeight="200.0" prefWidth="180.0">
          <children>
-            <Label fx:id="name3" alignment="CENTER" prefHeight="125.0" prefWidth="182.0" text="Proximity Trap" textFill="WHITE">
+            <Label fx:id="name4" alignment="CENTER" prefHeight="125.0" prefWidth="182.0" text="Wall Spread Cannon" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="18.0" />
                </font>
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="110.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="100.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/Spring%20Trap%201.png" />
+                        <Image url="@Images/multi%20cannon%201.png" />
                      </image>
                   </ImageView>
                </children>
@@ -124,7 +124,7 @@
                   <Font name="Comic Sans MS" size="24.0" />
                </font>
             </Label>
-            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Wall Trap" textFill="WHITE">
+            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Volley Spread Cannon" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
@@ -147,16 +147,16 @@
       <Separator orientation="VERTICAL" prefHeight="500.0" style="-fx-background-size: 30;" />
       <VBox prefHeight="200.0" prefWidth="180.0">
          <children>
-            <Label fx:id="name4" alignment="CENTER" prefHeight="125.0" prefWidth="182.0" text="Wall Spread Cannon" textFill="WHITE">
+            <Label fx:id="name3" alignment="CENTER" prefHeight="125.0" prefWidth="182.0" text="Proximity Trap" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS Bold" size="18.0" />
                </font>
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="100.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="110.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/multi%20cannon%201.png" />
+                        <Image url="@Images/Spring%20Trap%201.png" />
                      </image>
                   </ImageView>
                </children>
@@ -166,7 +166,7 @@
                   <Font name="Comic Sans MS" size="24.0" />
                </font>
             </Label>
-            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Volley Spread Cannon" textFill="WHITE">
+            <Label prefHeight="62.0" prefWidth="200.0" text="Type: Wall Trap" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>

@@ -107,7 +107,7 @@ public class AppController extends Application {
 			int spawnDistance = 700;
 			Battle b = new Battle(0,0,spawnDistance,setting.getnoOfLanes(),setting.getInitialResourcesperLane());
 			
-			//gameView.setBattle(b);
+			
 			Scene gameScene = new Scene(CreateRoot());
 			this.gameController.setBattle(b);
 			mainstage.setScene(gameScene);

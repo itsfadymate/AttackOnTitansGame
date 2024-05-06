@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 
 import game.engine.Battle;
+import game.engine.base.Wall;
 import game.engine.lanes.Lane;
 import game.engine.titans.AbnormalTitan;
 import game.engine.titans.ArmoredTitan;
@@ -59,14 +60,18 @@ public class GameController implements Initializable{
 	private Label phaseLabel;
 	@FXML
 	private Button endTurnButton;
-    @FXML
-    private Button weaponShopInfoButton;
-    private HashMap<Titan,TitanView> titanMap = new HashMap<Titan,TitanView>();
-    
-    private final double[] laneYCoordinates = new double[] {133,245,375,485,590};
+	@FXML
+	private Button weaponShopInfoButton;
+	private HashMap<Titan,TitanView> titanMap = new HashMap<Titan,TitanView>();
+	private HashMap<Wall,WallView> wallMap = new HashMap<Wall,WallView>();
+
+	private final double[] titanlaneYCoordinates = new double[] {133,245,375,485,590};
+	private final double[] LaneYCoordinates = new double[] {60,188,293,426,553};
+
+
 
 	private Battle battle;
-	
+
 	public GameController() {
 		System.out.println("empty GameView constructor was called");
 	}
@@ -75,57 +80,104 @@ public class GameController implements Initializable{
 		try {
 			this.battle = b;
 			System.out.println("start of gameController initialization");
-			Image bgImagee = new Image(getClass().getResourceAsStream("Images/threelanes.png"));
-			System.out.println("loaded bgImage of 3 lanes successfully");
-			
-			if (b.getOriginalLanes().size()==5) {
-				
-			   bgImagee = new Image(getClass().getResourceAsStream("Images/fivelanes.png"));
-			   System.out.println("loaded bgImage of 5 lanes successfully");
+			Image bgImagee = new Image(getClass().getResourceAsStream("Images/fivelanes.png"));
+			System.out.println("loaded bgImage of 5 lanes successfully");
+
+			if (b.getOriginalLanes().size()==3) {
+				bgImagee = new Image(getClass().getResourceAsStream("Images/threelanes.png"));
+				System.out.println("loaded bgImage of 3 lanes successfully");
 			}
 			this.bgImage.setImage(bgImagee);
-			
-			
+
+
+
 		}catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("could not load image of lanes" + e.getMessage());
 		}
+		this.Initializewalls();
 		updateLabels();
 	}
 
+	private void Initializewalls() {
+		int laneYCoordinatesIndex =battle.getOriginalLanes().size()==5 ?  0 : 1;
+		if (battle.getOriginalLanes().size()==3) {
+			new WallView(this.anchorPane,this.LaneYCoordinates[0]);
+		}
+		for (Lane lane:  battle.getOriginalLanes()) {
+			Wall laneWall = lane.getLaneWall();
+			WallView wall = new WallView(laneWall,this.anchorPane,this.LaneYCoordinates[laneYCoordinatesIndex]);
+			wallMap.put(laneWall, wall);
+			laneYCoordinatesIndex++;
+		}
+		if (battle.getOriginalLanes().size()==3) {
+			new WallView(this.anchorPane,this.LaneYCoordinates[4]);
+		}
 
+	}
 	public void buyWeaponOne(ActionEvent e) {
 		System.out.println("user is trying to buy the first weapon");
 	}
 	public void onEndTurn(ActionEvent e) {
-		System.out.println("EndTurn was clicked");
-		battle.passTurn();
-		updateBattleView();
-		battle.setScore(battle.getScore()+10);
+
+		try {
+			System.out.println("EndTurn was clicked");
+			battle.passTurn();
+			updateBattleView();
+			battle.setScore(battle.getScore()+10);//remove when doing actual game
+			battle.getLanes().peek().getLaneWall().takeDamage(2500);
+		}catch (Exception e1) {
+			e1.printStackTrace();
+			System.out.println("some problem happend pal," + e1.getMessage());
+		}
+		handleGameOver();
 	}
-    
-	private void updateBattleView() {
-		//TODO Ask around how tf to disable the button till the animations finsish
-       
-		drawTitans();
-		//TODO: updateWalls();
-		updateLabels();
-		
+	private void handleGameOver() {
+		if (battle.isGameOver()) {
+			//logic for going to end of game page ("test.fxml") then going to main menu
+		}
 	}
 
+	private void updateBattleView() {
+		//TODO Ask around how tf to disable the button till the animations finsish
+
+		drawTitans();
+		updateWalls();
+		updateLabels();
+
+	}
+
+	private void updateWalls() {
+
+		for (Lane l : battle.getOriginalLanes()) {
+			Wall laneWall = l.getLaneWall();
+			WallView view = wallMap.get(laneWall);
+			view.updateHealthBar(laneWall.getCurrentHealth());
+			if (laneWall.isDefeated()) {
+				wallMap.get(laneWall).defeat();
+				System.out.println(" wall " + (battle.getOriginalLanes().indexOf(laneWall)+1)+"is defeted");
+			}
+
+		}
+
+	}
+
+
+	/*
+	 * DO We remove titans from defeated lanes once a lane is defeated?
+	 * if so do we move titans -> update wall stats -> remove titans?
+	 * if that is the case consider firing a running animation once a wall is defeated
+	 * removing would be done in update wall method
+	 * */
 	private void drawTitans() {
 		// TODO Auto-generated method stub
 		int laneYCoordinatesIndex =battle.getOriginalLanes().size()==5 ?  0 : 1;
-		
+
 		for (Lane l : battle.getOriginalLanes()) {
-			drawLaneTitans(l.getTitans(),laneYCoordinates[laneYCoordinatesIndex]);
-			System.out.println();
-			System.out.println("---- y: "+ laneYCoordinates[laneYCoordinatesIndex]+" ----");
-			System.out.println();
+			drawLaneTitans(l.getTitans(),titanlaneYCoordinates[laneYCoordinatesIndex]);
 			laneYCoordinatesIndex++;
-			
 		}
-		
+
 	}
 
 	private void drawLaneTitans(PriorityQueue<Titan> titans, double yCoordinate) {
@@ -134,9 +186,9 @@ public class GameController implements Initializable{
 			titanStack.push(titans.remove());
 
 			Titan currentTitan = titanStack.peek();
-			
-			
-			System.out.print(" T " );
+
+
+
 			if (!titanMap.containsKey(currentTitan)) {//1200 is start x titan coord
 				titanMap.put(currentTitan, new TitanView(currentTitan,anchorPane,yCoordinate,1100));
 			}
@@ -148,7 +200,6 @@ public class GameController implements Initializable{
 				titanMap.remove(currentTitan);
 			}
 			else if (!currentTitan.hasReachedTarget()) {
-				System.out.print("walk ");
 				titanView.walk(titanStack.peek().getSpeed(),0.1);
 			}
 			else if (currentTitan.hasReachedTarget()) {
@@ -156,12 +207,12 @@ public class GameController implements Initializable{
 				System.out.print("attack ");
 			}
 		}
-		
+
 		while (!titanStack.isEmpty()) {
 			titans.add(titanStack.pop());
 		}
 	}
-	
+
 	private void updateLabels() {
 
 		scoreLabel.setText("score: " + battle.getScore());
@@ -173,6 +224,10 @@ public class GameController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
+
+
+
+
 		endTurnButton.setOnMouseEntered(new EventHandler<>() {
 
 			@Override
@@ -181,7 +236,7 @@ public class GameController implements Initializable{
 				System.out.println("entered the holy button");
 				endTurnButton.setStyle("-fx-background-radius: 30; -fx-background-color: #bec626;");
 			}
-			
+
 		});
 		endTurnButton.setOnMouseExited(new EventHandler<>() {
 
@@ -191,9 +246,9 @@ public class GameController implements Initializable{
 				System.out.println("exited the holy button");
 				endTurnButton.setStyle("-fx-background-radius: 30; -fx-background-color: #755a00;");
 			}
-			
+
 		});
-	    weaponShopInfoButton.setOnAction(new EventHandler<>() {
+		weaponShopInfoButton.setOnAction(new EventHandler<>() {
 
 
 			@Override
@@ -208,9 +263,9 @@ public class GameController implements Initializable{
 					weaponshopstage.show();
 					weaponShopController wsc = loader.getController();
 					wsc.setValues(battle.getWeaponFactory().getWeaponShop());
-					
-					
-					
+
+
+
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -219,10 +274,12 @@ public class GameController implements Initializable{
 					a.setContentText("failed to show weaponShop info");
 					a.show();
 				}
-				
+
 			}
-	    	
-	    });
+
+		});
+
+
 	}
 
 

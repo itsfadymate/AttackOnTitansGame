@@ -22,8 +22,8 @@ public class AppController extends Application {
 	private final int windowHeight = 760;
 	
 	private GameController gameController; 
-    private final AOTMainMenu mainMenu = new AOTMainMenu(windowWidth,windowHeight);
-    private final settings setting = new settings(windowWidth,windowHeight);
+    private final MainMenuPage mainMenu = new MainMenuPage(windowWidth,windowHeight);
+    private final SettingsPage setting = new SettingsPage(windowWidth,windowHeight);
 	
 
 	@Override
@@ -105,8 +105,8 @@ public class AppController extends Application {
 		// TODO Auto-generated method stub
 		try {
 			int spawnDistance = 700;
-			System.out.println(settings.getnoOfLanes());
-			Battle b = new Battle(0,0,spawnDistance,settings.getnoOfLanes(),settings.getInitialResourcesperLane());
+			System.out.println(SettingsPage.getnoOfLanes());
+			Battle b = new Battle(0,0,spawnDistance,SettingsPage.getnoOfLanes(),SettingsPage.getInitialResourcesperLane());
 			
 			
 			Scene gameScene = new Scene(CreateRoot());

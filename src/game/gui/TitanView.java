@@ -15,17 +15,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class TitanView extends ImageView {
+public class TitanView extends View {
 	private String pureTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
 	private String abnormalTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
 	private String ArmoredTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
 	private String colossalTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
-	private ProgressBarSkin healthBarSkin;
-	private ProgressBar healthBar;
-	private  int baseHealth;
+	
+	private final static int healthBarWidth = 50;
+	private final static int healthBarHeight = 10;
+	
 
 
 	public TitanView(Titan titan, AnchorPane anchorPane, double yCoordinate, double xCoordinate) {
+		super(anchorPane,xCoordinate,yCoordinate,healthBarWidth,healthBarHeight,titan.getBaseHealth());
 		if (titan instanceof PureTitan) {
 			this.setImage(new Image(getClass().getResourceAsStream(pureTitanSpriteSheetUrl)));
 		}else if (titan instanceof AbnormalTitan) {
@@ -35,15 +37,7 @@ public class TitanView extends ImageView {
 		}else if (titan instanceof ColossalTitan) {
 			this.setImage(new Image(getClass().getResourceAsStream(colossalTitanSpriteSheetUrl)));
 		}
-		this.baseHealth = titan.getBaseHealth();
-        healthBar = new ProgressBar(100);
-		this.healthBarSkin = new ProgressBarSkin(healthBar);
-		healthBar.setLayoutX(xCoordinate);
-	    healthBar.setPrefSize(50, 10);
-		healthBar.setLayoutY(yCoordinate);
-		this.setLayoutY(yCoordinate);
-		this.setLayoutX(xCoordinate);
-		anchorPane.getChildren().addAll(this,healthBar);
+	
 	}
 
 
@@ -92,7 +86,7 @@ public class TitanView extends ImageView {
 					));
 		});
 		TranslateTransition healthTransition = new TranslateTransition();
-		healthTransition.setNode(this.healthBar);
+		healthTransition.setNode(getHealthBar());
 		healthTransition.setDuration(Duration.seconds(timeToMove));
 		healthTransition.setByX(-distanceToMove*10);
 		healthTransition.play();
@@ -151,7 +145,5 @@ public class TitanView extends ImageView {
 		timeline.play();
 		if (isAbnormal) timeline.setOnFinished(e->{timeline.play();});
 	}
-    public void updateHealthBar(int currHealth) {
-    	  this.healthBar.setProgress((double)currHealth/baseHealth);
-    }
+    
 }

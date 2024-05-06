@@ -51,7 +51,9 @@ public class AbnormalTitan extends Titan {
     	System.out.println(w);
     	t1.attack(w);
     }
-
+    public int getCode() {
+    	return TITAN_CODE;
+    }
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

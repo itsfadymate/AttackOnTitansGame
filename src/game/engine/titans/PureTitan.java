@@ -23,5 +23,8 @@ public class PureTitan extends Titan {
 	public String toString() {
 		return "	Pure"+ super.toString();
 	}
+	public int getCode() {
+    	return TITAN_CODE;
+    }
 	
 }

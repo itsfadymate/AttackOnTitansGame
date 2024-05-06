@@ -29,5 +29,7 @@ public class ColossalTitan extends Titan {
 		// TODO Auto-generated method stub
 		return "	Colossal" + super.toString();
 	}
-
+	public int getCode() {
+    	return TITAN_CODE;
+    }
 }

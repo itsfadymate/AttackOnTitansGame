@@ -22,6 +22,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -34,6 +35,8 @@ public class settings extends Scene  {
 	private static int noOfLanes = 5;
 	private static String soundTrack = "soundtrack 1";
 	private final static String backgroundImageURL = "src/game/gui/Images/background2.png";
+	private static ComboBox<difficulty> difficultyBox;
+	private static ComboBox<String> soundTrackBox;
 	
 	public settings(int width,int height) {
 		super(createRoot(width,height),width,height);
@@ -44,9 +47,9 @@ public class settings extends Scene  {
 
 
 
-		ComboBox<difficulty> difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Hard),difficultyLevel,0);	
+		 difficultyBox= addSelectionUI(settings,"Difficulty: ",FXCollections.observableArrayList(difficulty.Easy,difficulty.Hard),difficultyLevel,0);	
 		
-		ComboBox<String> soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),soundTrack,2);
+		 soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),soundTrack,2);
 
 		settings.setAlignment(Pos.CENTER);
 		settings.setPadding(insets);
@@ -56,9 +59,19 @@ public class settings extends Scene  {
 		 backButton = new MenuItem("Back",35,10);
 		
 		backButton.setAlignment(Pos.CENTER_LEFT);
+		HBox topLayout = new HBox();
+		topLayout.setSpacing(20);
+		topLayout.setAlignment(Pos.CENTER);
+		topLayout.getChildren().add(backButton);
 		
-		root.setTop(backButton);
+		root.setTop(topLayout);
 		root.setCenter(settings);
+		setbgImage(width, height, root);
+		
+		return root;
+	
+	}
+	private static void setbgImage(int width, int height, BorderPane root) {
 		try {
 			Image bgImage = new Image(new FileInputStream(backgroundImageURL));    
 			BackgroundImage backgroundImage = new BackgroundImage(bgImage, 
@@ -69,13 +82,12 @@ public class settings extends Scene  {
 			System.out.println("couldn't find settings background");
 			root.setBackground(Background.fill(Color.BLUEVIOLET));
 		}
-		
-		return root;
-	
 	}
 	
 	
 	public void setBackButtonOnMouseClicked(EventHandler<MouseEvent> e) {
+		difficultyLevel = difficultyBox.getValue();
+		soundTrack = soundTrackBox.getValue();
 		this.backButton.setOnMouseClicked(e);
 	}
 	
@@ -93,16 +105,16 @@ public class settings extends Scene  {
 		settings.add(box, 1, rowNum);
 		return box;
 	}
-    public  int getnoOfLanes() {
-       if (this.difficultyLevel==difficulty.Hard) return 5;
+    public  static int getnoOfLanes() {
+       if (difficultyBox.getValue()==difficulty.Hard) return 5;
        return 3;
     }
-    public int getInitialResourcesperLane() {
-    	 if (this.difficultyLevel==difficulty.Hard) return 125;
+    public static  int getInitialResourcesperLane() {
+    	 if (difficultyBox.getValue()==difficulty.Hard) return 125;
          return 250;
     }
    
-    public  String getSoundTrack() {return soundTrack;}
+    public  String getSoundTrack() {return soundTrackBox.getValue();}
    
 
 

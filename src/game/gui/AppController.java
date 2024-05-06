@@ -105,11 +105,12 @@ public class AppController extends Application {
 		// TODO Auto-generated method stub
 		try {
 			int spawnDistance = 700;
-			Battle b = new Battle(0,0,spawnDistance,setting.getnoOfLanes(),setting.getInitialResourcesperLane());
+			System.out.println(settings.getnoOfLanes());
+			Battle b = new Battle(0,0,spawnDistance,settings.getnoOfLanes(),settings.getInitialResourcesperLane());
 			
 			
 			Scene gameScene = new Scene(CreateRoot());
-			this.gameController.setBattle(b);
+			this.gameController.initialize(b);
 			mainstage.setScene(gameScene);
 			
 		
@@ -153,7 +154,8 @@ public class AppController extends Application {
 		return root;
         }
 	public static void main(String[] args) {
-		launch(args);
+		System.out.println("started app");
+		AppController.launch(args);
 	}
 
 }

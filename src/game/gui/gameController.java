@@ -2,9 +2,22 @@ package game.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.PriorityQueue;
 import java.util.ResourceBundle;
+import java.util.Stack;
 
 import game.engine.Battle;
+import game.engine.lanes.Lane;
+import game.engine.titans.AbnormalTitan;
+import game.engine.titans.ArmoredTitan;
+import game.engine.titans.ColossalTitan;
+import game.engine.titans.PureTitan;
+import game.engine.titans.Titan;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,8 +42,11 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class GameController implements Initializable{
+	@FXML 
+	private AnchorPane anchorPane;
 	@FXML
 	private ImageView bgImage;
 	@FXML
@@ -45,6 +61,9 @@ public class GameController implements Initializable{
 	private Button endTurnButton;
     @FXML
     private Button weaponShopInfoButton;
+    private HashMap<Titan,TitanView> titanMap = new HashMap<Titan,TitanView>();
+    
+    private final double[] laneYCoordinates = new double[] {133,245,375,485,590};
 
 	private Battle battle;
 	
@@ -52,17 +71,20 @@ public class GameController implements Initializable{
 		System.out.println("empty GameView constructor was called");
 	}
 
-	public void setBattle(Battle b) {
+	public void initialize(Battle b) {
 		try {
 			this.battle = b;
 			System.out.println("start of gameController initialization");
-			Image bgImage = new Image(getClass().getResourceAsStream("Images/threelanes.png"));
+			Image bgImagee = new Image(getClass().getResourceAsStream("Images/threelanes.png"));
+			System.out.println("loaded bgImage of 3 lanes successfully");
 			
 			if (b.getOriginalLanes().size()==5) {
-			   bgImage = new Image(getClass().getResourceAsStream("Images/fivelanes.png"));
+				
+			   bgImagee = new Image(getClass().getResourceAsStream("Images/fivelanes.png"));
+			   System.out.println("loaded bgImage of 5 lanes successfully");
 			}
-			this.bgImage = new ImageView(bgImage);
-			System.out.println("loaded bgImage successfully");
+			this.bgImage.setImage(bgImagee);
+			
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -83,12 +105,63 @@ public class GameController implements Initializable{
 	}
     
 	private void updateBattleView() {
-
-		//TODO:drawTitans();
+		//TODO Ask around how tf to disable the button till the animations finsish
+       
+		drawTitans();
 		//TODO: updateWalls();
 		updateLabels();
+		
 	}
 
+	private void drawTitans() {
+		// TODO Auto-generated method stub
+		int laneYCoordinatesIndex =battle.getOriginalLanes().size()==5 ?  0 : 1;
+		
+		for (Lane l : battle.getOriginalLanes()) {
+			drawLaneTitans(l.getTitans(),laneYCoordinates[laneYCoordinatesIndex]);
+			System.out.println();
+			System.out.println("---- y: "+ laneYCoordinates[laneYCoordinatesIndex]+" ----");
+			System.out.println();
+			laneYCoordinatesIndex++;
+			
+		}
+		
+	}
+
+	private void drawLaneTitans(PriorityQueue<Titan> titans, double yCoordinate) {
+		Stack<Titan> titanStack = new Stack<Titan>();
+		while (!titans.isEmpty()) {
+			titanStack.push(titans.remove());
+
+			Titan currentTitan = titanStack.peek();
+			
+			
+			System.out.print(" T " );
+			if (!titanMap.containsKey(currentTitan)) {//1200 is start x titan coord
+				titanMap.put(currentTitan, new TitanView(currentTitan,anchorPane,yCoordinate,1100));
+			}
+			TitanView titanView = titanMap.get(currentTitan);
+			if (currentTitan.isDefeated()) {
+				System.out.print("defeated ");
+				titanView.defeat(0.1); 
+				anchorPane.getChildren().remove(titanView);
+				titanMap.remove(currentTitan);
+			}
+			else if (!currentTitan.hasReachedTarget()) {
+				System.out.print("walk ");
+				titanView.walk(titanStack.peek().getSpeed(),0.1);
+			}
+			else if (currentTitan.hasReachedTarget()) {
+				titanView.attack(currentTitan instanceof AbnormalTitan,0.2);
+				System.out.print("attack ");
+			}
+		}
+		
+		while (!titanStack.isEmpty()) {
+			titans.add(titanStack.pop());
+		}
+	}
+	
 	private void updateLabels() {
 
 		scoreLabel.setText("score: " + battle.getScore());

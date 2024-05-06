@@ -29,6 +29,9 @@ public class ArmoredTitan extends Titan {
 		else return 0;
 		
 	}
+	public int getCode() {
+    	return TITAN_CODE;
+    }
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

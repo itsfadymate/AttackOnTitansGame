@@ -13,6 +13,9 @@ public class WallView extends View {
 	private final static int healthBarWidth = 90;
 	private final static int healthBarHeight = 10;
 	private final static double wallLayoutX = 270;
+	public static double getWalllayoutx() {
+		return wallLayoutX;
+	}
 	private final static int wallFitWidth =190;
 	private final static int wallFitHeight =164;
 
@@ -52,5 +55,7 @@ public class WallView extends View {
 		}
 		super.removeHealthBar();
 	}
-
+    public static double getWallOuterBoundary() {
+    	return wallLayoutX + wallFitWidth;
+    }
 }

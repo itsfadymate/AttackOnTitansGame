@@ -8,6 +8,7 @@ import game.engine.titans.Titan;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.skin.ProgressBarSkin;
 import javafx.scene.image.Image;
@@ -20,16 +21,24 @@ public class TitanView extends View {
 	private String abnormalTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
 	private String ArmoredTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
 	private String colossalTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
-	
+
 	private final static int healthBarWidth = 50;
 	private final static int healthBarHeight = 10;
-	
+	private final static double titanLayoutX =1200;
 
 
-	public TitanView(Titan titan, AnchorPane anchorPane, double yCoordinate, double xCoordinate) {
-		super(anchorPane,xCoordinate,yCoordinate,healthBarWidth,healthBarHeight,titan.getBaseHealth());
+	/*
+	 * distance between titan and wall = titan's X - wallouterBoundary's X
+	 * a titan's speed in the gui = 10 * titan's engine speed
+	 * so engine spawn distance should be distance between (titan and wall) /10
+	 */
+
+
+	public TitanView(Titan titan, AnchorPane anchorPane, double yCoordinate) {
+		super(anchorPane,titanLayoutX,yCoordinate,healthBarWidth,healthBarHeight,titan.getBaseHealth());
 		if (titan instanceof PureTitan) {
 			this.setImage(new Image(getClass().getResourceAsStream(pureTitanSpriteSheetUrl)));
+
 		}else if (titan instanceof AbnormalTitan) {
 			this.setImage(new Image(getClass().getResourceAsStream(abnormalTitanSpriteSheetUrl)));
 		}else if (titan instanceof ArmoredTitan) {
@@ -37,12 +46,12 @@ public class TitanView extends View {
 		}else if (titan instanceof ColossalTitan) {
 			this.setImage(new Image(getClass().getResourceAsStream(colossalTitanSpriteSheetUrl)));
 		}
-	
+
 	}
 
 
 
-	public void walk(int distanceToMove ,double keyFrameDuration) {
+	public void walk(double distanceToMove,double keyFrameDuration) {
 		double timeToMove = 2.5;
 		this.setViewport(new javafx.geometry.Rectangle2D(0, 9*64, 64, 64)); // Set the viewport to the first frame of the walking animation
 
@@ -73,7 +82,17 @@ public class TitanView extends View {
 		TranslateTransition transition = new TranslateTransition();
 		transition.setNode(this);
 		transition.setDuration(Duration.seconds(timeToMove));
-		transition.setByX(-distanceToMove*10);
+
+
+		double distance =Math.max(-distanceToMove*10, -(this.titanLayoutX +this.getTranslateX() - WallView.getWallOuterBoundary())-25);
+		//-25 adds a little correction as the wall imageView has an empty part
+
+		transition.setByX(distance);
+		this.setxCoordinate(this.getLayoutX()+this.getTranslateX());
+
+
+
+
 		transition.play();
 
 		transition.setOnFinished(e->{
@@ -84,16 +103,17 @@ public class TitanView extends View {
 					this.getViewport().getWidth(),
 					this.getViewport().getHeight()
 					));
+
 		});
 		TranslateTransition healthTransition = new TranslateTransition();
 		healthTransition.setNode(getHealthBar());
 		healthTransition.setDuration(Duration.seconds(timeToMove));
-		healthTransition.setByX(-distanceToMove*10);
+		healthTransition.setByX(distance);
 		healthTransition.play();
 	}
 	public void defeat(double keyFrameDuration) {
 		this.setViewport(new javafx.geometry.Rectangle2D(0, 20*64, 64, 64)); // Set the viewport to the first frame of the walking animation
-
+        System.out.println("titan has been defeated");
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(keyFrameDuration), e -> {
 					this.setViewport(new javafx.geometry.Rectangle2D(
@@ -104,7 +124,7 @@ public class TitanView extends View {
 							));
 
 					// If the sprite has moved beyond the first frame, reset the viewport
-					if (this.getViewport().getMinX() > 512) {
+					if (this.getViewport().getMinX() > 6*64) {
 						this.setViewport(new javafx.geometry.Rectangle2D(
 								0,  // Move to the first frame of the walking animation
 								this.getViewport().getMinY(),
@@ -115,23 +135,29 @@ public class TitanView extends View {
 				})
 				);
 		timeline.play();
-		this.setImage(null);
+		timeline.setOnFinished(e->{
+			//this.setImage(null);
+			this.removeHealthBar();
+		});
+	
 	}
 	public void attack(boolean isAbnormal,double keyFrameDuration) {
+		final int noOfFrames = 8;
+		final int sizeofFrame = 64;
 		//animation is after 20 64 heightPixels
-		this.setViewport(new javafx.geometry.Rectangle2D(0, 20*64, 64, 64)); // Set the viewport to the first frame of the walking animation
+		this.setViewport(new javafx.geometry.Rectangle2D(0, 5*64, 64, 64)); // Set the viewport to the first frame of the walking animation
 
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(keyFrameDuration), e -> {
 					this.setViewport(new javafx.geometry.Rectangle2D(
-							this.getViewport().getMinX() + 64,  // Move to the next frame by changing the X coordinate
+							this.getViewport().getMinX() + sizeofFrame,  // Move to the next frame by changing the X coordinate
 							this.getViewport().getMinY(),
 							this.getViewport().getWidth(),
 							this.getViewport().getHeight()
 							));
 
 					// If the sprite has moved beyond the first frame, reset the viewport
-					if (this.getViewport().getMinX() > 512) {
+					if (this.getViewport().getMinX() > (noOfFrames-1) * sizeofFrame) {
 						this.setViewport(new javafx.geometry.Rectangle2D(
 								0,  // Move to the first frame of the walking animation
 								this.getViewport().getMinY(),
@@ -141,9 +167,13 @@ public class TitanView extends View {
 					}
 				})
 				);
-		
+		timeline.setCycleCount(noOfFrames+1);
 		timeline.play();
-		if (isAbnormal) timeline.setOnFinished(e->{timeline.play();});
+		this.setViewport(new javafx.geometry.Rectangle2D(0, 5*64, 64, 64)); // Set the viewport to the first frame of the walking animation
+
+
 	}
-    
+	public static double getTitanPixelSpawnDistance() {
+		return titanLayoutX;
+	}
 }

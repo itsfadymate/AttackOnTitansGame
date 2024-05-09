@@ -104,7 +104,7 @@ public class AppController extends Application {
 	private void startGame() {
 		// TODO Auto-generated method stub
 		try {
-			int spawnDistance = 700;
+			int spawnDistance = (int)(TitanView.getTitanPixelSpawnDistance() - WallView.getWallOuterBoundary())/10;
 			System.out.println(SettingsPage.getnoOfLanes());
 			Battle b = new Battle(0,0,spawnDistance,SettingsPage.getnoOfLanes(),SettingsPage.getInitialResourcesperLane());
 			
@@ -112,6 +112,18 @@ public class AppController extends Application {
 			Scene gameScene = new Scene(CreateRoot());
 			this.gameController.initialize(b);
 			mainstage.setScene(gameScene);
+		
+			/*
+			 * crashes the game
+			 * double updateInterval = 1000000000 * 25; double delta = 0; long lastTime =
+			 * System.nanoTime(); long currentTime; while (!b.isGameOver()) { currentTime =
+			 * System.nanoTime(); delta+= (currentTime - lastTime) / updateInterval; if
+			 * (delta < 1) continue;
+			 * 
+			 * b.passTurn(); this.gameController.updateBattleView(); delta--; }
+			 */
+			
+			
 			
 		
 		}catch (Exception e) {

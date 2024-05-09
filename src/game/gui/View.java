@@ -25,7 +25,7 @@ public abstract class View extends ImageView {
 		this.setLayoutY(y);
 
 		this.healthBar = new ProgressBar(100);
-		this.healthBar.setStyle("-fx-accent: green;");
+		this.healthBar.setStyle("-fx-accent: #1f3300;");
 		this.healthBar.setLayoutX(xCoordinate);
 		this.healthBar.setLayoutY(yCoordinate);
 		this.healthBar.setPrefSize(barwidth, barHeight);
@@ -64,6 +64,12 @@ public abstract class View extends ImageView {
 			this.healthBar.setStyle("-fx-accent: red;");
 		}else if (healthFraction < 0.5) {
 			this.healthBar.setStyle("-fx-accent: yellow;");
+		}else if (healthFraction < 0.7){
+			this.healthBar.setStyle("-fx-accent: #c2ff66;");
+		}else if (healthFraction < 0.9) {
+			this.healthBar.setStyle("-fx-accent: #adff2f;");
+		}else if (healthFraction<0.95) {
+			this.healthBar.setStyle("-fx-accent: #5c9900;");
 		}
 
 		this.healthBar.setProgress((double)currHealth/baseHealth);

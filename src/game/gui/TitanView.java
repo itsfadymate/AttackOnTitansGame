@@ -17,14 +17,28 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
 public class TitanView extends View {
-	private String pureTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
-	private String abnormalTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
-	private String ArmoredTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
-	private String colossalTitanSpriteSheetUrl = "Images/zombieSpritesheet.png";
 
 	private final static int healthBarWidth = 50;
 	private final static int healthBarHeight = 10;
 	private final static double titanLayoutX =1200;
+	private final AnchorPane anchorPane ;
+	private static Image pureImage;
+	private static Image AbnormalImage;
+	private static Image ArmoredImage;
+	private static Image ColossalImage;
+	private Titan titan;
+	
+	static {
+		try {
+		pureImage = new Image(TitanView.class.getResourceAsStream("Images/pureTitanSpriteSheet.png"));
+		AbnormalImage = new Image(TitanView.class.getResourceAsStream("Images/abnormalTitanSheetFinal.png"));
+		ArmoredImage = new Image(TitanView.class.getResourceAsStream("Images/armoredTitanSpriteSheet.png"));
+		ColossalImage = new Image(TitanView.class.getResourceAsStream("Images/zombieSpritesheet.png"));
+		}catch (Exception exc) {
+			exc.printStackTrace();
+		
+		}
+	}
 
 
 	/*
@@ -36,15 +50,22 @@ public class TitanView extends View {
 
 	public TitanView(Titan titan, AnchorPane anchorPane, double yCoordinate) {
 		super(anchorPane,titanLayoutX,yCoordinate,healthBarWidth,healthBarHeight,titan.getBaseHealth());
+		this.toFront();
+		this.titan = titan;
+		this.anchorPane = anchorPane;
 		if (titan instanceof PureTitan) {
-			this.setImage(new Image(getClass().getResourceAsStream(pureTitanSpriteSheetUrl)));
-
+			this.setImage(pureImage);
+            getHealthBar().setLayoutY(yCoordinate-10);
 		}else if (titan instanceof AbnormalTitan) {
-			this.setImage(new Image(getClass().getResourceAsStream(abnormalTitanSpriteSheetUrl)));
+			this.setImage(AbnormalImage);
+			getHealthBar().setTranslateX(20);
 		}else if (titan instanceof ArmoredTitan) {
-			this.setImage(new Image(getClass().getResourceAsStream(ArmoredTitanSpriteSheetUrl)));
+			this.setImage(ArmoredImage);
 		}else if (titan instanceof ColossalTitan) {
-			this.setImage(new Image(getClass().getResourceAsStream(colossalTitanSpriteSheetUrl)));
+			this.setImage(ColossalImage);
+			this.setLayoutY(yCoordinate-70);//70 is height of colossal imageView
+			getHealthBar().setLayoutY(yCoordinate-70);
+			getHealthBar().setTranslateX(75);//width of colossal /2
 		}
 
 	}
@@ -52,23 +73,48 @@ public class TitanView extends View {
 
 
 	public void walk(double distanceToMove,double keyFrameDuration) {
+		this.toFront();
 		double timeToMove = 2.5;
-		this.setViewport(new javafx.geometry.Rectangle2D(0, 9*64, 64, 64)); // Set the viewport to the first frame of the walking animation
+		 final int width ;
+		 final int height;
+		 final int minX;
+		 final int maxX;
+		 final int minY;
+		 this.setPreserveRatio(false);
+		if (titan instanceof PureTitan) {
+           width = 64; height = 128; minX = 0; maxX = 7*width-1; minY = 0;
+           this.setFitWidth(45); this.setFitHeight(90);
+		}else if (titan instanceof AbnormalTitan) {
+			width = 64; height = 64; minX = 0; maxX = 8*width; minY = 0;
+	        this.setFitWidth(width);
+	        this.setFitHeight(height);
+		}else if (titan instanceof ArmoredTitan) {
+			width = 64; height = 128; minX = 0; maxX = 8*width-1; minY = 0;
+	           this.setFitWidth(45); this.setFitHeight(90);
+		}else if (titan instanceof ColossalTitan) {
+			width = 64; height = 64; minX = 0; maxX = 512; minY = 9*64;
+	        this.setFitWidth(200); this.setFitHeight(150);
+		}else {
+			width = 64; height = 64; minX = 0; maxX = 512; minY = 9*64;
+	        this.setFitWidth(200); this.setFitHeight(150);
+		}
+		
+		this.setViewport(new javafx.geometry.Rectangle2D(minX, minY, width, height)); // Set the viewport to the first frame of the walking animation
 
 		// Create a walking animation using the frames in the 10th row
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(keyFrameDuration), e -> {
 					this.setViewport(new javafx.geometry.Rectangle2D(
-							this.getViewport().getMinX() + 64,  // Move to the next frame by changing the X coordinate
+							this.getViewport().getMinX() + width,  // Move to the next frame by changing the X coordinate
 							this.getViewport().getMinY(),
 							this.getViewport().getWidth(),
 							this.getViewport().getHeight()
 							));
 
 					// If the sprite has moved beyond the first frame, reset the viewport
-					if (this.getViewport().getMinX() > 512) {
+					if (this.getViewport().getMinX() > maxX) {
 						this.setViewport(new javafx.geometry.Rectangle2D(
-								0,  // Move to the first frame of the walking animation
+								minX,  // Move to the first frame of the walking animation
 								this.getViewport().getMinY(),
 								this.getViewport().getWidth(),
 								this.getViewport().getHeight()
@@ -98,7 +144,7 @@ public class TitanView extends View {
 		transition.setOnFinished(e->{
 			timeline.stop();
 			this.setViewport(new javafx.geometry.Rectangle2D(
-					0,  
+					minX,  
 					this.getViewport().getMinY(),
 					this.getViewport().getWidth(),
 					this.getViewport().getHeight()
@@ -112,8 +158,15 @@ public class TitanView extends View {
 		healthTransition.play();
 	}
 	public void defeat(double keyFrameDuration) {
+		this.toFront();
+		System.out.println("titan has been defeated");
+		if (!(titan instanceof AbnormalTitan)) { //abnormal titan is the only one with a death animation 
+			this.setImage(null);
+			this.removeHealthBar();
+			this.anchorPane.getChildren().remove(this);
+			return;
+		}
 		this.setViewport(new javafx.geometry.Rectangle2D(0, 20*64, 64, 64)); // Set the viewport to the first frame of the walking animation
-        System.out.println("titan has been defeated");
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(keyFrameDuration), e -> {
 					this.setViewport(new javafx.geometry.Rectangle2D(
@@ -136,28 +189,50 @@ public class TitanView extends View {
 				);
 		timeline.play();
 		timeline.setOnFinished(e->{
-			//this.setImage(null);
+			this.setImage(null);
 			this.removeHealthBar();
+			this.anchorPane.getChildren().remove(this);
 		});
 	
 	}
 	public void attack(boolean isAbnormal,double keyFrameDuration) {
-		final int noOfFrames = 8;
-		final int sizeofFrame = 64;
-		//animation is after 20 64 heightPixels
-		this.setViewport(new javafx.geometry.Rectangle2D(0, 5*64, 64, 64)); // Set the viewport to the first frame of the walking animation
+		 this.toFront();
+		 final int width ;
+		 final int height;
+		 final int minX;
+		 final int maxX;
+		 final int minY;
+		 final int noOfFrames;
+		 this.setPreserveRatio(false);
+		 if (titan instanceof PureTitan) { //looks good
+			 noOfFrames = 5; width = 90; height = 132; minX = 0; maxX = noOfFrames*width-1; minY = 132;
+	           this.setFitWidth(80); this.setFitHeight(64);
+			}else if (titan instanceof AbnormalTitan) {//doesn't appear aslan
+				noOfFrames = 6; width = 64; height = 64; minX = 0; maxX = noOfFrames * width-1; minY = 2*height; 
+		       
+			}else if (titan instanceof ArmoredTitan) {//looks good
+				noOfFrames = 4; width = 124; height = 130; minX = 0; maxX = noOfFrames*width-1; minY = 130; 
+		           this.setFitWidth(100); this.setFitHeight(80); 
+			}else if (titan instanceof ColossalTitan) {//look for another
+				noOfFrames = 8; width = 64; height = 64; minX = 0; maxX = noOfFrames * width-1; minY = 5*height;
+		        this.setFitWidth(150); this.setFitHeight(150);
+			}else {
+				noOfFrames = 8; width = 64; height = 64; minX = 0; maxX = noOfFrames * width-1; minY = 5*height;
+		        this.setFitWidth(150); this.setFitHeight(150);
+			}
+		this.setViewport(new javafx.geometry.Rectangle2D(minX, minY, width, height)); // Set the viewport to the first frame of the walking animation
 
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(keyFrameDuration), e -> {
 					this.setViewport(new javafx.geometry.Rectangle2D(
-							this.getViewport().getMinX() + sizeofFrame,  // Move to the next frame by changing the X coordinate
+							this.getViewport().getMinX() + width,  // Move to the next frame by changing the X coordinate
 							this.getViewport().getMinY(),
 							this.getViewport().getWidth(),
 							this.getViewport().getHeight()
 							));
 
 					// If the sprite has moved beyond the first frame, reset the viewport
-					if (this.getViewport().getMinX() > (noOfFrames-1) * sizeofFrame) {
+					if (this.getViewport().getMinX() > maxX) {
 						this.setViewport(new javafx.geometry.Rectangle2D(
 								0,  // Move to the first frame of the walking animation
 								this.getViewport().getMinY(),
@@ -169,8 +244,9 @@ public class TitanView extends View {
 				);
 		timeline.setCycleCount(noOfFrames+1);
 		timeline.play();
-		this.setViewport(new javafx.geometry.Rectangle2D(0, 5*64, 64, 64)); // Set the viewport to the first frame of the walking animation
-
+		timeline.setOnFinished(e->{
+			this.setViewport(new javafx.geometry.Rectangle2D(minX, minY, width, height)); // Set the viewport to the first frame of the walking animation
+		});
 
 	}
 	public static double getTitanPixelSpawnDistance() {

@@ -1,10 +1,16 @@
 package game.gui;
 
+/*TODO:
+ * remove weapons when a lane is destroyed
+ * restrict to only one wall trap per lane
+ * mortar animation 
+ * update weapon shop images
+ * */
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.ResourceBundle;
 import java.util.Stack;
@@ -16,22 +22,17 @@ import game.engine.exceptions.InsufficientResourcesException;
 import game.engine.exceptions.InvalidLaneException;
 import game.engine.lanes.Lane;
 import game.engine.titans.AbnormalTitan;
-import game.engine.titans.ArmoredTitan;
-import game.engine.titans.ColossalTitan;
-import game.engine.titans.PureTitan;
 import game.engine.titans.Titan;
 import game.engine.weapons.WallTrap;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -42,12 +43,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -55,7 +50,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-//TODO: Game crashes after round 52
+
 public class GameController implements Initializable{
 	@FXML 
 	private AnchorPane anchorPane;
@@ -69,6 +64,18 @@ public class GameController implements Initializable{
 	private Label resourcesLabel;
 	@FXML
 	private Label phaseLabel;
+	@FXML
+	private Label titanPerTurnLabel;
+	@FXML
+	private Label DL1Label;
+	@FXML
+	private Label DL2Label;
+	@FXML
+	private Label DL3Label;
+	@FXML
+	private Label DL4Label;
+	@FXML
+	private Label DL5Label;
 	@FXML
 	private Button endTurnButton;
 	@FXML
@@ -91,11 +98,14 @@ public class GameController implements Initializable{
 	private Rectangle fourthLaneRectangle;
 	@FXML
 	private Rectangle fifthLaneRectangle;
+	
 
 	private int selectedWeaponCode=-1;
+	private int previouslySelectedWeapon;
 
 	private HashMap<Titan,TitanView> titanMap = new HashMap<Titan,TitanView>();
 	private HashMap<Wall,WallView> wallMap = new HashMap<Wall,WallView>();
+	private ArrayList<WeaponView> weaponsList = new ArrayList<WeaponView>(50);
 
 	private final double[] titanlaneYCoordinates = new double[] {133,245,375,485,590};
 	private final double[] laneYCoordinates = new double[] {60,188,316,444,573};
@@ -127,6 +137,7 @@ public class GameController implements Initializable{
 			tilePanes[i].setPrefHeight(123);
 			tilePanes[i].setLayoutX(WallView.getWalllayoutx());
 			tilePanes[i].setLayoutY(this.laneYCoordinates[i]);
+			tilePanes[i].setAlignment(Pos.CENTER);
 			this.anchorPane.getChildren().add(tilePanes[i]);
 		}
 
@@ -178,6 +189,7 @@ public class GameController implements Initializable{
 		}else if (clickedButton == this.fourthWeaponButton) {
 			this.selectedWeaponCode=4;
 		}
+		this.previouslySelectedWeapon = this.selectedWeaponCode;
 	}
 
 	public void buyLaneWeapon(MouseEvent e) {
@@ -191,6 +203,10 @@ public class GameController implements Initializable{
 
 				//if only 3 lanes then 1st and 5th lanes cannot purchase weapons
 				if (this.battle.getOriginalLanes().size()==3) return;
+				if (this.tilePanes[0].getChildren().size() >=9) {
+					showMsg("max number of weapons Placed ");
+					return;
+				}
 
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(0));
 				buyLaneWeaponHelper(0);
@@ -198,17 +214,26 @@ public class GameController implements Initializable{
 
 
 			} else if (clickedRectangle == this.secondLaneRectanlge) {
-
-				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(1));
+				int laneIndex = this.battle.getOriginalLanes().size()==3 ? 0:1;
+				
+				if (this.tilePanes[1].getChildren().size() >=9) {
+					showMsg("max number of weapons Placed ");
+					return;
+				}
+				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(laneIndex));
 				buyLaneWeaponHelper(1);
 
 
 
 			}
 			else if (clickedRectangle== this.thirdLaneRectangle) {
-
-
-				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(2));
+				int laneIndex = this.battle.getOriginalLanes().size()==3 ? 1:2;
+				
+				if (this.tilePanes[2].getChildren().size() >=9) {
+					showMsg("max number of weapons Placed ");
+					return;
+				}
+				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(laneIndex));
 				buyLaneWeaponHelper(2);
 
 
@@ -216,10 +241,13 @@ public class GameController implements Initializable{
 
 			}
 			else if (clickedRectangle== this.fourthLaneRectangle) {
+				int laneIndex = this.battle.getOriginalLanes().size()==3 ? 2:3;
 
-
-
-				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(3));
+				if (this.tilePanes[3].getChildren().size() >=9) {
+					showMsg("max number of weapons Placed ");
+					return;
+				}
+				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(laneIndex));
 				buyLaneWeaponHelper(3);
 
 
@@ -230,7 +258,10 @@ public class GameController implements Initializable{
 				//if only 3 lanes then 1st and 5th lanes cannot purchase weapons
 				if (this.battle.getOriginalLanes().size()==3) return;
 
-
+				if (this.tilePanes[4].getChildren().size() >=9) {
+					showMsg("max number of weapons Placed ");
+					return;
+				}
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(4));
 				buyLaneWeaponHelper(4);
 
@@ -249,11 +280,13 @@ public class GameController implements Initializable{
 				this.secondWeaponButton.setDisable(false);
 				this.thirdWeaponButton.setDisable(false);
 				this.fourthWeaponButton.setDisable(false);
+				this.selectedWeaponCode = this.previouslySelectedWeapon;
 
 			});
 			timer.play();
 
 			updateBattleView();
+			this.selectedWeaponCode=-1;
 
 
 		} catch (InsufficientResourcesException e1) {
@@ -293,16 +326,29 @@ public class GameController implements Initializable{
 	}
 
 	private void buyLaneWeaponHelper(int tilePaneIndex){
-		// TODO Auto-generated method stub
 		if (this.selectedWeaponCode==WallTrap.WEAPON_CODE) {
 			System.out.println("buyin wall trap x= " + (WallView.getWallOuterBoundary()-15) +" y="+ (this.titanlaneYCoordinates[tilePaneIndex]));
 			WeaponView wallTrapView = new WeaponView(selectedWeaponCode);
-			wallTrapView.setLayoutX(WallView.getWallOuterBoundary()-15);
-			wallTrapView.setLayoutY(this.titanlaneYCoordinates[tilePaneIndex]);
+			wallTrapView.setLayoutX(firstLaneRectanlge.getLayoutX() + 40);
+			wallTrapView.setLayoutY(getWalltrapLayoutY(tilePaneIndex));
 			this.anchorPane.getChildren().add(wallTrapView);
+			this.weaponsList.add(wallTrapView);
 		}else {
-			this.tilePanes[tilePaneIndex].getChildren().add(new WeaponView(selectedWeaponCode));
+			this.weaponsList.add(new WeaponView(selectedWeaponCode));
+			this.tilePanes[tilePaneIndex].getChildren().add(weaponsList.get(weaponsList.size()-1));
 		}
+	}
+
+	private double getWalltrapLayoutY(int tilePaneIndex) {
+
+		switch (tilePaneIndex) {
+		case 0: return this.firstLaneRectanlge.getLayoutY();
+		case 1: return this.secondLaneRectanlge.getLayoutY();
+		case 2: return this.thirdLaneRectangle.getLayoutY();
+		case 3: return this.fourthLaneRectangle.getLayoutY();
+		case 4: return this.fifthLaneRectangle.getLayoutY();
+		}
+		return 0;
 	}
 
 	public void showRectangle(MouseEvent e) {
@@ -325,7 +371,7 @@ public class GameController implements Initializable{
 	public void onEndTurn(ActionEvent e) {
 		System.out.println("skipping turn");
 		try {
-
+            this.selectedWeaponCode = -1;
 			this.endTurnButton.setDisable(true);
 			this.firstWeaponButton.setDisable(true);
 			this.secondWeaponButton.setDisable(true);
@@ -339,7 +385,7 @@ public class GameController implements Initializable{
 				this.secondWeaponButton.setDisable(false);
 				this.thirdWeaponButton.setDisable(false);
 				this.fourthWeaponButton.setDisable(false);
-
+                this.selectedWeaponCode = this.previouslySelectedWeapon;
 			});
 			timer.play();
 			battle.passTurn();
@@ -359,12 +405,18 @@ public class GameController implements Initializable{
 	}
 
 	public void updateBattleView() {
-		//TODO Ask all buttons should be disabled till cycle is done
-
+		fireWeapons();
 		drawTitans();
 		updateWalls();
 		updateLabels();
+		
 
+	}
+
+	private void fireWeapons() {
+		for (WeaponView w : this.weaponsList ) {
+			w.fire();
+		}
 	}
 
 	private void updateWalls() {
@@ -375,11 +427,19 @@ public class GameController implements Initializable{
 			view.updateHealthBar(laneWall.getCurrentHealth());
 			if (laneWall.isDefeated()) {
 				wallMap.get(laneWall).defeat();
+				removeLaneTitans(l.getTitans());
 				System.out.println(" wall " + (battle.getOriginalLanes().indexOf(laneWall)+1)+"is defeted");
 			}
 
 		}
 
+	}
+
+	private void removeLaneTitans(PriorityQueue<Titan> titans) {
+		
+		while (!titans.isEmpty()) {
+			titanMap.get(titans.poll()).defeat(0.0);
+		}
 	}
 
 	/*
@@ -390,7 +450,7 @@ public class GameController implements Initializable{
 	 * */
 
 	private void drawTitans() {
-		// TODO Auto-generated method stub
+		
 		int laneYCoordinatesIndex =battle.getOriginalLanes().size()==5 ?  0 : 1;
 
 		for (Lane l : battle.getOriginalLanes()) {
@@ -412,7 +472,6 @@ public class GameController implements Initializable{
 		for (Titan t : allTitans) {
 			if (t.isDefeated()) {
 				titanMap.get(t).defeat(0.3);
-				this.anchorPane.getChildren().remove(titanMap.get(t));
 				titanMap.remove(t);
 				allTitans.remove(t);
 			}
@@ -456,41 +515,33 @@ public class GameController implements Initializable{
 		resourcesLabel.setText("resources: " + battle.getResourcesGathered());
 		phaseLabel.setText("Phase: "+ battle.getBattlePhase());
 		turnLabel.setText("Turn: "+battle.getNumberOfTurns());
+		titanPerTurnLabel.setText("TitansPerTurn: "+battle.getNumberOfTitansPerTurn());
+		this.DL1Label.setText(this.battle.getOriginalLanes().size()==5? ""+this.battle.getOriginalLanes().get(0).getDangerLevel():"" );
+		this.DL2Label.setText(this.battle.getOriginalLanes().size()==5? ""+this.battle.getOriginalLanes().get(1).getDangerLevel():""+this.battle.getOriginalLanes().get(0).getDangerLevel() );
+		this.DL3Label.setText(this.battle.getOriginalLanes().size()==5? ""+this.battle.getOriginalLanes().get(2).getDangerLevel():""+this.battle.getOriginalLanes().get(1).getDangerLevel() );
+		this.DL4Label.setText(this.battle.getOriginalLanes().size()==5? ""+this.battle.getOriginalLanes().get(3).getDangerLevel():""+this.battle.getOriginalLanes().get(2).getDangerLevel() );
+		this.DL5Label.setText(this.battle.getOriginalLanes().size()==5? ""+this.battle.getOriginalLanes().get(4).getDangerLevel():"");
+	}
+	
+	public void onButtonEntered(MouseEvent event) {
+		Button b = (Button)event.getSource();
+		b.setStyle("-fx-background-radius: 30; -fx-background-color: #bec626; -fx-border-color:  #e1c642;-fx-border-radius:  30; -fx-border-width: 4;");
+	}
+	public void onButtonExited(MouseEvent event) {
+		Button b = (Button)event.getSource();
+		b.setStyle("-fx-background-radius: 30; -fx-background-color: #755a00;-fx-border-color:  #e1c642;-fx-border-radius:  30; -fx-border-width: 4;");
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
 
-
-
-
-		endTurnButton.setOnMouseEntered(new EventHandler<>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("entered the holy button");
-				endTurnButton.setStyle("-fx-background-radius: 30; -fx-background-color: #bec626;");
-			}
-
-		});
-		endTurnButton.setOnMouseExited(new EventHandler<>() {
-
-			@Override
-			public void handle(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				System.out.println("exited the holy button");
-				endTurnButton.setStyle("-fx-background-radius: 30; -fx-background-color: #755a00;");
-			}
-
-		});
 		weaponShopInfoButton.setOnAction(new EventHandler<>() {
 
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				Stage weaponshopstage = new Stage();
 				try {
 					FXMLLoader loader = new FXMLLoader(GameController.class.getResource("weaponShop.fxml"));
@@ -504,7 +555,7 @@ public class GameController implements Initializable{
 
 
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+			
 					e.printStackTrace();
 					Alert a = new Alert(AlertType.ERROR);
 					a.setTitle("Error");

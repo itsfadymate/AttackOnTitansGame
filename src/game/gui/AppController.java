@@ -24,17 +24,18 @@ public class AppController extends Application {
 	private GameController gameController; 
     private final MainMenuPage mainMenu = new MainMenuPage(windowWidth,windowHeight);
     private final SettingsPage setting = new SettingsPage(windowWidth,windowHeight);
-	
+	private final HowToJouerPage htp = new HowToJouerPage(windowWidth,windowHeight);
 
 	@Override
 	public void start(Stage arg0) throws Exception {
-		
 		mainstage = new Stage();
 		mainstage.setHeight(windowHeight);
 		mainstage.setWidth(windowWidth);
 		mainstage.setScene(mainMenu);
 		mainstage.setTitle("AttackOnTitans");
 		mainstage.setResizable(false);
+		try {
+		
 		
 		// set main menu button functionalities
 		mainMenu.setPlayButtonOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -63,7 +64,7 @@ public class AppController extends Application {
 			@Override
 			public void handle(MouseEvent arg0) {
 				// TODO Auto-generated method stub
-				
+				mainstage.setScene(htp);
 			}
 			
 		});
@@ -97,7 +98,18 @@ public class AppController extends Application {
 			}
 			
 		});
-		
+		htp.setRoot1BackbuttonOnMouseClicked(e->{mainstage.setScene(mainMenu);});
+		htp.setRoot3NextButtonMouseClicked(e->{
+			htp.setRoot(HowToJouerPage.createRoot1(windowWidth, windowHeight));
+			startGame();
+		});
+		htp.setRoot3BackButtonMouseClicked(e->{
+			htp.setRoot(HowToJouerPage.createRoot1(windowWidth, windowHeight));
+			mainstage.setScene(mainMenu);
+			});
+		}catch (Exception exc) {
+			exc.printStackTrace();
+		}
 	
 		mainstage.show();
 	}

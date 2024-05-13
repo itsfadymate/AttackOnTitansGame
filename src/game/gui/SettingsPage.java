@@ -7,12 +7,14 @@ import java.io.FileInputStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -26,7 +28,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-//TODO: fix lanky resizing and image resizing and implement leaderBoards
+//TODO: implement leaderBoards
 public class SettingsPage extends Scene  {
 	private final static Font labelFont = new Font("BOLD",35);
 	private final static javafx.geometry.Insets insets = new javafx.geometry.Insets(20,0,20,0);
@@ -56,12 +58,12 @@ public class SettingsPage extends Scene  {
 		settings.setGridLinesVisible(false);
 
 		
-		 backButton = new AppButton("Back",35,10);
+		 backButton = new AppButton("Back",100,40);
 		
-		backButton.setAlignment(Pos.CENTER_LEFT);
+		backButton.setAlignment(Pos.CENTER);
 		HBox topLayout = new HBox();
-		topLayout.setSpacing(20);
-		topLayout.setAlignment(Pos.CENTER);
+		topLayout.setPadding(new Insets(20,20,20,20));
+		topLayout.setAlignment(Pos.BOTTOM_LEFT);
 		topLayout.getChildren().add(backButton);
 		
 		root.setTop(topLayout);
@@ -103,6 +105,7 @@ public class SettingsPage extends Scene  {
 		
 		settings.add(label,0,rowNum);
 		settings.add(box, 1, rowNum);
+		box.setBlendMode(BlendMode.MULTIPLY);
 		return box;
 	}
     public  static int getnoOfLanes() {

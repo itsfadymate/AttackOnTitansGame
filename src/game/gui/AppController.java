@@ -19,7 +19,7 @@ public class AppController extends Application {
 	private Stage mainstage;
 
 	private final int windowWidth = 1280;
-	private final int windowHeight = 760;
+	private final int windowHeight = 780;
 	
 	private GameController gameController; 
     private final MainMenuPage mainMenu = new MainMenuPage(windowWidth,windowHeight);

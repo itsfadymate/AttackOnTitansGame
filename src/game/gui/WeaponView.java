@@ -2,6 +2,8 @@ package game.gui;
 
 
 
+import java.util.PriorityQueue;
+
 import game.engine.titans.Titan;
 import game.engine.weapons.PiercingCannon;
 import game.engine.weapons.SniperCannon;
@@ -70,7 +72,7 @@ public class WeaponView extends ImageView {
 
 	}
 	
-	public void fire() {
+	public void fire(PriorityQueue<Titan> titans) {
 		final int maxX;
 		int cycleCount =0;
 		int durationMillis=100;

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="500.0" prefWidth="746.0" style="-fx-background-color: #1F8F00;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.weaponShopController">
+<HBox prefHeight="500.0" prefWidth="746.0" style="-fx-background-color: #755a00;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="game.gui.weaponShopController">
    <children>
       <VBox prefHeight="200.0" prefWidth="180.0">
          <children>
@@ -17,10 +18,13 @@
                   <Font name="Comic Sans MS Bold" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="104.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="104.0" fitWidth="179.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@Images/cannon%201.png" />
-               </image></ImageView>
+                  <Image url="@Images/cannonSpriteSheet90x64.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D height="64.0" width="90.0" />
+               </viewport></ImageView>
             <Label fx:id="price1" prefHeight="62.0" prefWidth="200.0" text="Price: 25" textFill="WHITE">
                <font>
                   <Font name="Comic Sans MS" size="24.0" />
@@ -65,8 +69,11 @@
                <children>
                   <ImageView fitHeight="87.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/XBow1.png" />
+                        <Image url="@Images/sniperSpriteSheet.png" />
                      </image>
+                     <viewport>
+                        <Rectangle2D height="64.0" width="64.0" />
+                     </viewport>
                   </ImageView>
                </children>
             </HBox>
@@ -114,7 +121,7 @@
                <children>
                   <ImageView fitHeight="100.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/multi%20cannon%201.png" />
+                        <Image url="@Images/mortar.png" />
                      </image>
                   </ImageView>
                </children>
@@ -156,8 +163,11 @@
                <children>
                   <ImageView fitHeight="110.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Images/Spring%20Trap%201.png" />
+                        <Image url="@Images/wallTrapSpriteSheet170x245.png" />
                      </image>
+                     <viewport>
+                        <Rectangle2D height="245.0" minX="680.0" width="170.0" />
+                     </viewport>
                   </ImageView>
                </children>
             </HBox>

@@ -34,6 +34,8 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -47,11 +49,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -106,6 +111,81 @@ public class GameController implements Initializable{
 	private Rectangle fourthLaneRectangle;
 	@FXML
 	private Rectangle fifthLaneRectangle;
+	@FXML
+	private Button SettingButton;
+	@FXML
+	private Button Resume;
+	@FXML
+	private Button Quit;
+	@FXML
+	private Rectangle backRec;
+	@FXML
+	private VBox SettingContainer;
+	@FXML
+	private Slider Music;
+	@FXML
+	private Slider SFX;
+	@FXML
+	private Label C1;
+	private int CannonCounter1 = 0;
+	@FXML
+	private Label C2;
+	private int CannonCounter2 = 0;
+	@FXML
+	private Label C3;
+	private int CannonCounter3 = 0;
+	@FXML
+	private Label C4;
+	private int CannonCounter4 = 0;
+	@FXML
+	private Label C5;
+	private int CannonCounter5 = 0;
+	@FXML
+	private Label S1;
+	private int SniperCounter1 = 0;
+	@FXML
+	private Label S2;
+	private int SniperCounter2 = 0;
+	@FXML
+	private Label S3;
+	private int SniperCounter3 = 0;
+	@FXML
+	private Label S4;
+	private int SniperCounter4= 0;
+	@FXML
+	private Label S5;
+	private int SniperCounter5= 0;
+	@FXML
+	private Label M1;
+	private int MortarCounter1= 0;
+	@FXML
+	private Label M2;
+	private int MortarCounter2= 0;
+	@FXML
+	private Label M3;
+	private int MortarCounter3= 0;
+	@FXML
+	private Label M4;
+	private int MortarCounter4= 0;
+	@FXML
+	private Label M5;
+	private int MortarCounter5= 0;
+	@FXML
+	private HBox firstInfo;
+	@FXML
+	private HBox secondInfo;
+	@FXML
+	private HBox thirdInfo;
+	@FXML
+	private HBox forthInfo;
+	@FXML
+	private HBox fifthInfo;
+	
+	private Button lastSelectedWeaponButton;
+	private Boolean settingsOpen;
+	private Boolean infoOpen;
+	private gameOverScene gameOverScene;
+	private Stage main;
 	
 
 	private int selectedWeaponCode=-1;
@@ -132,8 +212,12 @@ public class GameController implements Initializable{
 		System.out.println("empty GameView constructor was called");
 	}
 
-	public void initialize(Battle b) {
+	public void initialize(Battle b , gameOverScene gameOverScene, Stage main) {
+		this.gameOverScene = gameOverScene;
+		this.main = main;
 		this.battle = b;
+		this.settingsOpen = false;
+		this.infoOpen = false;
 		this.allTitans = new CopyOnWriteArrayList<Titan>();
 		this.loadBackgroundImage(b);
 		this.Initializewalls();
@@ -152,12 +236,70 @@ public class GameController implements Initializable{
 			tilePanes[i].setAlignment(Pos.CENTER);
 			this.anchorPane.getChildren().add(tilePanes[i]);
 		}
-
-	}
+		if (battle.getOriginalLanes().size() == 5) {
+			tilePanes[0].setOnMouseClicked(e -> {
+					if (!infoOpen) {
+						infoOpen = true;
+						firstInfo.setVisible(true);
+						firstInfo.toFront();
+						}
+						else {firstInfo.setVisible(false);infoOpen = false;}
+							
+				
+			});	
+			tilePanes[0].setOnMouseExited(e ->{
+				firstInfo.setVisible(false);infoOpen = false;
+			});}
+			tilePanes[1].setOnMouseClicked(e -> {
+				if (!infoOpen) {
+					infoOpen = true;
+					secondInfo.setVisible(true);
+					secondInfo.toFront();
+					}
+				else {secondInfo.setVisible(false);infoOpen = false;}
+			});
+			tilePanes[1].setOnMouseExited(e ->{
+				secondInfo.setVisible(false);infoOpen = false;
+			});
+			tilePanes[2].setOnMouseClicked(e -> {
+				if (!infoOpen) {
+					infoOpen = true;
+					thirdInfo.setVisible(true);
+					thirdInfo.toFront();
+					}
+				else {thirdInfo.setVisible(false);infoOpen = false;}
+			});
+			tilePanes[2].setOnMouseExited(e -> {
+				thirdInfo.setVisible(false);infoOpen = false;
+			});
+			tilePanes[3].setOnMouseClicked(e -> {
+				if (!infoOpen) {
+					infoOpen = true;
+					forthInfo.setVisible(true);
+					forthInfo.toFront();
+					}
+				else {forthInfo.setVisible(false);infoOpen = false;}
+			});
+			tilePanes[3].setOnMouseExited(e -> {
+				forthInfo.setVisible(false);infoOpen = false;
+			});
+			if (battle.getOriginalLanes().size() == 5) {
+				tilePanes[4].setOnMouseClicked(e -> {
+					if (!infoOpen) {
+						infoOpen = true;
+						fifthInfo.setVisible(true);
+						fifthInfo.toFront();
+						}
+					else {fifthInfo.setVisible(false);infoOpen = false;}
+				});
+				tilePanes[4].setOnMouseExited(e -> {
+					fifthInfo.setVisible(false);infoOpen = false;
+				});
+	}}
 
 	private void loadBackgroundImage(Battle b) {
 		try {
-			Image bgImagee = new Image(getClass().getResourceAsStream("Images/finalFiveLanes.jpg"));
+			Image bgImagee = new Image(getClass().getResourceAsStream("Images/lanes final2.jpg"));
 			if (b.getOriginalLanes().size()==3) {
 				bgImagee = new Image(getClass().getResourceAsStream("Images/finalThreeLanes.jpeg"));
 			}
@@ -191,6 +333,19 @@ public class GameController implements Initializable{
 
 	public void selectWeapon(ActionEvent e) {
 		Button clickedButton = (Button) e.getSource();
+		if (lastSelectedWeaponButton != null && clickedButton!=this.lastSelectedWeaponButton) {
+			this.lastSelectedWeaponButton.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 30;");
+		}
+		this.lastSelectedWeaponButton = clickedButton;
+		this.lastSelectedWeaponButton.setStyle(
+  	           "-fx-background-color: #e1c642;"
+  	            + "-fx-background-radius: 30; "
+  	           	+ "-fx-border-radius: 30;"
+  	           	+ "-fx-border-color:A00900;"
+  	           	+ "-fx-border-width:4;"
+  	           	+ "-fx-border-insets: -2;"
+  				);
+		
 		System.out.println("selected a lane");
 		if (clickedButton == this.firstWeaponButton) {
 			this.selectedWeaponCode=PiercingCannon.WEAPON_CODE;
@@ -217,80 +372,142 @@ public class GameController implements Initializable{
 
 				//if only 3 lanes then 1st and 5th lanes cannot purchase weapons
 				if (this.battle.getOriginalLanes().size()==3) return;
-				if (this.tilePanes[0].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE) {
-					showMsg("max number of weapons Placed ");
-					return;
-				}
+				
                 if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[0]!=null) {
                 	showMsg("Already bought wall Trap in that lane ",firstLaneRectanlge.getLayoutX(),firstLaneRectanlge.getLayoutY(),translateByY,fontSize);return;
                 }
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(0));
-				buyLaneWeaponHelper(0,this.battle.getOriginalLanes().get(0));
-
-
-
+				
+				if (selectedWeaponCode == PiercingCannon.WEAPON_CODE) {
+					CannonCounter1++;
+					C1.setText("X" + CannonCounter1);
+				}
+				if (selectedWeaponCode == SniperCannon.WEAPON_CODE) {
+					SniperCounter1++;
+					S1.setText("X" + SniperCounter1);
+				}
+				if (selectedWeaponCode == VolleySpreadCannon.WEAPON_CODE) {
+					MortarCounter1++;
+					M1.setText("X" + MortarCounter1);
+				}
+				if (!(this.tilePanes[0].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE)) {
+//					showMsg("max number of weapons Placed ");
+					buyLaneWeaponHelper(0,this.battle.getOriginalLanes().get(0));
+				}
+				
 			} else if (clickedRectangle == this.secondLaneRectanlge) {
 				int laneIndex = this.battle.getOriginalLanes().size()==3 ? 0:1;
 				
-				if (this.tilePanes[1].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE) {
-					showMsg("max number of weapons Placed ");
-					return;
-				}
+				
 				if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[1]!=null) {
                 	showMsg("Already bought wall Trap in that lane ",secondLaneRectanlge.getLayoutX(),secondLaneRectanlge.getLayoutY(),translateByY,fontSize);return;
                 }
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(laneIndex));
-				buyLaneWeaponHelper(1,this.battle.getOriginalLanes().get(laneIndex));
-
-
+				
+				if (selectedWeaponCode == PiercingCannon.WEAPON_CODE) {
+					CannonCounter2++;
+					C2.setText("X" + CannonCounter2);
+				}
+				if (selectedWeaponCode == SniperCannon.WEAPON_CODE) {
+					SniperCounter2++;
+					S2.setText("X" + SniperCounter2);
+				}
+				if (selectedWeaponCode == VolleySpreadCannon.WEAPON_CODE) {
+					MortarCounter2++;
+					M2.setText("X" + MortarCounter2);
+				}
+				if (!(this.tilePanes[1].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE)) {
+//					showMsg("max number of weapons Placed ");
+					buyLaneWeaponHelper(1,this.battle.getOriginalLanes().get(laneIndex));
+				}
+				
 
 			}
 			else if (clickedRectangle== this.thirdLaneRectangle) {
 				int laneIndex = this.battle.getOriginalLanes().size()==3 ? 1:2;
 				
-				if (this.tilePanes[2].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE) {
-					showMsg("max number of weapons Placed ");
-					return;
-				}
+				
 				if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[2]!=null) {
                 	showMsg("Already bought wall Trap in that lane ",thirdLaneRectangle.getLayoutX(),thirdLaneRectangle.getLayoutY(),translateByY,fontSize);return;
                 }
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(laneIndex));
-				buyLaneWeaponHelper(2,this.battle.getOriginalLanes().get(laneIndex));
+				
+				if (selectedWeaponCode == PiercingCannon.WEAPON_CODE) {
+					CannonCounter3++;
+					C3.setText("X" + CannonCounter3);
+				}
+				if (selectedWeaponCode == SniperCannon.WEAPON_CODE) {
+					SniperCounter3++;
+					S3.setText("X" + SniperCounter3);
+				}
+				if (selectedWeaponCode == VolleySpreadCannon.WEAPON_CODE) {
+					MortarCounter3++;
+					M3.setText("X" + MortarCounter3);
+				}
 
-
+				if (!(this.tilePanes[2].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE)) {
+//					showMsg("max number of weapons Placed ");
+					buyLaneWeaponHelper(2,this.battle.getOriginalLanes().get(laneIndex));
+				}
+				
 
 
 			}
 			else if (clickedRectangle== this.fourthLaneRectangle) {
 				int laneIndex = this.battle.getOriginalLanes().size()==3 ? 2:3;
 
-				if (this.tilePanes[3].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE) {
-					showMsg("max number of weapons Placed ");
-					return;
-				} if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[3]!=null) {
+				 if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[3]!=null) {
                 	showMsg("Already bought wall Trap in that lane ",fourthLaneRectangle.getLayoutX(),fourthLaneRectangle.getLayoutY(),translateByY,fontSize);return;
                 }
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(laneIndex));
-				buyLaneWeaponHelper(3,this.battle.getOriginalLanes().get(laneIndex));
+				
+				if (selectedWeaponCode == PiercingCannon.WEAPON_CODE) {
+					CannonCounter4++;
+					C4.setText("X" + CannonCounter4);
+				}
+				if (selectedWeaponCode == SniperCannon.WEAPON_CODE) {
+					SniperCounter4++;
+					S4.setText("X" + SniperCounter4);
+				}
+				if (selectedWeaponCode == VolleySpreadCannon.WEAPON_CODE) {
+					MortarCounter4++;
+					M4.setText("X" + MortarCounter4);
+				}
 
-
-
+				if (!(this.tilePanes[3].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE)) {
+//					showMsg("max number of weapons Placed ");
+					buyLaneWeaponHelper(3,this.battle.getOriginalLanes().get(laneIndex));
+				}
+				
 
 			}
 			else if (clickedRectangle== this.fifthLaneRectangle) {
 				//if only 3 lanes then 1st and 5th lanes cannot purchase weapons
 				if (this.battle.getOriginalLanes().size()==3) return;
 
-				if (this.tilePanes[4].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE) {
-					showMsg("max number of weapons Placed ");
-					return;
-				}if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[4]!=null) {
+				if (selectedWeaponCode==WallTrap.WEAPON_CODE && this.boughtWallTrap[4]!=null) {
                 	showMsg("Already bought wall Trap in that lane ",fifthLaneRectangle.getLayoutX(),fifthLaneRectangle.getLayoutY(),translateByY,fontSize);return;
                 }
 				this.battle.purchaseWeapon(selectedWeaponCode, this.battle.getOriginalLanes().get(4));
-				buyLaneWeaponHelper(4,this.battle.getOriginalLanes().get(4));
-
+				
+				if (selectedWeaponCode == PiercingCannon.WEAPON_CODE) {
+					CannonCounter5++;
+					C5.setText("X" + CannonCounter5);
+				}
+				if (selectedWeaponCode == SniperCannon.WEAPON_CODE) {
+					SniperCounter5++;
+					S5.setText("X" + SniperCounter5);
+				}
+				if (selectedWeaponCode == VolleySpreadCannon.WEAPON_CODE) {
+					MortarCounter5++;
+					M5.setText("X" + MortarCounter5);
+				}
+				
+				if (!(this.tilePanes[4].getChildren().size() >=9 && selectedWeaponCode!=WallTrap.WEAPON_CODE)) {
+//					showMsg("max number of weapons Placed ");
+					buyLaneWeaponHelper(4,this.battle.getOriginalLanes().get(4));
+				}
+				
 			}
 
 			this.endTurnButton.setDisable(true);
@@ -299,7 +516,7 @@ public class GameController implements Initializable{
 			this.thirdWeaponButton.setDisable(true);
 			this.fourthWeaponButton.setDisable(true);
 			//2.5 is time taken for move action of a titan check walk method for changes
-			PauseTransition timer = new PauseTransition(Duration.seconds(2.5));
+			PauseTransition timer = new PauseTransition(Duration.seconds(TitanView.getTimeToMove()));
 			timer.setOnFinished(finishedevent -> {
 				if (isGameOver) return;
 				this.endTurnButton.setDisable(false);
@@ -308,12 +525,21 @@ public class GameController implements Initializable{
 				this.thirdWeaponButton.setDisable(false);
 				this.fourthWeaponButton.setDisable(false);
 				this.selectedWeaponCode = this.previouslySelectedWeapon;
+				this.lastSelectedWeaponButton.setStyle(
+	           "-fx-background-color: #e1c642;"
+	            + "-fx-background-radius: 30; "
+	           	+ "-fx-border-radius: 30;"
+	           	+ "-fx-border-color:A00900;"
+	           	+ "-fx-border-width:4;"
+	           	+ "-fx-border-insets: -2;"
+				);
 
 			});
 			timer.play();
 
 			updateBattleView();
 			this.selectedWeaponCode=-1;
+			this.lastSelectedWeaponButton.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 30;");
 
 
 		} catch (InsufficientResourcesException e1) {
@@ -379,7 +605,7 @@ public class GameController implements Initializable{
 		if (this.selectedWeaponCode==WallTrap.WEAPON_CODE) {
 			System.out.println("buyin wall trap x= " + (WallView.getWallOuterBoundary()-15) +" y="+ (this.titanlaneYCoordinates[tilePaneIndex]));
 			
-			WeaponView wallTrapView = new WeaponView(selectedWeaponCode);
+			WeaponView wallTrapView = new WeaponView(selectedWeaponCode,this.anchorPane,this.battle.getWeaponFactory().getWeaponShop().get(selectedWeaponCode));
 			wallTrapView.setLayoutX(firstLaneRectanlge.getLayoutX() + 40);
 			wallTrapView.setLayoutY(getWalltrapLayoutY(tilePaneIndex));
 			this.boughtWallTrap[tilePaneIndex] = wallTrapView;
@@ -387,7 +613,7 @@ public class GameController implements Initializable{
 			this.weaponsList.add(wallTrapView);
 			this.weaponLaneMap.put(wallTrapView, l);
 		}else {
-			WeaponView wv =  new WeaponView(selectedWeaponCode);
+			WeaponView wv =  new WeaponView(selectedWeaponCode,this.anchorPane,this.battle.getWeaponFactory().getWeaponShop().get(selectedWeaponCode));
 			this.weaponsList.add(wv);
 			this.tilePanes[tilePaneIndex].getChildren().add(wv);
 			this.weaponLaneMap.put(wv, l);
@@ -434,7 +660,7 @@ public class GameController implements Initializable{
 			this.thirdWeaponButton.setDisable(true);
 			this.fourthWeaponButton.setDisable(true);
 			//2.5 is time taken for move action of a titan check walk method for changes
-			PauseTransition timer = new PauseTransition(Duration.seconds(2.5));
+			PauseTransition timer = new PauseTransition(Duration.seconds(TitanView.getTimeToMove()));
 			timer.setOnFinished(finishedevent -> {
 				if (isGameOver) return;
 				this.endTurnButton.setDisable(false);
@@ -443,10 +669,20 @@ public class GameController implements Initializable{
 				this.thirdWeaponButton.setDisable(false);
 				this.fourthWeaponButton.setDisable(false);
                 this.selectedWeaponCode = this.previouslySelectedWeapon;
+                this.lastSelectedWeaponButton.setStyle(
+         	           "-fx-background-color:  #e1c642;"
+         	            + "-fx-background-radius: 30; "
+         	           	+ "-fx-border-radius: 30;"
+         	           	+ "-fx-border-color:A00900;"
+         	           	+ "-fx-border-width:4;"
+         	           	+ "-fx-border-insets: -2;"
+         				);
 			});
 			timer.play();
 			battle.passTurn();
 			updateBattleView();
+			if(this.lastSelectedWeaponButton!=null)
+				this.lastSelectedWeaponButton.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 30;");
 			
 
 		}catch (Exception e1) {
@@ -494,6 +730,11 @@ public class GameController implements Initializable{
 		this.anchorPane.getChildren().add(noMoney);
 		ParallelTransition pt = new ParallelTransition(noMoney,translate,scaleTransition);
 		pt.play();
+		pt.setOnFinished(e ->{
+			gameOverScene.setScore(battle.getScore());
+			gameOverScene.setTurns(battle.getNumberOfTurns());
+			main.setScene(gameOverScene);
+		});
 	}
 
 	public void updateBattleView() {
@@ -508,7 +749,7 @@ public class GameController implements Initializable{
 	private void fireWeapons() {
 		for (WeaponView w : this.weaponsList ) {
 			if (this.weaponLaneMap.get(w).getTitans().isEmpty()) continue;
-			w.fire(this.weaponLaneMap.get(w).getTitans());
+			w.fire(this.weaponLaneMap.get(w).getTitans(),this.titanMap);
 		}
 	}
 
@@ -602,7 +843,7 @@ public class GameController implements Initializable{
 			TitanView titanView = titanMap.get(currentTitan);
 
 			if (!currentTitan.hasReachedTarget()) {
-				titanView.walk(titanStack.peek().getSpeed(),0.1);
+				titanView.walk(0.1);
 			}
 			else if (currentTitan.hasReachedTarget()) {
 				titanView.attack(currentTitan instanceof AbnormalTitan,0.2);
@@ -643,8 +884,62 @@ public class GameController implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		SettingButton.setOnAction(e ->{
+			backRec.toFront();
+			SettingContainer.toFront();
+			if (this.settingsOpen){
+				this.settingsOpen = false; 
+				this.endTurnButton.setDisable(false);
+				this.firstWeaponButton.setDisable(false);
+				this.secondWeaponButton.setDisable(false);
+				this.thirdWeaponButton.setDisable(false);
+				this.fourthWeaponButton.setDisable(false);
+				backRec.setVisible(false);
+				SettingContainer.setVisible(false);
+			}else {
+				this.settingsOpen = true;
+				this.endTurnButton.setDisable(true);
+				this.firstWeaponButton.setDisable(true);
+				this.secondWeaponButton.setDisable(true);
+				this.thirdWeaponButton.setDisable(true);
+				this.fourthWeaponButton.setDisable(true);
+				backRec.setVisible(true);
+				SettingContainer.setVisible(true);
+			}
+			this.selectedWeaponCode = -1;
+			
+		});
+		try {
+		Resume.setOnAction(e ->{
+			this.settingsOpen = false; 
+			this.endTurnButton.setDisable(false);
+			this.firstWeaponButton.setDisable(false);
+			this.secondWeaponButton.setDisable(false);
+			this.thirdWeaponButton.setDisable(false);
+			this.fourthWeaponButton.setDisable(false);
+			backRec.setVisible(false);
+			SettingContainer.setVisible(false);
+		});
 		
+		Music.valueProperty().addListener(new ChangeListener<Number>() {
 
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				
+				soundSystem.setBackgroundVolume(Music.getValue() * 0.01);			
+			}
+		});
+		SFX.valueProperty().addListener(new ChangeListener<Number>() {
+
+			public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+				
+				soundSystem.setSFXVolume(SFX.getValue() * 0.01);			
+			}
+		});
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		weaponShopInfoButton.setOnAction(new EventHandler<>() {
 
 
@@ -678,6 +973,10 @@ public class GameController implements Initializable{
 
 
 	}
+	public void setQuitOnMouseClicked(EventHandler<MouseEvent> e) {
+		this.Quit.setOnMouseClicked(e);
+	}
+	
 
 
 

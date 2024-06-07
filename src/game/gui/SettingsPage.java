@@ -4,6 +4,8 @@ package game.gui;
 
 import java.io.FileInputStream;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -14,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -39,6 +42,8 @@ public class SettingsPage extends Scene  {
 	private final static String backgroundImageURL = "src/game/gui/Images/background2.png";
 	private static ComboBox<difficulty> difficultyBox;
 	private static ComboBox<String> soundTrackBox;
+	private static Slider BackgroundMusicVolume;
+	private static Slider SFXVolume;
 	
 	public SettingsPage(int width,int height) {
 		super(createRoot(width,height),width,height);
@@ -53,6 +58,25 @@ public class SettingsPage extends Scene  {
 		
 		 soundTrackBox = addSelectionUI(settings,"SoundTrack: ",FXCollections.observableArrayList("soundtrack 1","soundtrack 2","soundtrack 3"),soundTrack,2);
 
+		 BackgroundMusicVolume = addSliderUI(settings, "Music Volume: ", 0, 100, 50, 4);
+		 
+		 BackgroundMusicVolume.valueProperty().addListener(new ChangeListener<Number>() {
+
+				public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+					
+					soundSystem.setBackgroundVolume(BackgroundMusicVolume.getValue() * 0.01);			
+				}
+			});
+		 
+//	     SFXVolume = addSliderUI(settings, "SFX Volume: ", 0, 100, 50, 5);
+//	     SFXVolume.valueProperty().addListener(new ChangeListener<Number>() {
+//
+//				public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+//					
+//					soundSystem.setSFXVolume(SFXVolume.getValue() * 0.01);			
+//				}
+//			});
+	     
 		settings.setAlignment(Pos.CENTER);
 		settings.setPadding(insets);
 		settings.setGridLinesVisible(false);
@@ -97,7 +121,7 @@ public class SettingsPage extends Scene  {
 	private static <T> ComboBox<T>  addSelectionUI(GridPane settings,String labelTxt,ObservableList<T> choices,T defaultValue,int rowNum) {
 		Label label = new Label(labelTxt);
 		label.setFont(labelFont);
-		label.setPrefSize(200, 50);
+		label.setPrefSize(250, 50);
 		ComboBox<T> box = new ComboBox<T>();
 		box.setItems(choices);
 		box.setValue(defaultValue);	
@@ -108,6 +132,17 @@ public class SettingsPage extends Scene  {
 		box.setBlendMode(BlendMode.MULTIPLY);
 		return box;
 	}
+	private static Slider addSliderUI(GridPane settings, String labelTxt, double min, double max, double defaultValue, int rowNum) {
+        Label label = new Label(labelTxt);
+        label.setFont(labelFont);
+        label.setPrefSize(250, 50);
+        Slider slider = new Slider(min, max, defaultValue);
+        slider.setPrefSize(200, 50);
+
+        settings.add(label, 0, rowNum);
+        settings.add(slider, 1, rowNum);
+        return slider;
+    }
     public  static int getnoOfLanes() {
        if (difficultyBox.getValue()==difficulty.Hard) return 5;
        return 3;
@@ -118,6 +153,8 @@ public class SettingsPage extends Scene  {
     }
    
     public  String getSoundTrack() {return soundTrackBox.getValue();}
+    public double getBackgroundVolume() {return BackgroundMusicVolume.getValue();}
+    public double getSFXVolume() {return SFXVolume.getValue();}
    
 
 

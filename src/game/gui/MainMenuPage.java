@@ -26,7 +26,7 @@ import java.io.FileInputStream;
 public class MainMenuPage extends Scene {
 	
 	private final static Insets defaultInset = new Insets(30, 0, 30, 0);
-	private final static String backgroundImageUrl = "src/game/gui/Images/wallPaper1920by1200.jpg";
+	private final static String backgroundImageUrl = "src/game/gui/Images/background 4-1.png";
     private final static String titleImageUrl = "src/game/gui/Images/Title4.png";
     
     private static AppButton PlayButton; 

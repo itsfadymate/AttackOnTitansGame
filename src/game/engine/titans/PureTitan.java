@@ -1,12 +1,12 @@
 package game.engine.titans;
 
 public class PureTitan extends Titan {
-	
-	
-	
+
+
+
 	public final static int TITAN_CODE =1;
     /**
-     * 
+     *
      * @param baseHealth
      * @param baseDamage
      * @param heightInMeters
@@ -19,12 +19,13 @@ public class PureTitan extends Titan {
 			int resourcesValue, int dangerLevel) {
 		super(baseHealth, baseDamage, heightInMeters, distanceFromBase, speed, resourcesValue, dangerLevel);
 	}
-	
+
+	@Override
 	public String toString() {
 		return "	Pure"+ super.toString();
 	}
 	public int getCode() {
     	return TITAN_CODE;
     }
-	
+
 }

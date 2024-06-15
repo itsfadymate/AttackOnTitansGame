@@ -8,11 +8,8 @@ import game.engine.titans.Titan;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
-import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.skin.ProgressBarSkin;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -29,7 +26,7 @@ public class TitanView extends View {
 	private Titan titan;
 	private static final double timeToMove = 2.5;
 	private boolean stopMoving;
-	
+
 	static {
 		try {
 		pureImage = new Image(TitanView.class.getResourceAsStream("Images/pureTitanSpriteSheet.png"));
@@ -38,7 +35,7 @@ public class TitanView extends View {
 		ColossalImage = new Image(TitanView.class.getResourceAsStream("Images/zombieSpritesheet.png"));
 		}catch (Exception exc) {
 			exc.printStackTrace();
-		
+
 		}
 	}
 
@@ -77,9 +74,11 @@ public class TitanView extends View {
 
 
 	public void walk(double keyFrameDuration) {
-		if (stopMoving) return;
+		if (stopMoving) {
+			return;
+		}
 		this.toFront();
-		this.getHealthBar().toFront(); 
+		this.getHealthBar().toFront();
 		 final int width ;
 		 final int height;
 		 final int minX;
@@ -103,7 +102,7 @@ public class TitanView extends View {
 			width = 64; height = 64; minX = 0; maxX = 512; minY = 9*64;
 	        this.setFitWidth(200); this.setFitHeight(150);
 		}
-		
+
 		this.setViewport(new javafx.geometry.Rectangle2D(minX, minY, width, height)); // Set the viewport to the first frame of the walking animation
 
 		// Create a walking animation using the frames in the 10th row
@@ -149,7 +148,7 @@ public class TitanView extends View {
 		transition.setOnFinished(e->{
 			timeline.stop();
 			this.setViewport(new javafx.geometry.Rectangle2D(
-					minX,  
+					minX,
 					this.getViewport().getMinY(),
 					this.getViewport().getWidth(),
 					this.getViewport().getHeight()
@@ -166,7 +165,7 @@ public class TitanView extends View {
 		this.stopMoving = true;
 		this.toFront();
 		System.out.println("titan has been defeated");
-		if (!(titan instanceof AbnormalTitan)) { //abnormal titan is the only one with a death animation 
+		if (!(titan instanceof AbnormalTitan)) { //abnormal titan is the only one with a death animation
 			this.setImage(null);
 			this.removeHealthBar();
 			this.anchorPane.getChildren().remove(this);
@@ -181,7 +180,7 @@ public class TitanView extends View {
 							this.getViewport().getWidth(),
 							this.getViewport().getHeight()
 							));
-					
+
 				})
 				);
 		timeline.setCycleCount(6);
@@ -192,7 +191,7 @@ public class TitanView extends View {
 			this.anchorPane.getChildren().remove(this);
 			this.setVisible(false);
 		});
-	
+
 	}
 	public void attack(boolean isAbnormal,double keyFrameDuration) {
 		 this.toFront();
@@ -207,11 +206,11 @@ public class TitanView extends View {
 			 noOfFrames = 5; width = 90; height = 132; minX = 0; maxX = noOfFrames*width-1; minY = 132;
 	           this.setFitWidth(80); this.setFitHeight(64);
 			}else if (titan instanceof AbnormalTitan) {//doesn't appear aslan
-				noOfFrames = 6; width = 64; height = 64; minX = 0; maxX = noOfFrames * width-1; minY = 2*height; 
-		       
+				noOfFrames = 6; width = 64; height = 64; minX = 0; maxX = noOfFrames * width-1; minY = 2*height;
+
 			}else if (titan instanceof ArmoredTitan) {//looks good
-				noOfFrames = 4; width = 124; height = 130; minX = 0; maxX = noOfFrames*width-1; minY = 130; 
-		           this.setFitWidth(100); this.setFitHeight(80); 
+				noOfFrames = 4; width = 124; height = 130; minX = 0; maxX = noOfFrames*width-1; minY = 130;
+		           this.setFitWidth(100); this.setFitHeight(80);
 			}else if (titan instanceof ColossalTitan) {//look for another
 				noOfFrames = 8; width = 64; height = 64; minX = 0; maxX = noOfFrames * width-1; minY = 5*height;
 		        this.setFitWidth(150); this.setFitHeight(150);
@@ -252,9 +251,11 @@ public class TitanView extends View {
 	public void updateHealthBar(int currHealth) {
 		ProgressBar healthBar = super.getHealthBar();
 		int baseHealth = titan.getBaseHealth();
-		if (healthBar==null) return;
-		
-		
+		if (healthBar==null) {
+			return;
+		}
+
+
 		double healthFraction = (double)currHealth/baseHealth;
 		if (healthFraction < 0.2) {
 			healthBar.setStyle("-fx-accent: red;");
@@ -275,10 +276,10 @@ public class TitanView extends View {
 	}
 	public double getTitanWalkDisttance() {
 		double distanceToMove = titan.getSpeed();
-		return Math.max(-distanceToMove*10, -(this.titanLayoutX +this.getTranslateX() - WallView.getWallOuterBoundary())-25);
+		return Math.max(-distanceToMove*10, -(TitanView.titanLayoutX +this.getTranslateX() - WallView.getWallOuterBoundary())-25);
 	}
     public double getTitanPixelPerSecondVelocity() {
-    	return getTitanWalkDisttance()/ this.timeToMove;
+    	return getTitanWalkDisttance()/ TitanView.timeToMove;
     }
     public static double getTimeToMove() {
     	return timeToMove;

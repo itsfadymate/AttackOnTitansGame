@@ -1,13 +1,8 @@
 package game.gui;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.skin.ProgressBarSkin;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 
 public abstract class View extends ImageView {
 	private double xCoordinate;
@@ -61,9 +56,11 @@ public abstract class View extends ImageView {
 	}
 
 	public void updateHealthBar(int currHealth) {
-		if (healthBar==null) return;
-		
-		
+		if (healthBar==null) {
+			return;
+		}
+
+
 		double healthFraction = (double)currHealth/baseHealth;
 		if (healthFraction < 0.2) {
 			this.healthBar.setStyle("-fx-accent: red;");

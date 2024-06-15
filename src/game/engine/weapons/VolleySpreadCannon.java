@@ -14,16 +14,20 @@ public class VolleySpreadCannon extends Weapon {
 		super(baseDamage);
 		this.minRange = minRange;
 		this.maxRange = maxRange;
-		
+
 	}
+	@Override
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
 		ArrayList<Titan> attackedTitans = new ArrayList<>();
 		int resourcesGathered =0;
 		while (!laneTitans.isEmpty()) {
 			Titan titan = laneTitans.remove();
-			if (titan.getDistance() >= getMinRange() && titan.getDistance() <= getMaxRange())
+			if (titan.getDistance() >= getMinRange() && titan.getDistance() <= getMaxRange()) {
 				resourcesGathered += this.attack(titan);
-			if (titan.isDefeated()) continue;
+			}
+			if (titan.isDefeated()) {
+				continue;
+			}
 			attackedTitans.add(titan);
 		}
 		for (Titan titan : attackedTitans) {
@@ -31,10 +35,10 @@ public class VolleySpreadCannon extends Weapon {
 		}
 		return resourcesGathered;
 	}
-	
+
 	public int getMinRange() {return this.minRange;}
 	public int getMaxRange() {return this.maxRange;}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

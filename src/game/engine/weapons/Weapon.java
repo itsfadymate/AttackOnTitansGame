@@ -11,12 +11,14 @@ public abstract class Weapon implements Attacker {
 	public Weapon(int baseDamage) {
 		this.baseDamage = baseDamage;
 	}
-	
+
 	public abstract int turnAttack(PriorityQueue<Titan> laneTitans);
+	@Override
 	public int getDamage() {
 		return baseDamage;
 	}
     public int getBaseDamage() {return baseDamage;}
-    
-    public abstract String toString();
+
+    @Override
+	public abstract String toString();
 }

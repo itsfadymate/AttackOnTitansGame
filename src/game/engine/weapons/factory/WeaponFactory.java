@@ -5,30 +5,33 @@ import java.util.HashMap;
 
 import game.engine.dataloader.DataLoader;
 import game.engine.exceptions.InsufficientResourcesException;
-import game.engine.weapons.*;
+import game.engine.weapons.Weapon;
+import game.engine.weapons.WeaponRegistry;
 
 public class WeaponFactory {
 	private final HashMap<Integer,WeaponRegistry> weaponShop;
 
 	public WeaponFactory() throws IOException {
 		weaponShop = DataLoader.readWeaponRegistry();
-		
+
 	}
-	
+
 	public  HashMap<Integer,WeaponRegistry> getWeaponShop(){return this.weaponShop;}
-	 
-	
+
+
 	/**
-	 * 
+	 *
 	 * @param resources
 	 * @param weaponCode
-	 * @return FactoryResponse  
+	 * @return FactoryResponse
 	 * @throws InsufficientResourcesException
 	 */
 	public FactoryResponse buyWeapon(int resources, int weaponCode) throws
 	 InsufficientResourcesException{
 		 WeaponRegistry registry = weaponShop.get(weaponCode);
-		 if (registry.getPrice() > resources) throw new InsufficientResourcesException(resources);
+		 if (registry.getPrice() > resources) {
+			throw new InsufficientResourcesException(resources);
+		}
 		 int remainingResources = resources - registry.getPrice();
 		 Weapon weapon = registry.buildWeapon();
 		 return new FactoryResponse(weapon,remainingResources);
@@ -45,6 +48,6 @@ public class WeaponFactory {
 			 int maxRange) {
 		 WeaponRegistry registry = new WeaponRegistry(code,price,damage,name,minRange,maxRange);
 		 weaponShop.put(code,registry);
-		 
+
 	 }
 }

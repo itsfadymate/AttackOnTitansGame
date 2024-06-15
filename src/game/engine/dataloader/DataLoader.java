@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import game.engine.exceptions.InvalidCSVFormat;
-import game.engine.titans.*;
+import game.engine.titans.TitanRegistry;
 import game.engine.weapons.WeaponRegistry;
 
 public  class DataLoader {
@@ -81,11 +81,13 @@ public  class DataLoader {
 	public static void main(String[] args){
 		try {
 			HashMap<Integer,TitanRegistry> hm = readTitanRegistry();
-			for(Entry<Integer, TitanRegistry>  entry: hm.entrySet())
+			for(Entry<Integer, TitanRegistry>  entry: hm.entrySet()) {
 				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
 			HashMap<Integer,WeaponRegistry> hm2 = readWeaponRegistry();
-			for(Map.Entry<Integer,WeaponRegistry >  entry: hm2.entrySet())
+			for(Map.Entry<Integer,WeaponRegistry >  entry: hm2.entrySet()) {
 				System.out.println(entry.getKey() + " : " + entry.getValue());
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -39,12 +39,12 @@
                         <Font size="43.0" />
                      </font>
                   </Label>
-                  <Label fx:id="player1" prefHeight="60.0" prefWidth="402.0" text="Label" textFill="#e1e143">
+                  <Label fx:id="player1" prefHeight="60.0" prefWidth="402.0" text="Fady" textFill="#e1e143">
                      <font>
-                        <Font name="Sitka Text" size="50.0" />
+                        <Font name="Sitka Text" size="44.0" />
                      </font>
                   </Label>
-                  <Label fx:id="score1" prefHeight="60.0" prefWidth="195.0" text="0" textFill="WHITE">
+                  <Label fx:id="score1" prefHeight="60.0" prefWidth="195.0" text="1693" textFill="WHITE">
                      <font>
                         <Font name="Courier New" size="50.0" />
                      </font>
@@ -63,12 +63,12 @@
                         <Font size="43.0" />
                      </font>
                   </Label>
-                  <Label fx:id="player2" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#e1e143">
+                  <Label fx:id="player2" prefHeight="60.0" prefWidth="400.0" text="Omar" textFill="#e1e143">
                      <font>
-                        <Font name="Sitka Text" size="50.0" />
+                        <Font name="Sitka Text" size="44.0" />
                      </font>
                   </Label>
-                  <Label fx:id="score2" prefHeight="60.0" prefWidth="300.0" text="0" textFill="WHITE">
+                  <Label fx:id="score2" prefHeight="60.0" prefWidth="300.0" text="1435" textFill="WHITE">
                      <font>
                         <Font name="Courier New" size="50.0" />
                      </font>
@@ -82,12 +82,12 @@
                         <Font size="43.0" />
                      </font>
                   </Label>
-                  <Label fx:id="player3" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#e1e143">
+                  <Label fx:id="player3" prefHeight="60.0" prefWidth="400.0" text="Mojo jojo" textFill="#e1e143">
                      <font>
-                        <Font name="Sitka Text" size="50.0" />
+                        <Font name="Sitka Text" size="44.0" />
                      </font>
                   </Label>
-                  <Label fx:id="score3" prefHeight="60.0" prefWidth="300.0" text="0" textFill="WHITE">
+                  <Label fx:id="score3" prefHeight="60.0" prefWidth="300.0" text="1399" textFill="WHITE">
                      <font>
                         <Font name="Courier New" size="50.0" />
                      </font>
@@ -101,12 +101,12 @@
                         <Font size="43.0" />
                      </font>
                   </Label>
-                  <Label fx:id="player4" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#e1e143">
+                  <Label fx:id="player4" prefHeight="60.0" prefWidth="400.0" text="Abdallah" textFill="#e1e143">
                      <font>
-                        <Font name="Sitka Text" size="50.0" />
+                        <Font name="Sitka Text" size="44.0" />
                      </font>
                   </Label>
-                  <Label fx:id="score4" prefHeight="60.0" prefWidth="300.0" text="0" textFill="WHITE">
+                  <Label fx:id="score4" prefHeight="60.0" prefWidth="300.0" text="1257" textFill="WHITE">
                      <font>
                         <Font name="Courier New" size="50.0" />
                      </font>
@@ -120,12 +120,12 @@
                         <Font size="43.0" />
                      </font>
                   </Label>
-                  <Label fx:id="player5" prefHeight="60.0" prefWidth="400.0" text="Label" textFill="#e1e143">
+                  <Label fx:id="player5" prefHeight="60.0" prefWidth="400.0" text="perry the platypus" textFill="#e1e143">
                      <font>
-                        <Font name="Sitka Text" size="50.0" />
+                        <Font name="Sitka Text" size="45.0" />
                      </font>
                   </Label>
-                  <Label fx:id="score5" prefHeight="60.0" prefWidth="300.0" text="0" textFill="WHITE">
+                  <Label fx:id="score5" prefHeight="60.0" prefWidth="300.0" text="1211" textFill="WHITE">
                      <font>
                         <Font name="Courier New" size="50.0" />
                      </font>

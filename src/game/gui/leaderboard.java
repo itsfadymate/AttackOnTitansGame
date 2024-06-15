@@ -2,9 +2,10 @@ package game.gui;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
+import java.util.PriorityQueue;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -94,34 +95,63 @@ public class leaderboard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Initialize the players and scores arrays here
+    	System.out.println("initializing leaderboards");
         players = new Label[]{player1, player2, player3, player4, player5};
         scores = new Label[]{score1, score2, score3, score4, score5};
 
         readFromCSV();
     }
 
+
     private void readFromCSV() {
-        String csvFile = "players.csv";
-        String line;
-        String csvSplitBy = ",";
+    	try {
+			BufferedReader br = new BufferedReader(new FileReader("players.csv"));
+			PriorityQueue<PlayerData> playersPq = new PriorityQueue<>();
+			String line;
+			int lineNo =0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            int i = 0;
-            while ((line = br.readLine()) != null) {
-                // Split the line by comma
-                String[] data = line.split(csvSplitBy);
+			//we read max 5 top people and add them to pq
+			while ((line = br.readLine())!=null ) {
+				String[] lineData = line.split(",");
+				leaderboard gos = new leaderboard();
+				PlayerData pd = gos.new PlayerData(lineData[0],Integer.parseInt(lineData[1]));
+				playersPq.add(pd);
+				lineNo++;
+			}
 
-                // Ensure we have enough data and not exceeding the arrays' lengths
-                if (data.length < 2 || i >= players.length || i >= scores.length) {
-                    break;
-                }
 
-                players[i].setText(data[0]);
-                scores[i].setText(data[1]);
-                i++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			System.out.println(playersPq);
+			for (int i=0;i<5 && lineNo >=0;i++,lineNo--) {
+				PlayerData pd = playersPq.remove();
+				players[i].setText(pd.getName());
+				scores[i].setText(""+pd.getScore());
+			}
+
+			br.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
+    class  PlayerData implements Comparable<PlayerData>{
+		String playerName;
+		int score;
+		public PlayerData(String playerName,int score) {
+			this.playerName = playerName;
+			this.score =score;
+		}
+
+
+		@Override
+		public int compareTo(PlayerData that) {
+			return that.score - this.score;
+		}
+		public String getName() {return playerName;}
+		public int getScore() {return score;}
+		@Override
+		public String toString() {
+			return "["+playerName + "," + score+"]";
+		}
+	}
 }

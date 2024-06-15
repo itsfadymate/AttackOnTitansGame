@@ -1,16 +1,16 @@
 package game.gui;
 
+import java.io.File;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-
-import java.io.File;
 
 public class soundSystem {
     private static MediaPlayer backgroundMusicPlayer;
     private static MediaPlayer soundEffectsPlayer;
     private static double SFXVolume;
     private static double BackgroundVolume;
-    
+
     public static double getSFXVolume() {
 		return SFXVolume;
 	}
@@ -39,9 +39,9 @@ public class soundSystem {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-        
+
     }
-    
+
     public static void muteBackground() {
     	backgroundMusicPlayer.setMute(true);
     }
@@ -54,23 +54,23 @@ public class soundSystem {
 //    public void pauseBackgroundMusic() {
 //        backgroundMusicPlayer.pause();
 //    }
-    
+
     //the weapons sound effect
-    
+
     public static void playSoundEffectFromURL(String url) {
         Media soundEffect = new Media(new File(url).toURI().toString());
         soundEffectsPlayer = new MediaPlayer(soundEffect);
         soundEffectsPlayer.play();
     }
-    
+
     public static void playCannonEffect() {
     	playSoundEffectFromURL("sound/cannon-firing.mp3"); // add the file path
     }
-    
+
     public static void playSniperEffect() {
     	playSoundEffectFromURL("sound/sniper-rifle-firing-shot.mp3"); // add the file path
     }
-    
+
     public static void playMortarEffect() {
     	Media soundEffect = new Media(new File("sound/mortar-shots.mp3").toURI().toString());
         soundEffectsPlayer = new MediaPlayer(soundEffect);
@@ -78,36 +78,36 @@ public class soundSystem {
         soundEffectsPlayer.setRate(2.8);
         soundEffectsPlayer.play();
     }
-    
+
     public static void playWallTrapEffect() {
     	playSoundEffectFromURL("sound/Wall-trap.mp3"); // add the file path
     }
-    
+
     //here are the titans attacking sound effect
-    
+
     public static void playClossalEffect() {
     	playSoundEffectFromURL(null); // add the file path
     }
-    
+
     public static void playPureEffect() {
     	playSoundEffectFromURL(null); // add the file path
     }
-    
+
     public static void playArmouredEffect() {
     	playSoundEffectFromURL(null); // add the file path
     }
-    
+
     public static void playAbnormalEffect() {
     	playSoundEffectFromURL(null); // add the file path
     }
-    
-    
+
+
     //sound effect player controls
-    
+
     public static void mutesoundEffects() {
     	soundEffectsPlayer.setMute(true);
     }
-    
+
     public static void playSoundEffect() {
         soundEffectsPlayer.play();
     }

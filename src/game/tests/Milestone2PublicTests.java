@@ -8,9 +8,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -19,7 +16,6 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.PriorityQueue;
 
@@ -83,7 +79,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -132,7 +128,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("All active lane danger level should be updated correctly inside a game battle.", dangerLevel,dangerLevelField.get(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -150,7 +146,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field battlePhase= Class.forName(battlePath).getDeclaredField("battlePhase");
@@ -223,13 +219,15 @@ public class Milestone2PublicTests {
 			Method m= Class.forName(battlePath).getDeclaredMethod("performTurn", null);
 			m.setAccessible(true);
 			m.invoke(battle);
-			if(((PriorityQueue<Object>) (lanesField.get(battle))).isEmpty())
+			if(((PriorityQueue<Object>) (lanesField.get(battle))).isEmpty()) {
 				fail("Lanes should not be emptied");
+			}
 			while(!dangerLevel.isEmpty()) {
 				int dl= dangerLevel.poll();
 				Object lane=((PriorityQueue<Object>) (lanesField.get(battle))).poll();
-				if(lane== null)
+				if(lane== null) {
 					fail("Add turn titans should not remove any lane from the battle lanes");
+				}
 				int laneDL= dangerLevelFieldLane.getInt(lane);
 
 				assertTrue("PerformTurn should excute the main functionalities with the correct order as mentioned in the game description, "
@@ -238,7 +236,7 @@ public class Milestone2PublicTests {
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -252,13 +250,13 @@ public class Milestone2PublicTests {
 		try {
 			Class weaponClass = Class.forName(sniperCannonPath);
 			Constructor<?> constructor1 = weaponClass.getConstructor(int.class);
-			int baseDamage = (int) (Math.random() * 100) + 60; 
+			int baseDamage = (int) (Math.random() * 100) + 60;
 			Object weapon = constructor1.newInstance(baseDamage);
 			Class armoredTitanClass = Class.forName(armoredTitan);
 			Constructor<?> constructor2 = armoredTitanClass.getConstructor(int.class, int.class, int.class, int.class,
 					int.class, int.class, int.class);
 			int health = (int) (Math.random() * 10) + 1;
-			int damage = (int) (Math.random() * 20) + 10; 
+			int damage = (int) (Math.random() * 20) + 10;
 			int heightInMeters = (int) (Math.random() * 10) + 1;
 			int distanceFromBase = (int) (Math.random() * 10) + 1;
 			int speed = (int) (Math.random() * 10) + 1;
@@ -311,7 +309,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
@@ -360,7 +358,7 @@ public class Milestone2PublicTests {
 			assertEquals("All active lane danger level should be updated correctly inside a game battle.", lane1DL,dangerLevelField.get(laneObject));
 			assertEquals("All active lane danger level should be updated correctly inside a game battle.", lane2DL,dangerLevelField.get(laneObject2));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -379,7 +377,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -438,7 +436,7 @@ public class Milestone2PublicTests {
 			updatelaneDangerLevelMethod.setAccessible(true);
 			updatelaneDangerLevelMethod.invoke(battle);
 			lanesPQ= (PriorityQueue<Object>) lanesField.get(battle);
-			
+
 			if(lanesPQ.isEmpty()) {
 				fail("lanes PriorityQueue should NOT be be emptied when updating danger level");
 
@@ -450,7 +448,7 @@ public class Milestone2PublicTests {
 						dangerLevelField.get(object).equals(x));
 			}
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -469,7 +467,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -534,7 +532,7 @@ public class Milestone2PublicTests {
 			assertEquals("ALL active lanes should move their titans in battle",25,titanDistanceField.get(titan) );
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -543,7 +541,7 @@ public class Milestone2PublicTests {
 	}
 	@Test(timeout=1000)
 	public void testMoveTitansBattleOnlyActiveLanes() {
-		
+
 		Constructor<?> battleConstructor;
 		try {
 			battleConstructor = Class.forName(battlePath).getConstructor(int.class,int.class,int.class,int.class,int.class);
@@ -551,76 +549,76 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
-			
+
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
 			lanesField.setAccessible(true);
 			PriorityQueue<Object> lanesPQ= new PriorityQueue<>();
-			
-			
-			
+
+
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
-			
-			
+
+
 			Constructor<?> constructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Object laneObject =  constructor.newInstance(createWall());
 			Object laneObject2 =  constructor.newInstance(createWall());
 			Object laneObject3 =  constructor.newInstance(createWall());
-			
-			
+
+
 			Field titansField= Class.forName(lanePath).getDeclaredField("titans");
 			titansField.setAccessible(true);
-			
+
 			PriorityQueue<Object> titansPQ= (PriorityQueue<Object>) titansField.get(laneObject);
 			Object titan= createAbnormalTitanFixed();
 			titansPQ.add(titan);
 			titansField.set(laneObject, titansPQ);
-			
+
 			lanesPQ.add(laneObject);
-			
+
 			PriorityQueue<Object> titansPQ2= (PriorityQueue<Object>) titansField.get(laneObject2);
 			Object titan2= createAbnormalTitanFixed();
 			titansPQ2.add(titan2);
 			titansField.set(laneObject2, titansPQ2);
-			
+
 			lanesPQ.add(laneObject2);
-			
+
 			PriorityQueue<Object> titansPQ3= (PriorityQueue<Object>) titansField.get(laneObject3);
 			Object titan3= createAbnormalTitanFixed();
 			titansPQ3.add(titan3);
 			titansField.set(laneObject3, titansPQ3);
-			
-			
-			
+
+
+
 			originalLanes.add(laneObject3);
 			originalLanes.addAll(lanesPQ);
 			originalLanesField.set(battle, originalLanes);
-			
-			
+
+
 			lanesField.set(battle, lanesPQ);
-			
-			
+
+
 			Method moveLaneTitans= Class.forName(battlePath).getDeclaredMethod("moveTitans",  null);
 			moveLaneTitans.setAccessible(true);
 			moveLaneTitans.invoke(battle);
-			
+
 			titansField= Class.forName(lanePath).getDeclaredField("titans");
 			titansField.setAccessible(true);
 			titansPQ= (PriorityQueue<Object>) titansField.get(laneObject);
-			
-			
+
+
 			Field titanDistanceField= Class.forName(titanClassPath).getDeclaredField("distanceFromBase");
 			titanDistanceField.setAccessible(true);
-			
+
 			assertEquals("ALL active lanes should move their titans in battle",25,titanDistanceField.get(titan2) );
 			assertEquals("ALL active lanes should move their titans in battle",25,titanDistanceField.get(titan) );
 			assertEquals("ONLY active lanes should move their titans in battle",30,titanDistanceField.get(titan3) );
-			
-			
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+
+
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -637,7 +635,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -698,7 +696,7 @@ public class Milestone2PublicTests {
 			assertTrue("ALL active lanes should remain in the game when moving their titans in battle",((PriorityQueue<Object>) lanesField.get(battle)).contains(laneObject3));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -716,7 +714,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -753,7 +751,7 @@ public class Milestone2PublicTests {
 			assertEquals("Incorrect return value for perform weapon attacks in battle", value, performWeaponsAttacksmethod.invoke(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -772,7 +770,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -809,7 +807,7 @@ public class Milestone2PublicTests {
 
 			Field resourcesGatheredField= Class.forName(battlePath).getDeclaredField("resourcesGathered");
 			resourcesGatheredField.setAccessible(true);
-			int random6 = (int) (Math.random() * 10) + 1; 
+			int random6 = (int) (Math.random() * 10) + 1;
 			resourcesGatheredField.set(battle, random6);
 
 			Method performWeaponsAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performWeaponsAttacks",  null);
@@ -821,7 +819,7 @@ public class Milestone2PublicTests {
 			assertEquals(" When performing the weapons attacks in battle you should update the resouces gathered correctly", value+random6, resourcesGatheredField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -840,7 +838,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -874,7 +872,7 @@ public class Milestone2PublicTests {
 
 			Field scoreField= Class.forName(battlePath).getDeclaredField("score");
 			scoreField.setAccessible(true);
-			int random6 = (int) (Math.random() * 10) + 1; 
+			int random6 = (int) (Math.random() * 10) + 1;
 			scoreField.set(battle, random6);
 
 			Method performWeaponsAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performWeaponsAttacks",  null);
@@ -886,7 +884,7 @@ public class Milestone2PublicTests {
 			assertEquals(" When performing the weapons attacks in battle you should update the score correctly", value+random6, scoreField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -896,7 +894,7 @@ public class Milestone2PublicTests {
 
 	@Test(timeout=1000)
 	public void testperformWeaponsAttacksBattleScore2() {
-		
+
 		Constructor<?> battleConstructor;
 		try {
 			battleConstructor = Class.forName(battlePath).getConstructor(int.class,int.class,int.class,int.class,int.class);
@@ -904,60 +902,60 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
-			
+
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
 			lanesField.setAccessible(true);
 			PriorityQueue<Object> lanesPQ= (PriorityQueue<Object>) lanesField.get(battle);
-			
-			
-			
+
+
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
-			
+
 			int value=0;
-			
+
 			Constructor<?> constructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Object laneObject =  constructor.newInstance(createWall());
 			Object laneObject2 =  constructor.newInstance(createWall());
 			Object laneObject3 =  constructor.newInstance(createWall());
-			
+
 			value+=returnResourceGathered(laneObject);
 			value+=returnResourceGathered(laneObject2);
 			returnResourceGathered(laneObject3);
-			
+
 			lanesPQ.add(laneObject);
 			lanesPQ.add(laneObject2);
-			
+
 			lanesField.set(battle, lanesPQ);
 			originalLanes.addAll(lanesPQ);
 			originalLanes.add(laneObject3);
 			originalLanesField.set(battle, originalLanes);
-			
+
 			Field scoreField= Class.forName(battlePath).getDeclaredField("score");
 			scoreField.setAccessible(true);
-			int random6 = (int) (Math.random() * 10) + 1; 
+			int random6 = (int) (Math.random() * 10) + 1;
 			scoreField.set(battle, random6);
-			
+
 			Method performWeaponsAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performWeaponsAttacks",  null);
 			performWeaponsAttacksmethod.setAccessible(true);
 			performWeaponsAttacksmethod.invoke(battle);
-			
+
 			scoreField= Class.forName(battlePath).getDeclaredField("score");
 			scoreField.setAccessible(true);
 			assertEquals("Only active lanes should preform weapons attack", value+random6, scoreField.get(battle));
-			
-			
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+
+
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statement."+e.getClass()+" occurred");
 		}
 	}
-	
+
 
 
 
@@ -971,7 +969,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -980,12 +978,12 @@ public class Milestone2PublicTests {
 
 			Field resourcesGatheredField= Class.forName(battlePath).getDeclaredField("resourcesGathered");
 			resourcesGatheredField.setAccessible(true);
-			int random6 = (int) (Math.random() * 10) + 1; 
+			int random6 = (int) (Math.random() * 10) + 1;
 			resourcesGatheredField.set(battle, random6);
 
 			Field scoreField= Class.forName(battlePath).getDeclaredField("score");
 			scoreField.setAccessible(true);
-			int random7 = (int) (Math.random() * 10) + 1; 
+			int random7 = (int) (Math.random() * 10) + 1;
 			scoreField.set(battle, random7);
 
 
@@ -1024,7 +1022,7 @@ public class Milestone2PublicTests {
 					random7, scoreField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1044,7 +1042,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1087,7 +1085,7 @@ public class Milestone2PublicTests {
 					( (PriorityQueue<Object>) lanesField.get(battle)).contains(laneObject));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1096,7 +1094,7 @@ public class Milestone2PublicTests {
 	}
 	@Test(timeout=1000)
 	public void testperformTitansAttacksBattleLaneLostOriginalLanes() {
-		
+
 		Constructor<?> battleConstructor;
 		try {
 			battleConstructor = Class.forName(battlePath).getConstructor(int.class,int.class,int.class,int.class,int.class);
@@ -1104,38 +1102,38 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
-			
+
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
 			lanesField.setAccessible(true);
 			PriorityQueue<Object> lanesPQ= (PriorityQueue<Object>) lanesField.get(battle);
-			
-			
-			
+
+
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
-			
+
 			Constructor<?> constructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Object laneObject =  constructor.newInstance(createWall());
 			Object laneObject2 =  constructor.newInstance(createWall());
 			Object laneObject3 =  constructor.newInstance(createWall());
-			
+
 			returnResourceGatheredTitans(laneObject3);
 			returnResourceGatheredTitans(laneObject2);
 			returnResourceGatheredTitans2(laneObject);
-			
+
 			lanesPQ.add(laneObject);
 			lanesPQ.add(laneObject2);
 			lanesPQ.add(laneObject3);
-			
+
 			lanesField.set(battle, lanesPQ);
-			
+
 			originalLanes.addAll(lanesPQ);
 			originalLanesField.set(battle, originalLanes);
-			
-			
+
+
 			Method performTitansAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performTitansAttacks",  null);
 			performTitansAttacksmethod.setAccessible(true);
 			performTitansAttacksmethod.invoke(battle);
@@ -1143,9 +1141,9 @@ public class Milestone2PublicTests {
 					( (ArrayList<Object>) originalLanesField.get(battle)).contains(laneObject3));
 			assertTrue("lost lanes should NOT be removed from original lanes in battle",
 					( (ArrayList<Object>) originalLanesField.get(battle)).contains(laneObject2));
-			
-			
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+
+
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1163,7 +1161,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1198,11 +1196,11 @@ public class Milestone2PublicTests {
 
 			Method performTitansAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performTitansAttacks",  null);
 			performTitansAttacksmethod.setAccessible(true);
-			assertEquals("Incorrect resources gathered value from calling performTitansAttacks.In battle all active lane titans, that has reached the wall, should perfom their attack on their lane wall.", 
+			assertEquals("Incorrect resources gathered value from calling performTitansAttacks.In battle all active lane titans, that has reached the wall, should perfom their attack on their lane wall.",
 					value, performTitansAttacksmethod.invoke(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1219,7 +1217,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = (int) (Math.random() * 10) + 5;
@@ -1234,7 +1232,7 @@ public class Milestone2PublicTests {
 			assertEquals("Number of turns should be incremented each time the turn is finalized", random5+1,numberOfTurnsField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1251,7 +1249,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = 14;
@@ -1274,7 +1272,7 @@ public class Milestone2PublicTests {
 					returnEnumValue(battlePhasePath,"INTENSE").equals(phasesField.get(battle)));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1292,7 +1290,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 			Field battlePhase= Class.forName(battlePath).getDeclaredField("battlePhase");
 			battlePhase.setAccessible(true);
@@ -1302,20 +1300,20 @@ public class Milestone2PublicTests {
 			Field numberOfTurnsField= Class.forName(battlePath).getDeclaredField("numberOfTurns");
 			numberOfTurnsField.setAccessible(true);
 			numberOfTurnsField.set(battle, random5);
-			
+
 			//System.out.println("numberOfTurns: " + numberOfTurnsField.getInt(battle));
-			
+
 			Field numberOfTitansPerTurnField= Class.forName(battlePath).getDeclaredField("numberOfTitansPerTurn");
 			numberOfTitansPerTurnField.setAccessible(true);
 			numberOfTitansPerTurnField.set(battle, random4);
-			
+
 			//System.out.println("numberOfTitansPerTurn: " +numberOfTitansPerTurnField.getInt(battle));
 
 			Method finalizeTurnsmethod=Class.forName(battlePath).getDeclaredMethod("finalizeTurns",  null);
 			finalizeTurnsmethod.setAccessible(true);
 			finalizeTurnsmethod.invoke(battle);
-			
-			
+
+
 
 			Field phasesField= Class.forName(battlePath).getDeclaredField("battlePhase");
 			phasesField.setAccessible(true);
@@ -1325,10 +1323,10 @@ public class Milestone2PublicTests {
 					returnEnumValue(battlePhasePath,"GRUMBLING").equals(phasesField.get(battle)));
 
 
-			assertEquals("The number of titans should ONLY be updated correctly when entering defined levels", 
+			assertEquals("The number of titans should ONLY be updated correctly when entering defined levels",
 					random4,numberOfTitansPerTurnField.get(battle));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1345,7 +1343,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = 34;
@@ -1365,14 +1363,14 @@ public class Milestone2PublicTests {
 			finalizeTurnsmethod.setAccessible(true);
 			finalizeTurnsmethod.invoke(battle);
 
-			assertEquals("The number of titans should be updated correctly when entering defined levels", 
+			assertEquals("The number of titans should be updated correctly when entering defined levels",
 					random4*2,numberOfTitansPerTurnField.get(battle));
 
 			assertTrue("The battle phase should be updated correctly depending on the number of turns",
 					returnEnumValue(battlePhasePath,"GRUMBLING").equals(phasesField.get(battle)));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1390,10 +1388,10 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
-			random5 = (int) (Math.random() * 13) + 1; ;
+			random5 = (int) (Math.random() * 13) + 1;
 			Field numberOfTurnsField= Class.forName(battlePath).getDeclaredField("numberOfTurns");
 			numberOfTurnsField.setAccessible(true);
 			numberOfTurnsField.set(battle, random5);
@@ -1410,7 +1408,7 @@ public class Milestone2PublicTests {
 			finalizeTurnsmethod.setAccessible(true);
 			finalizeTurnsmethod.invoke(battle);
 
-			assertEquals("The number of titans should ONLY be updated when entering levels that are divisible by 5 and >30", 
+			assertEquals("The number of titans should ONLY be updated when entering levels that are divisible by 5 and >30",
 					random4,numberOfTitansPerTurnField.get(battle));
 
 			assertTrue("The battle phase should be updated correctly depending on the number of turns",
@@ -1420,7 +1418,7 @@ public class Milestone2PublicTests {
 					random5+1,numberOfTurnsField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1442,7 +1440,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1506,7 +1504,7 @@ public class Milestone2PublicTests {
 			assertEquals("pass turn should perform skipping the turn including  moving the titans in ALL active lanes",25,titanDistanceField.get(titan3) );
 			assertEquals("pass turn should perform skipping the turn including  moving the titans in ALL active lanes",25,titanDistanceField.get(titan) );
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1524,7 +1522,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1558,7 +1556,7 @@ public class Milestone2PublicTests {
 
 			Field resourcesGatheredField= Class.forName(battlePath).getDeclaredField("resourcesGathered");
 			resourcesGatheredField.setAccessible(true);
-			int random6 = (int) (Math.random() * 10) + 1; 
+			int random6 = (int) (Math.random() * 10) + 1;
 			resourcesGatheredField.set(battle, random6);
 
 			Method performTurnPerformWeaponsAttacksmethod=Class.forName(battlePath).getDeclaredMethod("passTurn",  null);
@@ -1570,7 +1568,7 @@ public class Milestone2PublicTests {
 			assertEquals("pass turn should perform skipping the turn including  weapons in all lanes carrying out their attacks, ResourcesGathered in battle", value+random6, resourcesGatheredField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1590,7 +1588,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1632,7 +1630,7 @@ public class Milestone2PublicTests {
 					( (PriorityQueue<Object>) lanesField.get(battle)).contains(laneObject));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1651,7 +1649,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 
@@ -1730,7 +1728,7 @@ public class Milestone2PublicTests {
 				assertTrue("pass turn should perform skipping the turn including updating the dangerLevel for each active lane and reorder the priority queue accordingly",
 						dangerLevelField.get(object).equals(x));
 			}
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1749,7 +1747,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = 34;
@@ -1769,14 +1767,14 @@ public class Milestone2PublicTests {
 			finalizeTurnsmethod.setAccessible(true);
 			finalizeTurnsmethod.invoke(battle);
 
-			assertEquals("pass turn should perform skipping the turn including finalizing the turns with the correct number of titans", 
+			assertEquals("pass turn should perform skipping the turn including finalizing the turns with the correct number of titans",
 					random4*2,numberOfTitansPerTurnField.get(battle));
 
 			assertTrue("pass turn should perform skipping the turn including finalizing the turns with the battle phase",
 					returnEnumValue(battlePhasePath,"GRUMBLING").equals(phasesField.get(battle)));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1793,7 +1791,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = (int) (Math.random() * 10) + 5;
@@ -1808,7 +1806,7 @@ public class Milestone2PublicTests {
 			assertEquals("pass turn should perform skipping the turn including finalizing the turns with the correct number of turns", random5+1,numberOfTurnsField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1827,7 +1825,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1891,7 +1889,7 @@ public class Milestone2PublicTests {
 			assertEquals("performTurn should perform the main functionalities throughout each turn including moving the titans in ALL active lanes",25,titanDistanceField.get(titan3) );
 			assertEquals("performTurn should perform the main functionalities throughout each turn including moving the titans in ALL active lanes",25,titanDistanceField.get(titan) );
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1909,7 +1907,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -1973,7 +1971,7 @@ public class Milestone2PublicTests {
 			assertEquals("performTurn should perform the main functionalities throughout each turn including moving the titans in ALL active lanes",25,titanDistanceField.get(titan3) );
 			assertEquals("performTurn should perform the main functionalities throughout each turn including moving the titans in ALL active lanes",25,titanDistanceField.get(titan) );
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1993,7 +1991,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2028,7 +2026,7 @@ public class Milestone2PublicTests {
 
 			Field scoreField= Class.forName(battlePath).getDeclaredField("score");
 			scoreField.setAccessible(true);
-			int random6 = (int) (Math.random() * 10) + 1; 
+			int random6 = (int) (Math.random() * 10) + 1;
 			scoreField.set(battle, random6);
 
 			Method performTurnPerformWeaponsAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performTurn",  null);
@@ -2040,7 +2038,7 @@ public class Milestone2PublicTests {
 			assertEquals("performTurn should perform the main functionalities throughout each turn including  weapons in all lanes carrying out their attacks, Battle Score", value+random6, scoreField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2058,7 +2056,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2079,7 +2077,7 @@ public class Milestone2PublicTests {
 			lanesPQ.add(laneObject2);
 
 			lanesField.set(battle, lanesPQ);
-			
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
@@ -2088,22 +2086,22 @@ public class Milestone2PublicTests {
 			originalLanes.addAll(lanesPQ);
 			originalLanes.add(laneObject3);
 			originalLanesField.set(battle, originalLanes);
-			
+
 			Method performTitansAttacksmethod=Class.forName(battlePath).getDeclaredMethod("performTitansAttacks",  null);
 			performTitansAttacksmethod.setAccessible(true);
-	
-			assertEquals("Incorrect resources gathered value from calling performTitansAttacks.In battle all active lane titans, that has reached the wall, should perfom their attack on their lane wall.", 
+
+			assertEquals("Incorrect resources gathered value from calling performTitansAttacks.In battle all active lane titans, that has reached the wall, should perfom their attack on their lane wall.",
 					value, performTitansAttacksmethod.invoke(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statement."+e.getClass()+" occurred");
 		}
 	}
-	
+
 	@Test(timeout=1000)
 	public void testPerformTurnPerformTitansAttacksBattleLaneLost() {
 
@@ -2114,7 +2112,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2155,7 +2153,7 @@ public class Milestone2PublicTests {
 					( (PriorityQueue<Object>) lanesField.get(battle)).contains(laneObject));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2173,7 +2171,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2224,7 +2222,7 @@ public class Milestone2PublicTests {
 			assertEquals("performTurn should perform the main functionalities throughout each turn including updating the dangerLevel for each active lane", lane2DL,dangerLevelField.get(laneObject2));
 			assertEquals("performTurn should perform the main functionalities throughout each turn including updating the dangerLevel for each active lane", lane3DL,dangerLevelField.get(laneObject3));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2242,7 +2240,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2320,7 +2318,7 @@ public class Milestone2PublicTests {
 						dangerLevelField.get(object).equals(x));
 			}
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2339,7 +2337,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = 34;
@@ -2359,14 +2357,14 @@ public class Milestone2PublicTests {
 			finalizeTurnsmethod.setAccessible(true);
 			finalizeTurnsmethod.invoke(battle);
 
-			assertEquals("performTurn should perform the main functionalities throughout each turn including finalizing the turns with the correct number of titans", 
+			assertEquals("performTurn should perform the main functionalities throughout each turn including finalizing the turns with the correct number of titans",
 					random4*2,numberOfTitansPerTurnField.get(battle));
 
 			assertTrue("performTurn should perform the main functionalities throughout each turn including finalizing the turns with the battle phase",
 					returnEnumValue(battlePhasePath,"GRUMBLING").equals(phasesField.get(battle)));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2383,7 +2381,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 5;
 			int random3 = (int) (Math.random() * 10) + 5;
 			int random4 = (int) (Math.random() * 10) + 5;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			random5 = (int) (Math.random() * 10) + 5;
@@ -2398,7 +2396,7 @@ public class Milestone2PublicTests {
 			assertEquals("performTurn should perform the main functionalities throughout each turn including finalizing the turns with the correct number of turns", random5+1,numberOfTurnsField.get(battle));
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2416,7 +2414,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2471,9 +2469,9 @@ public class Milestone2PublicTests {
 			Method isLaneLost= Class.forName(lanePath).getDeclaredMethod("isLaneLost", null);
 			isLaneLost.setAccessible(true);
 
-			assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description", (boolean)isLaneLost.invoke(laneObject));;
+			assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description", (boolean)isLaneLost.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2491,7 +2489,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2549,7 +2547,7 @@ public class Milestone2PublicTests {
 			assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description",
 					((int)health.get(titan))==80);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2566,7 +2564,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2625,7 +2623,7 @@ public class Milestone2PublicTests {
 			assertTrue("passTurn should skip the turn by performing the main functionalities with the correct order as mentioned in the game description",
 					((int)health.get(titan))==80);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2643,7 +2641,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2707,9 +2705,9 @@ public class Milestone2PublicTests {
 			wallHealth.setAccessible(true);
 
 			assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description",
-					((int)wallHealth.get(wall))==50);;
+					((int)wallHealth.get(wall))==50);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2727,7 +2725,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2795,9 +2793,9 @@ public class Milestone2PublicTests {
 			assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description",
 					((int)health.get(titan))==0);
 			assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description",
-					((int)wallHealth.get(wall))==50);;
+					((int)wallHealth.get(wall))==50);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2880,7 +2878,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -2945,15 +2943,16 @@ public class Milestone2PublicTests {
 			while(!dangerLevel.isEmpty()) {
 				Object lane= dangerLevel.poll();
 				Object l=((PriorityQueue<Object>) (lanesField.get(battle))).poll();
-				if(l== null)
+				if(l== null) {
 					fail("Add turn titans should not remove any lane from the battle lanes");
+				}
 
 				assertTrue("Lanes should be sorted correctly after calling addTurnTitansToLane",lane.equals(l) );
 			}
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2971,7 +2970,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -3041,8 +3040,9 @@ public class Milestone2PublicTests {
 			while(!dangerLevel.isEmpty()) {
 				int dl= dangerLevel.poll();
 				Object lane=((PriorityQueue<Object>) (lanesField.get(battle))).poll();
-				if(lane== null)
+				if(lane== null) {
 					fail("Add turn titans should not remove any lane from the battle lanes");
+				}
 				int laneDL= dangerLevelFieldLane.getInt(lane);
 
 				assertTrue("performTurn should perform the main functionalities with the correct order as mentioned in the game description, "
@@ -3051,7 +3051,7 @@ public class Milestone2PublicTests {
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3069,7 +3069,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -3136,8 +3136,9 @@ public class Milestone2PublicTests {
 			while(!dangerLevel.isEmpty()) {
 				int dl= dangerLevel.poll();
 				Object lane=((PriorityQueue<Object>) (lanesField.get(battle))).poll();
-				if(lane== null)
+				if(lane== null) {
 					fail("Add turn titans should not remove any lane from the battle lanes");
+				}
 				int laneDL= dangerLevelFieldLane.getInt(lane);
 
 				assertTrue("pass turn should perform skipping the turn including performing the main functionalities with the correct order as mentioned in the game description, "
@@ -3146,7 +3147,7 @@ public class Milestone2PublicTests {
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3165,7 +3166,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field battlePhase= Class.forName(battlePath).getDeclaredField("battlePhase");
@@ -3241,8 +3242,9 @@ public class Milestone2PublicTests {
 			while(!dangerLevel.isEmpty()) {
 				int dl= dangerLevel.poll();
 				Object lane=((PriorityQueue<Object>) (lanesField.get(battle))).poll();
-				if(lane== null)
+				if(lane== null) {
 					fail("Add turn titans should not remove any lane from the battle lanes");
+				}
 				int laneDL= dangerLevelFieldLane.getInt(lane);
 
 				assertTrue("pass turn should perform skipping the turn including performing the main functionalities with the correct order as mentioned in the game description, "
@@ -3251,7 +3253,7 @@ public class Milestone2PublicTests {
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3259,7 +3261,7 @@ public class Milestone2PublicTests {
 		}
 
 	}
-	
+
 	@Test(timeout=1000)
 	public void testPerformTurnTitanAttackBeforeAddTitan() {
 
@@ -3270,7 +3272,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 			Field turnTitansField= Class.forName(battlePath).getDeclaredField("numberOfTitansPerTurn");
 			turnTitansField.setAccessible(true);
@@ -3367,7 +3369,7 @@ public class Milestone2PublicTests {
 
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3384,7 +3386,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 			Field turnTitansField= Class.forName(battlePath).getDeclaredField("numberOfTitansPerTurn");
 			turnTitansField.setAccessible(true);
@@ -3480,7 +3482,7 @@ public class Milestone2PublicTests {
 
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3493,7 +3495,7 @@ public class Milestone2PublicTests {
 
 	@Test(timeout=1000)
 	public void testAddTurnTitansOriginalLanes() {
-		
+
 		Constructor<?> battleConstructor;
 
 		try {
@@ -3502,7 +3504,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -3550,7 +3552,7 @@ public class Milestone2PublicTests {
 			lanesPQ.add(laneObject2);
 			lanesPQ.add(laneObject);
 			lanesField.set(battle, lanesPQ);
-			
+
 			originalLanes.add(laneObject3);
 			originalLanes.addAll(lanesPQ);
 			originalLanesField.set(battle, originalLanes);
@@ -3598,7 +3600,7 @@ public class Milestone2PublicTests {
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3616,7 +3618,7 @@ public class Milestone2PublicTests {
 			int random2 = (int) (Math.random() * 10) + 1;
 			int random3 = (int) (Math.random() * 10) + 1;
 			int random4 = (int) (Math.random() * 10) + 1;
-			int random5 = (int) (Math.random() * 10) + 1; 
+			int random5 = (int) (Math.random() * 10) + 1;
 			Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
@@ -3691,26 +3693,26 @@ public class Milestone2PublicTests {
 			m.setAccessible(true);
 			m.invoke(battle);
 
-			assertTrue("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once", 
+			assertTrue("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((ArrayList<Object>)approachingTitans.get(battle)).size()==2);
 			assertTrue("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((PriorityQueue<Object>)titansLaneField.get(laneObject4)).contains(titan));
 			assertTrue("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((PriorityQueue<Object>)titansLaneField.get(laneObject4)).contains(titan2));
-			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once", 
+			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((PriorityQueue<Object>)titansLaneField.get(laneObject4)).contains(titan3));
-			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once", 
+			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((PriorityQueue<Object>)titansLaneField.get(laneObject4)).contains(titan4));
-			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once", 
+			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((ArrayList<Object>)approachingTitans.get(battle)).contains(titan));
-			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once", 
+			assertFalse("passTurn should only skip the turn by calling perform turn to excute the main functionalities only once",
 					((ArrayList<Object>)approachingTitans.get(battle)).contains(titan2));
 
 
 
 
 		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
-				InstantiationException | IllegalAccessException | IllegalArgumentException | 
+				InstantiationException | IllegalAccessException | IllegalArgumentException |
 				InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3753,7 +3755,7 @@ public class Milestone2PublicTests {
 					"The method addTitan(Titan titan) should add the input titan to the priorityQueue of titans."+"The titan",abnormalTitan, t.peek());
 
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3793,21 +3795,26 @@ public class Milestone2PublicTests {
 			else {
 				for(int i=0;i<3;i++) {
 
-					if(t.get(i).getClass() != Class.forName(PureTitanClassPath))
+					if(t.get(i).getClass() != Class.forName(PureTitanClassPath)) {
 						correct=false;
+					}
 
 				}
-				if(t.get(3).getClass() != Class.forName(AbnormalTitanClassPath))
+				if(t.get(3).getClass() != Class.forName(AbnormalTitanClassPath)) {
 					correct=false;
+				}
 
-				if(t.get(4).getClass() != Class.forName(PureTitanClassPath))
+				if(t.get(4).getClass() != Class.forName(PureTitanClassPath)) {
 					correct=false;
+				}
 
-				if(t.get(5).getClass() != Class.forName(ArmoredTitanClassPath))
+				if(t.get(5).getClass() != Class.forName(ArmoredTitanClassPath)) {
 					correct=false;
+				}
 
-				if(t.get(6).getClass() != Class.forName(ColossalTitanClassPath))
+				if(t.get(6).getClass() != Class.forName(ColossalTitanClassPath)) {
 					correct=false;
+				}
 
 			}
 
@@ -3815,7 +3822,7 @@ public class Milestone2PublicTests {
 					"The method refillApproachingTitans() should refill the approaching titans based on the titans codes present in the current phase"+"",true, correct);
 
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3832,7 +3839,7 @@ public class Milestone2PublicTests {
 		int initialNumOfLanes = (int) (Math.random() * 10) + 1;
 		int initialResourcesPerLane = (int) (Math.random() * 10) + 1;
 		try {
-			Constructor<?> constructor = Class.forName(battlePath).getConstructor( int.class, int.class, int.class,int.class, int.class);	
+			Constructor<?> constructor = Class.forName(battlePath).getConstructor( int.class, int.class, int.class,int.class, int.class);
 			Object b = constructor.newInstance(numberOfTurns, score, titanSpawnDistance,initialNumOfLanes,initialResourcesPerLane);
 			Object intense= Enum.valueOf((Class<Enum>) Class.forName(battlePhasePath), "INTENSE");
 			Field f = null;
@@ -3854,21 +3861,26 @@ public class Milestone2PublicTests {
 			else {
 				for(int i=0;i<3;i++) {
 
-					if(t.get(i).getClass() != Class.forName(AbnormalTitanClassPath))
+					if(t.get(i).getClass() != Class.forName(AbnormalTitanClassPath)) {
 						correct=false;
+					}
 
 				}
-				if(t.get(3).getClass() != Class.forName(PureTitanClassPath))
+				if(t.get(3).getClass() != Class.forName(PureTitanClassPath)) {
 					correct=false;
+				}
 
-				if(t.get(4).getClass() != Class.forName(ArmoredTitanClassPath))
+				if(t.get(4).getClass() != Class.forName(ArmoredTitanClassPath)) {
 					correct=false;
+				}
 
-				if(t.get(5).getClass() != Class.forName(ArmoredTitanClassPath))
+				if(t.get(5).getClass() != Class.forName(ArmoredTitanClassPath)) {
 					correct=false;
+				}
 
-				if(t.get(6).getClass() != Class.forName(ColossalTitanClassPath))
+				if(t.get(6).getClass() != Class.forName(ColossalTitanClassPath)) {
 					correct=false;
+				}
 
 			}
 
@@ -3876,7 +3888,7 @@ public class Milestone2PublicTests {
 					"The method refillApproachingTitans() should refill the approaching titans based on the titans codes present in the current phase"+"",true, correct);
 
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3911,11 +3923,12 @@ public class Milestone2PublicTests {
 			ArrayList<Object> t =(ArrayList<Object>) f2.get(b);
 			Field f3=null;
 			boolean correct =true;
-			for(int i=0;i<t.size();i++) {
-				f3=t.get(i).getClass().getSuperclass().getDeclaredField("distanceFromBase");
+			for (Object element : t) {
+				f3=element.getClass().getSuperclass().getDeclaredField("distanceFromBase");
 				f3.setAccessible(true);
-				if((int)f3.get(t.get(i))!=titanSpawnDistance)
+				if((int)f3.get(element)!=titanSpawnDistance) {
 					correct = false;
+				}
 
 			}
 
@@ -3923,7 +3936,7 @@ public class Milestone2PublicTests {
 					"The method refillApproachingTitans() should refill the approaching titans with the correct distance."+"",true, correct);
 
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -3958,11 +3971,12 @@ public class Milestone2PublicTests {
 			boolean correct = true;
 			Field f3=null;
 
-			for(int i=0;i<t.size();i++) {
-				f3=t.get(i).getClass().getSuperclass().getDeclaredField("distanceFromBase");
+			for (Object element : t) {
+				f3=element.getClass().getSuperclass().getDeclaredField("distanceFromBase");
 				f3.setAccessible(true);
-				if((int)f3.get(t.get(i))!=titanSpawnDistance)
+				if((int)f3.get(element)!=titanSpawnDistance) {
 					correct = false;
+				}
 
 			}
 
@@ -3970,7 +3984,7 @@ public class Milestone2PublicTests {
 					"The method refillApproachingTitans() should refill the approaching titans with the correct distance."+"",true, correct);
 
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4005,10 +4019,10 @@ public class Milestone2PublicTests {
 			Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Constructor<?> wallConstructor = Class.forName(wallPath).getConstructor(int.class);
 			Constructor<?> pureTitanConstructor = Class.forName(PureTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
-			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);		
+			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Constructor<?> abnormalTitanconstructor = Class.forName(AbnormalTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
 			Object abnormalTitan =  abnormalTitanconstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
-			Object pureTitan2 = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);		
+			Object pureTitan2 = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Object abnormalTitan2 =  abnormalTitanconstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 
 			Object wall1 = wallConstructor.newInstance(1);
@@ -4072,23 +4086,27 @@ public class Milestone2PublicTests {
 			f5.setAccessible(true);
 			PriorityQueue<Object> titans = (PriorityQueue<Object>) f5.get(lane1);
 
-			if(titans.size()!=3)
+			if(titans.size()!=3) {
 				correct=false;
+			}
 
-			if(titans.poll()!=pureTitan)
+			if(titans.poll()!=pureTitan) {
 				correct=false;
+			}
 
-			if(titans.poll()!=pureTitan2)
+			if(titans.poll()!=pureTitan2) {
 				correct=false;
+			}
 
-			if(titans.poll()!=abnormalTitan)
+			if(titans.poll()!=abnormalTitan) {
 				correct=false;
+			}
 
 			assertEquals(
 					"The method addTurnTitansToLane() should add titans from approachingTitans to the least dangerous active lane based on the numberOfTitansPerTurn."+"",true, correct);
 
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4118,7 +4136,7 @@ public class Milestone2PublicTests {
 			Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Constructor<?> wallConstructor = Class.forName(wallPath).getConstructor(int.class);
 			Constructor<?> pureTitanConstructor = Class.forName(PureTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
-			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);		
+			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Object wall1 = wallConstructor.newInstance(1);
 			Object lane1 = laneConstructor.newInstance(wall1);
 			Object wall2 = wallConstructor.newInstance(2);
@@ -4166,16 +4184,18 @@ public class Milestone2PublicTests {
 			t =(ArrayList<Object>) f3.get(b);
 			boolean correct = true;
 
-			if(t.size()==0)
+			if(t.size()==0) {
 				correct=false;
+			}
 
-			if(t.size()!=6)
+			if(t.size()!=6) {
 				correct=false;
+			}
 
 			assertEquals(
 					"The method addTurnTitansToLane() should refill approachingTitans."+"",true, correct);
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4205,7 +4225,7 @@ public class Milestone2PublicTests {
 			Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Constructor<?> wallConstructor = Class.forName(wallPath).getConstructor(int.class);
 			Constructor<?> pureTitanConstructor = Class.forName(PureTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
-			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);		
+			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Constructor<?> abnormalTitanconstructor = Class.forName(AbnormalTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
 			Object abnormalTitan =  abnormalTitanconstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Object wall1 = wallConstructor.newInstance(1);
@@ -4258,12 +4278,13 @@ public class Milestone2PublicTests {
 
 			t =(ArrayList<Object>) f3.get(b);
 			boolean correct = true;
-			if(t.size()>2)
+			if(t.size()>2) {
 				correct=false;
+			}
 			assertEquals(
 					"The method addTurnTitansToLane() should not refill approachingTitans if it was not empty."+"",true, correct);
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4296,10 +4317,10 @@ public class Milestone2PublicTests {
 			Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Constructor<?> wallConstructor = Class.forName(wallPath).getConstructor(int.class);
 			Constructor<?> pureTitanConstructor = Class.forName(PureTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
-			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);		
+			Object pureTitan = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Constructor<?> abnormalTitanconstructor = Class.forName(AbnormalTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
 			Object abnormalTitan =  abnormalTitanconstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
-			Object pureTitan2 = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);		
+			Object pureTitan2 = pureTitanConstructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			Object wall1 = wallConstructor.newInstance(1);
 			Object lane1 = laneConstructor.newInstance(wall1);
 			Object wall2 = wallConstructor.newInstance(2);
@@ -4354,12 +4375,13 @@ public class Milestone2PublicTests {
 
 			t =(ArrayList<Object>) f3.get(b);
 			boolean correct = true;
-			if(t.size()!=6)
+			if(t.size()!=6) {
 				correct=false;
+			}
 			assertEquals(
 					"The method addTurnTitansToLane() should refill approachingTitans if it became empty."+"",true, correct);
 		}
-		catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4406,7 +4428,7 @@ public class Milestone2PublicTests {
 			assertTrue("Removing titan while moving lane failure", titansPQ.contains(titan2));
 			assertTrue("Removing titan while moving lane failure", titansPQ.contains(titan));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4472,7 +4494,7 @@ public class Milestone2PublicTests {
 				assertEquals("ALL titans inside a lane should move when calling moveLaneTitans",expected ,actual);
 			}
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4514,7 +4536,7 @@ public class Milestone2PublicTests {
 
 			assertTrue("moveLaneTitans should NOT remove any titan that has already reached their destination",titansPQ.contains(titan));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4562,7 +4584,7 @@ public class Milestone2PublicTests {
 			assertTrue("No Titans should be removed from the queue when moving the titans in a lane",titansPQ.contains(titan2));
 			assertTrue("No Titans should be removed from the queue when moving the titans in a lane",titansPQ.contains(titan3));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4621,15 +4643,16 @@ public class Milestone2PublicTests {
 			}
 			while (!titansPQ.isEmpty()) {
 				Object object = titansPQ.poll();
-				if(object==null)
+				if(object==null) {
 					fail("Titans should be sorted correctly after moving, and no titans should be removed");
+				}
 				assertTrue("Titans should be sorted correctly after moving",object.equals(array.get(i)));
 				i++;
 
 			}
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4669,7 +4692,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("performLaneTitansAttacks should return the correct gained values from the titans attacks in the lane on the wall", 0,performLaneTitansAttacks.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4713,7 +4736,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("performLaneTitansAttacks should return the correct gained values from the titans attacks in the lane on the wall", -2,moveLaneTitans.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4756,7 +4779,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("performLaneTitansAttacks should return the correct gained values from the titans that reached the wall in the lane",0 ,moveLaneTitans.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4792,7 +4815,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("performLaneWeaponsAttacks should return the correct gained values from the weapons attack",0 ,weaponAttack.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4837,7 +4860,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("performLaneWeaponsAttacks should return the correct gained values from the weapons attack",30 ,weaponAttack.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4886,7 +4909,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("performLaneWeaponsAttacks should return the correct gained values from the weapons attack",returnedR ,weaponAttack.invoke(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4914,7 +4937,7 @@ public class Milestone2PublicTests {
 
 			assertTrue("The lane is not lost unless its wall is destroyed ", !(boolean)(isLaneLostMethod.invoke(laneObject)));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4946,7 +4969,7 @@ public class Milestone2PublicTests {
 
 			assertTrue("The lane is lost only when its wall is destroied ", (boolean)(isLaneLostMethod.invoke(laneObject)));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -4991,7 +5014,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("The lane danger level is not updated correctly for ALL the titans inside the lane.", dangerLevel,dangerLevelField.get(laneObject));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -5770,26 +5793,26 @@ public class Milestone2PublicTests {
 			Method getWeaponShop = weaponFactoryClass.getDeclaredMethod("getWeaponShop");
 
 			HashMap<Integer, Object> weaponShop_expected_shallow = (HashMap<Integer, Object>) getWeaponShop.invoke(weaponFactory);
-			HashMap<Integer, Object> weaponShop_expected = new HashMap<Integer, Object>();
-			
-			
+			HashMap<Integer, Object> weaponShop_expected = new HashMap<>();
+
+
 			for (Map.Entry<Integer, Object> entry : weaponShop_expected_shallow.entrySet()) {
 				weaponShop_expected.put(entry.getKey(), entry.getValue());
 			}
 			weaponShop_expected.put(code, weaponRegistry);
-			
-	
+
+
 
 			Class[] attributes = {int.class, int.class};
 			Method addWeaponToShopMethod = weaponFactoryClass.getDeclaredMethod("addWeaponToShop", attributes);
 			addWeaponToShopMethod.invoke(weaponFactory, code, price);
-		
+
 			HashMap<Integer, Object> weaponShop_actual_shallow = (HashMap<Integer, Object>) getWeaponShop.invoke(weaponFactory);
-			HashMap<Integer, Object> weaponShop_actual = new HashMap<Integer, Object>();
+			HashMap<Integer, Object> weaponShop_actual = new HashMap<>();
 			for (Map.Entry<Integer, Object> entry : weaponShop_actual_shallow.entrySet()) {
 				weaponShop_actual.put(entry.getKey(), entry.getValue());
 			}
-	
+
 			assertEquals("The 2 hashmaps should have equal size", weaponShop_expected.size(), weaponShop_actual.size());
 
 
@@ -5826,7 +5849,7 @@ public class Milestone2PublicTests {
 			Method getWeaponShop = weaponFactoryClass.getDeclaredMethod("getWeaponShop");
 
 			HashMap<Integer, Object> weaponShop_expected_shallow = (HashMap<Integer, Object>) getWeaponShop.invoke(weaponFactory);
-			HashMap<Integer, Object> weaponShop_expected = new HashMap<Integer, Object>();
+			HashMap<Integer, Object> weaponShop_expected = new HashMap<>();
 			for (Map.Entry<Integer, Object> entry : weaponShop_expected_shallow.entrySet()) {
 				weaponShop_expected.put(entry.getKey(), entry.getValue());
 			}
@@ -5839,7 +5862,7 @@ public class Milestone2PublicTests {
 
 
 			HashMap<Integer, Object> weaponShop_actual_shallow = (HashMap<Integer, Object>) getWeaponShop.invoke(weaponFactory);
-			HashMap<Integer, Object> weaponShop_actual = new HashMap<Integer, Object>();
+			HashMap<Integer, Object> weaponShop_actual = new HashMap<>();
 			for (Map.Entry<Integer, Object> entry : weaponShop_actual_shallow.entrySet()) {
 				weaponShop_actual.put(entry.getKey(), entry.getValue());
 			}
@@ -5962,8 +5985,9 @@ public class Milestone2PublicTests {
 			Object weaponRegistry = weaponShop_expected_shallow.get(code);
 			int price = (int) getRegistryPrice.invoke(weaponRegistry, null);
 
-			while (price > resources)
+			while (price > resources) {
 				resources = (int) (Math.random() * 200) + 300;
+			}
 
 			Method buildWeaponMethod = weaponRegistryClass.getDeclaredMethod("buildWeapon", null);
 			Object weapon = buildWeaponMethod.invoke(weaponRegistry, null);
@@ -6011,8 +6035,9 @@ public class Milestone2PublicTests {
 			Object weaponRegistry = weaponShop_expected_shallow.get(code);
 			int price = (int) getRegistryPrice.invoke(weaponRegistry, null);
 
-			while (price > resources)
+			while (price > resources) {
 				resources = (int) (Math.random() * 200) + 300;
+			}
 
 			Method buildWeaponMethod = weaponRegistryClass.getDeclaredMethod("buildWeapon", null);
 			Object weapon = buildWeaponMethod.invoke(weaponRegistry, null);
@@ -6067,8 +6092,9 @@ public class Milestone2PublicTests {
 			Object weaponRegistry = weaponShop_expected_shallow.get(code);
 			int price = (int) getRegistryPrice.invoke(weaponRegistry, null);
 
-			while (price > resources)
+			while (price > resources) {
 				resources = (int) (Math.random() * 200) + 300;
+			}
 
 			Method buildWeaponMethod = weaponRegistryClass.getDeclaredMethod("buildWeapon", null);
 			Object weapon = buildWeaponMethod.invoke(weaponRegistry, null);
@@ -6131,7 +6157,7 @@ public class Milestone2PublicTests {
 
 			Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(wallClass);
 			Object lane = laneConstructor.newInstance(wall);
-			purchase_weapon.invoke(battle,weaponCode,lane); 
+			purchase_weapon.invoke(battle,weaponCode,lane);
 			fail("Expected InvalidLaneException was not thrown");
 		} catch (InvocationTargetException e) {
 			Throwable thrownException = e.getTargetException();
@@ -6143,10 +6169,10 @@ public class Milestone2PublicTests {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statement."+e.getClass()+" occurred");
 		}
-	}	
+	}
 	@Test(timeout = 1000)
 	public void testPurchaseWeaponFailCase2() {
-		
+
 		Class<?> InvalidLaneException = null;
 		try {
 			int numberOfTurns = (int) (Math.random() * 20) + 1;
@@ -6154,34 +6180,34 @@ public class Milestone2PublicTests {
 			int titanSpawnDistance = (int) (Math.random() * 20) + 1;
 			int initialNumOfLanes = (int) (Math.random() * 20) + 1;
 			int initialResourcesPerLane = (int) (Math.random() * 20) + 1;
-			
+
 			int wallHealth = (int)(Math.random()*20)+10001;
 			int weaponCode = (int)(Math.random()*4)+1;
-			
+
 			InvalidLaneException = Class.forName(invalidLaneExceptionPath);
 			Class laneClass = Class.forName(lanePath);
-			
+
 			Class battleClass = Class.forName(battlePath);
 			Constructor<?> battleConstructor = Class.forName(battlePath).getConstructor(int.class,int.class,int.class,int.class,int.class);
 			Object battle = battleConstructor.newInstance(numberOfTurns,score,titanSpawnDistance,initialNumOfLanes,initialResourcesPerLane);
-			
+
 			Class [] attributes = {int.class,laneClass};
 			Method purchase_weapon = battleClass.getDeclaredMethod("purchaseWeapon", attributes);
-			
+
 			Class wallClass = Class.forName(wallPath);
 			Constructor<?> wallConstructor = Class.forName(wallPath).getConstructor(int.class);
 			Object wall = wallConstructor.newInstance(wallHealth);
-			
+
 			Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(wallClass);
 			Object lane = laneConstructor.newInstance(wall);
-			
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
 			originalLanes.add(lane);
 			originalLanesField.set(battle, originalLanes);
-			
-			purchase_weapon.invoke(battle,weaponCode,lane); 
+
+			purchase_weapon.invoke(battle,weaponCode,lane);
 			fail("Expected InvalidLaneException was not thrown");
 		} catch (InvocationTargetException e) {
 			Throwable thrownException = e.getTargetException();
@@ -6193,7 +6219,7 @@ public class Milestone2PublicTests {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statement."+e.getClass()+" occurred");
 		}
-	}	
+	}
 
 
 	@Test(timeout = 1000)
@@ -6243,8 +6269,9 @@ public class Milestone2PublicTests {
 			Method getWeapons = laneClass.getDeclaredMethod("getWeapons", null);
 			ArrayList<Object> weaponsShallowExpected = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColExpected = new ArrayList<>();
-			for (Object weapon : weaponsShallowExpected)
+			for (Object weapon : weaponsShallowExpected) {
 				weaponsDeepColExpected.add(weapon);
+			}
 			weaponsDeepColExpected.add(purchasedWeapon);
 
 
@@ -6257,7 +6284,7 @@ public class Milestone2PublicTests {
 
 			originalLanes.addAll(lanes);
 			originalLanesField.set(battle, originalLanes);
-//			
+//
 			Class[] attributes = {int.class, laneClass};
 			Method purchase_weapon = battleClass.getDeclaredMethod("purchaseWeapon", attributes);
 			purchase_weapon.invoke(battle, weaponCode, lane);
@@ -6265,8 +6292,9 @@ public class Milestone2PublicTests {
 
 			ArrayList<Object> weaponsShallowActual = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColActual = new ArrayList<>();
-			for (Object weapon : weaponsShallowActual)
+			for (Object weapon : weaponsShallowActual) {
 				weaponsDeepColActual.add(weapon);
+			}
 
 			boolean equalContent = false;
 			for (int i = 0; i < weaponsDeepColActual.size(); i++) {
@@ -6324,22 +6352,23 @@ public class Milestone2PublicTests {
 			Method getWeapons = laneClass.getDeclaredMethod("getWeapons", null);
 			ArrayList<Object> weaponsShallowExpected = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColExpected = new ArrayList<>();
-			for (Object weapon : weaponsShallowExpected)
+			for (Object weapon : weaponsShallowExpected) {
 				weaponsDeepColExpected.add(weapon);
+			}
 			weaponsDeepColExpected.add(purchasedWeapon);
 
 
 			Method getLanes = battleClass.getDeclaredMethod("getLanes", null);
 			PriorityQueue<Object> lanes = (PriorityQueue<Object>) getLanes.invoke(battle, null);
 			lanes.add(lane);
-			
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
 
 			originalLanes.addAll(lanes);
 			originalLanesField.set(battle, originalLanes);
-//			
+//
 
 			Class[] attributes = {int.class, laneClass};
 			Method purchase_weapon = battleClass.getDeclaredMethod("purchaseWeapon", attributes);
@@ -6348,8 +6377,9 @@ public class Milestone2PublicTests {
 
 			ArrayList<Object> weaponsShallowActual = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColActual = new ArrayList<>();
-			for (Object weapon : weaponsShallowActual)
+			for (Object weapon : weaponsShallowActual) {
 				weaponsDeepColActual.add(weapon);
+			}
 
 			boolean equalContent = false;
 			for (int i = 0; i < weaponsDeepColActual.size(); i++) {
@@ -6424,7 +6454,7 @@ public class Milestone2PublicTests {
 
 			originalLanes.addAll(lanes);
 			originalLanesField.set(battle, originalLanes);
-//			
+//
 			Class[] attributes = {int.class, laneClass};
 			Method purchase_weapon = battleClass.getDeclaredMethod("purchaseWeapon", attributes);
 			purchase_weapon.invoke(battle, weaponCode, lane);
@@ -6483,7 +6513,7 @@ public class Milestone2PublicTests {
 
 			originalLanes.addAll(lanes);
 			originalLanesField.set(battle, originalLanes);
-//			
+//
 			Class[] attributes = {int.class, laneClass};
 			Method purchase_weapon = battleClass.getDeclaredMethod("purchaseWeapon", attributes);
 
@@ -6539,8 +6569,8 @@ public class Milestone2PublicTests {
 			Field lanesField= Class.forName(battlePath).getDeclaredField("lanes");
 			lanesField.setAccessible(true);
 			PriorityQueue<Object> lanesPQ= new PriorityQueue<>();
-			
-			
+
+
 
 			Constructor<?> constructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 			Object laneObject =  constructor.newInstance(createWall());
@@ -6564,14 +6594,14 @@ public class Milestone2PublicTests {
 			lanesPQ.add(laneObject);
 
 			lanesField.set(battle, lanesPQ);
-			
+
 			Field originalLanesField= Class.forName(battlePath).getDeclaredField("originalLanes");
 			originalLanesField.setAccessible(true);
 			ArrayList<Object> originalLanes= new ArrayList<>();
 
 			originalLanes.addAll(lanesPQ);
 			originalLanesField.set(battle, originalLanes);
-//			
+//
 
 			Class<?> weaponFactoryClass = Class.forName(weaponFactoryPath);
 			Constructor<?> weaponFactoryConstructor = Class.forName(weaponFactoryPath).getConstructor();
@@ -6608,18 +6638,19 @@ public class Milestone2PublicTests {
 			Field health= Class.forName(titanClassPath).getDeclaredField("currentHealth");
 			health.setAccessible(true);
 
-			if((originalHealthValue - damage)<0)
+			if((originalHealthValue - damage)<0) {
 				assertTrue("purchase weapon should perform the main functionalities with the correct order",
 						((int)health.get(abnormalTitan))==0);
-			else
+			} else {
 				assertTrue("purchase weapon should perform the main functionalities with the correct order",
 						((int)health.get(abnormalTitan))==(originalHealthValue - damage));
+			}
 
 		}catch(NullPointerException| InvocationTargetException e1) {
 			e1.printStackTrace();
 			fail("Incorrect weapon, Please check the console for the error");
 
-		} 
+		}
 		catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException  | NoSuchFieldException e) {
 			e.printStackTrace();
@@ -6651,7 +6682,7 @@ public class Milestone2PublicTests {
 
 //			originalLanes.addAll(lanesPQ);
 			originalLanesField.set(battle, originalLanes);
-//			
+//
 			boolean isGameOverOutput = (boolean) isGameOver.invoke(battle);
 			assertTrue("Expected True but was " + isGameOverOutput, isGameOverOutput);
 		}
@@ -6711,13 +6742,14 @@ public class Milestone2PublicTests {
 			isGameOver.invoke(battle);
 			PriorityQueue<Object> lanesAfterInvokation = (PriorityQueue<Object>) getLanes.invoke(battle, null);
 			PriorityQueue<Object> lanesAfterInvokationDeep = new PriorityQueue<>();
-			for(Object l: lanesAfterInvokation) 
+			for(Object l: lanesAfterInvokation) {
 				lanesAfterInvokationDeep.add(l);
+			}
 			int sizeOfLanesAfterInvokation = lanesAfterInvokationDeep.size();
 
 			boolean wallsEquality = true;
 			if(sizeOfLanesBeforeInvokation == sizeOfLanesAfterInvokation) {
-				while(!lanesBeforeInvokationDeep.isEmpty() && wallsEquality == true) {
+				while(!lanesBeforeInvokationDeep.isEmpty() && wallsEquality) {
 					Object l1 = lanesBeforeInvokationDeep.poll();
 					Object l2 = lanesAfterInvokationDeep.poll();
 					Object w1 = getWall.invoke(l1, null);
@@ -6759,7 +6791,7 @@ public class Milestone2PublicTests {
 			Method addT = laneClass.getDeclaredMethod("addTitan", Class.forName(titanClassPath));
 			for(Object l: lanesBeforeInvokation) {
 				addT.invoke(l, abnormalTitan1);
-			}			
+			}
 			Method isGameOver = battleClass.getDeclaredMethod("isGameOver", null);
 			isGameOver.invoke(battle);
 			Method getTitans = laneClass.getDeclaredMethod("getTitans", null);
@@ -6813,7 +6845,7 @@ public class Milestone2PublicTests {
 			Method addT = laneClass.getDeclaredMethod("addTitan", Class.forName(titanClassPath));
 			for(Object l: lanesBeforeInvokation) {
 				addT.invoke(l, abnormalTitan1);
-			}			
+			}
 			Method isGameOver = battleClass.getDeclaredMethod("isGameOver", null);
 			isGameOver.invoke(battle);
 
@@ -6851,8 +6883,9 @@ public class Milestone2PublicTests {
 
 			ArrayList<Object> weaponsShallowExpected = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColExpected = new ArrayList<>();
-			for (Object w : weaponsShallowExpected)
+			for (Object w : weaponsShallowExpected) {
 				weaponsDeepColExpected.add(w);
+			}
 			weaponsDeepColExpected.add(weapon);
 
 			Method method = laneClass.getDeclaredMethod("addWeapon", WeaponClass);
@@ -6860,8 +6893,9 @@ public class Milestone2PublicTests {
 
 			ArrayList<Object> weaponsShallowActual = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColActual = new ArrayList<>();
-			for (Object w1 : weaponsShallowActual)
+			for (Object w1 : weaponsShallowActual) {
 				weaponsDeepColActual.add(w1);
+			}
 
 			boolean equalContent = false;
 			for (int i = 0; i < weaponsDeepColActual.size(); i++) {
@@ -6897,8 +6931,9 @@ public class Milestone2PublicTests {
 
 			ArrayList<Object> weaponsShallowExpected = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColExpected = new ArrayList<>();
-			for (Object w : weaponsShallowExpected)
+			for (Object w : weaponsShallowExpected) {
 				weaponsDeepColExpected.add(w);
+			}
 			weaponsDeepColExpected.add(weapon);
 
 			Method method = laneClass.getDeclaredMethod("addWeapon", WeaponClass);
@@ -6906,8 +6941,9 @@ public class Milestone2PublicTests {
 
 			ArrayList<Object> weaponsShallowActual = (ArrayList<Object>) getWeapons.invoke(lane, null);
 			ArrayList<Object> weaponsDeepColActual = new ArrayList<>();
-			for (Object w1 : weaponsShallowActual)
+			for (Object w1 : weaponsShallowActual) {
 				weaponsDeepColActual.add(w1);
+			}
 
 			boolean equalContent = false;
 			for (int i = 0; i < weaponsDeepColActual.size(); i++) {
@@ -6942,7 +6978,7 @@ public class Milestone2PublicTests {
 			assertEquals("isDefeated Method should return false if the currentHealth = 0", true, isDefeated.invoke(wall));
 
 		} catch (ClassNotFoundException| NoSuchMethodException| SecurityException|
-				InstantiationException| IllegalAccessException| IllegalArgumentException| 
+				InstantiationException| IllegalAccessException| IllegalArgumentException|
 				InvocationTargetException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -6953,7 +6989,7 @@ public class Milestone2PublicTests {
 
 	@Test(timeout=1000)
 	public void testTakeDamageLogic() {
-		try {		
+		try {
 			Class aClass = Class.forName(wallPath);
 			Constructor<?> constructor = aClass.getConstructor(int.class);
 			int baseHealth = (int) (Math.random() * 20) + 10;
@@ -6981,12 +7017,12 @@ public class Milestone2PublicTests {
 
 			// case 3 : the damage is less than the current health of the wall
 			wall = constructor.newInstance(baseHealth);
-			damage = (int) (Math.random() * 5) + 1; 
+			damage = (int) (Math.random() * 5) + 1;
 			expectedHealth = (int) getCurrentHealth.invoke(wall) - damage;
 			result = (int) takeDamage.invoke(wall, damage); // invoke the method
 			assertEquals("You have to set the currentHealth correctly", expectedHealth, getCurrentHealth.invoke(wall));
 			assertEquals("The method should return 0 if the wall is not defeated", 0, result);
-		} 
+		}
 		catch (ClassNotFoundException| NoSuchMethodException| SecurityException|
 				InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
 			// TODO: handle exception
@@ -7003,13 +7039,13 @@ public class Milestone2PublicTests {
 		try {
 			Class wallClass = Class.forName(wallPath);
 			Constructor<?> constructor1 = wallClass.getConstructor(int.class);
-			int baseHealth = (int) (Math.random() * 10) + 1; 
+			int baseHealth = (int) (Math.random() * 10) + 1;
 			Object wall = constructor1.newInstance(baseHealth);
 			Class pureTitanClass = Class.forName(pureTitanPath);
 			Constructor<?> constructor2 = pureTitanClass.getConstructor(int.class, int.class, int.class, int.class,
 					int.class, int.class, int.class);
 			int health = (int) (Math.random() * 10) + 1;
-			int damage = (int) (Math.random() * 20) + 10 + baseHealth; 
+			int damage = (int) (Math.random() * 20) + 10 + baseHealth;
 			int heightInMeters = (int) (Math.random() * 10) + 1;
 			int distanceFromBase = (int) (Math.random() * 10) + 1;
 			int speed = (int) (Math.random() * 10) + 1;
@@ -7108,7 +7144,7 @@ public class Milestone2PublicTests {
 			pureTitan = constructor2.newInstance(health, damage, heightInMeters, 0, speed, resourcesValue, dangerLevel);
 			result = (boolean) hasReachedTarget.invoke(pureTitan);
 			assertEquals("The method should return false if the titan did not reach", true, result);
-		} 
+		}
 		catch (ClassNotFoundException| NoSuchMethodException| SecurityException| InstantiationException|
 				IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
 			// TODO: handle exception
@@ -7151,8 +7187,8 @@ public class Milestone2PublicTests {
 			int damage = (int) (Math.random() * 10) + 1;
 			int health = (int) (Math.random() * 10) + 1;
 			int heightInMeters = (int) (Math.random() * 10) + 1;
-			int distanceFromBase = (int) (Math.random() * 20) + 11; 
-			int speed = (int) (Math.random() * 10) + 1; 
+			int distanceFromBase = (int) (Math.random() * 20) + 11;
+			int speed = (int) (Math.random() * 10) + 1;
 			int resourcesValue = (int) (Math.random() * 10) + 1;
 			int dangerLevel = (int) (Math.random() * 10) + 1;
 			Object pureTitan = constructor2.newInstance(health, damage, heightInMeters, distanceFromBase, speed,
@@ -7172,8 +7208,8 @@ public class Milestone2PublicTests {
 			assertEquals("The method should return false because the titan did not reach", false, result);
 
 			// case 2 : the titan reached
-			distanceFromBase = (int) (Math.random() * 10) + 1; 
-			speed = (int) (Math.random() * 20) + 10; 
+			distanceFromBase = (int) (Math.random() * 10) + 1;
+			speed = (int) (Math.random() * 20) + 10;
 			pureTitan = constructor2.newInstance(health, damage, heightInMeters, distanceFromBase, speed, resourcesValue,
 					dangerLevel);
 			expectedDistance = (int) getDistance.invoke(pureTitan) - (int) getSpeed.invoke(pureTitan);
@@ -7182,9 +7218,9 @@ public class Milestone2PublicTests {
 			assertEquals("The distance of the titan from the base is calculated wrongly", expectedDistance,
 					getDistance.invoke(pureTitan));
 			assertEquals("The method should return true because the titan reaches the wall", true, result);
-		} 
+		}
 		catch (ClassNotFoundException| NoSuchMethodException| SecurityException|
-				InstantiationException| IllegalAccessException| IllegalArgumentException| 
+				InstantiationException| IllegalAccessException| IllegalArgumentException|
 				InvocationTargetException  e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statement."+e.getClass()+" occurred");
@@ -7246,7 +7282,7 @@ public class Milestone2PublicTests {
 			Class abnormalTitanClass = Class.forName(abnormalTitan);
 			Constructor<?> constructor1 = abnormalTitanClass.getConstructor(int.class, int.class, int.class, int.class,
 					int.class, int.class, int.class);
-			int damage = (int) (Math.random() * 20) + 10; 
+			int damage = (int) (Math.random() * 20) + 10;
 			int health = (int) (Math.random() * 10) + 1;
 			int heightInMeters = (int) (Math.random() * 10) + 1;
 			int distanceFromBase = (int) (Math.random() * 10) + 1;
@@ -7258,7 +7294,7 @@ public class Milestone2PublicTests {
 
 			Class wallClass = Class.forName(wallPath);
 			Constructor<?> constructor2 = wallClass.getConstructor(int.class);
-			int baseHealth = (int) (Math.random() * 5) + 1; 
+			int baseHealth = (int) (Math.random() * 5) + 1;
 			Object wall = constructor2.newInstance(baseHealth);
 			Method attack = abnormalTitanClass.getDeclaredMethod("attack", Class.forName(attackeePath));
 			Method getCurrentHealth = wallClass.getDeclaredMethod("getCurrentHealth");
@@ -7275,8 +7311,8 @@ public class Milestone2PublicTests {
 
 			// case 2 : if the titan's damage <= wall's health, however wall will be
 			// defeated after the method invocation
-			damage = (int) (Math.random() * 10) + 1; 
-			baseHealth = (int) (Math.random() * damage) + damage; 
+			damage = (int) (Math.random() * 10) + 1;
+			baseHealth = (int) (Math.random() * damage) + damage;
 			abnormalTitan = constructor1.newInstance(health, damage, heightInMeters, distanceFromBase, speed,
 					resourcesValue, dangerLevel);
 			wall = constructor2.newInstance(baseHealth);
@@ -7288,7 +7324,7 @@ public class Milestone2PublicTests {
 
 			// case 3 : if the titan's damage < wall's health, and the wall will not be
 			// defeated after the method invocation
-			damage = (int) (Math.random() * 10) + 1; 
+			damage = (int) (Math.random() * 10) + 1;
 			baseHealth = (damage * 2) + (int) (Math.random() * 10) + 1;
 			abnormalTitan = constructor1.newInstance(health, damage, heightInMeters, distanceFromBase, speed,
 					resourcesValue, dangerLevel);
@@ -7298,7 +7334,7 @@ public class Milestone2PublicTests {
 			assertEquals("The current health of the wall should be " + expectedHealth, expectedHealth,
 					getCurrentHealth.invoke(wall));
 			assertEquals("The attack method should return 0 because the wall is not defeated", 0, result);
-		} 
+		}
 		catch (ClassNotFoundException| NoSuchMethodException| SecurityException| InstantiationException|
 				IllegalAccessException| IllegalArgumentException| InvocationTargetException  e) {
 			// TODO: handle exception
@@ -7349,7 +7385,7 @@ public class Milestone2PublicTests {
 			Class armoredTitanClass = Class.forName(armoredTitan);
 			Constructor<?> constructor1 = armoredTitanClass.getConstructor(int.class, int.class, int.class, int.class,
 					int.class, int.class, int.class);
-			int damage = (int) (Math.random() * 20) + 10; 
+			int damage = (int) (Math.random() * 20) + 10;
 			int health = (damage * 4) + (int) (Math.random() * 10) + 1;
 			int heightInMeters = (int) (Math.random() * 10) + 1;
 			int distanceFromBase = (int) (Math.random() * 10) + 1;
@@ -7384,13 +7420,13 @@ public class Milestone2PublicTests {
 					getCurrentHealth.invoke(armoredTitan));
 			assertEquals("the method should return the resources value as the titan is defeated",
 					getResourcesValue.invoke(armoredTitan), result);
-		} 
+		}
 		catch (ClassNotFoundException| NoSuchMethodException| SecurityException|
 				InstantiationException| IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statement."+e.getClass()+" occurred");
-		}	
+		}
 	}
 
 	@Test(timeout=1000)
@@ -7437,8 +7473,8 @@ public class Milestone2PublicTests {
 			int damage = (int) (Math.random() * 20) + 10;
 			int health = (int) (Math.random() * 20) + 10;
 			int heightInMeters = (int) (Math.random() * 10) + 1;
-			int distanceFromBase = (int) (Math.random() * 10) + 1; 
-			int speed = (int) (Math.random() * 20) + 10; 
+			int distanceFromBase = (int) (Math.random() * 10) + 1;
+			int speed = (int) (Math.random() * 20) + 10;
 			int resourcesValue = (int) (Math.random() * 10) + 1;
 			int dangerLevel = (int) (Math.random() * 10) + 1;
 			Object colossalTitanObject = constructor1.newInstance(health, damage, heightInMeters, distanceFromBase, speed,
@@ -7476,7 +7512,7 @@ public class Milestone2PublicTests {
 					getSpeed.invoke(colossalTitanObject));
 			assertEquals("the method should return false if the titan has not reached", false, result);
 
-		} 
+		}
 		catch (ClassNotFoundException| NoSuchMethodException| SecurityException| InstantiationException|
 				IllegalAccessException| IllegalArgumentException| InvocationTargetException e) {
 			// TODO: handle exception
@@ -7508,7 +7544,7 @@ public class Milestone2PublicTests {
 		}
 	}
 
-	//	
+	//
 
 
 	@Test(timeout=1000)
@@ -7574,7 +7610,7 @@ public class Milestone2PublicTests {
 
 			assertTrue("turnAttack Method of SniperWeapon fails to attack closest Titan",checkAttributesEqualValue(titanClassPath, armoredTitan1, 65, "currentHealth"));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -7614,7 +7650,7 @@ public class Milestone2PublicTests {
 			assertTrue("turnAttack Method shouldn't affect far titans",checkAttributesEqualValue(titanClassPath, abnormalTitan2, 100, "currentHealth"));
 			assertTrue("turnAttack Method shouldn't affect far titans", checkAttributesEqualValue(titanClassPath, armoredTitan2, 100, "currentHealth"));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 
 			e.printStackTrace();
@@ -7649,7 +7685,7 @@ public class Milestone2PublicTests {
 			// check dead titan was removed from queue
 
 			assertFalse("Dead titans should be removed from lane on attack",laneTitans.contains(colossalTitan2));
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException  e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -7669,7 +7705,7 @@ public class Milestone2PublicTests {
 			Method turnAttack = sniperWeaponClass.getDeclaredMethod("turnAttack", PriorityQueue.class);
 			int returnedResources = (int) turnAttack.invoke(sniperWeapon, laneTitans);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -7702,7 +7738,7 @@ public class Milestone2PublicTests {
 
 			assertEquals(3, laneTitans.size());
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException  e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -7740,9 +7776,9 @@ public class Milestone2PublicTests {
 			Method turnAttack = wallTrapWeaponClass.getDeclaredMethod("turnAttack", PriorityQueue.class);
 			int returnedResources = (int) turnAttack.invoke(wallTrapWeapon, laneTitans);
 
-			assertEquals(resourcesColossalTitan2, returnedResources); 
+			assertEquals(resourcesColossalTitan2, returnedResources);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -7791,7 +7827,7 @@ public class Milestone2PublicTests {
 			assertTrue("turnAttack Method of PiercingCannon fails to attack closest 5 Titans",checkAttributesEqualValue(titanClassPath, pureTitan1, 40, "currentHealth"));
 			assertTrue("turnAttack Method of PiercingCannon fails to attack closest 5 Titans",checkAttributesEqualValue(titanClassPath, colossalTitan1, 0, "currentHealth"));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -7835,7 +7871,7 @@ public class Milestone2PublicTests {
 			assertTrue("turnAttack Method shouldn't affect far titans",checkAttributesEqualValue(titanClassPath, colossalTitan2, 100, "currentHealth"));
 			assertTrue("turnAttack Method shouldn't affect far titans",checkAttributesEqualValue(titanClassPath, pureTitan2, 100, "currentHealth"));
 			assertTrue("turnAttack Method shouldn't affect far titans", checkAttributesEqualValue(titanClassPath, armoredTitan2, 100, "currentHealth"));
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -7879,7 +7915,7 @@ public class Milestone2PublicTests {
 
 			assertFalse("Dead titans should be removed from lane on attack",laneTitans.contains(abnormalTitan2));
 			assertFalse("Dead titans should be removed from lane on attack",laneTitans.contains(colossalTitan1));
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -7922,8 +7958,8 @@ public class Milestone2PublicTests {
 			int returnedResources = (int) turnAttack.invoke(piercingWeapon, laneTitans);
 
 
-			assertEquals("Method turnAttack should return the total retrieved resources of dead titans",40, returnedResources); 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+			assertEquals("Method turnAttack should return the total retrieved resources of dead titans",40, returnedResources);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -7947,7 +7983,7 @@ public class Milestone2PublicTests {
 			int returnedResources = (int) turnAttack.invoke(piercingWeapon, laneTitans);
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Piercing Weapon should attack the closest 5 titans only if they exist");
@@ -7992,7 +8028,7 @@ public class Milestone2PublicTests {
 			assertTrue("Living titans shouldn't be removed from lane on attack",laneTitans.contains(abnormalTitan1));
 			assertTrue("Living titans shouldn't be removed from lane on attack",laneTitans.contains(armoredTitan2));
 			assertTrue("Living titans shouldn't be removed from lane on attack",laneTitans.contains(colossalTitan2));
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -8038,7 +8074,7 @@ public class Milestone2PublicTests {
 			assertFalse("Dead titans should be removed from lane on attack",laneTitans.contains(abnormalTitan2));
 			assertFalse("Dead titans should be removed from lane on attack",laneTitans.contains(pureTitan1));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -8086,7 +8122,7 @@ public class Milestone2PublicTests {
 			assertTrue("Unattacked titans shouldn't be removed from lane on attack",laneTitans.contains(pureTitan2));
 			assertTrue("Unattacked titans shouldn't be removed from lane on attack",laneTitans.contains(armoredTitan1));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -8111,9 +8147,9 @@ public class Milestone2PublicTests {
 			Object colossalTitan1 =  constructor4.newInstance(20,  20, 10,  50, 15, 25, 2);
 
 			laneTitans.add(abnormalTitan1);
-			laneTitans.add(armoredTitan1); 
-			laneTitans.add(pureTitan1); 
-			laneTitans.add(colossalTitan1);  
+			laneTitans.add(armoredTitan1);
+			laneTitans.add(pureTitan1);
+			laneTitans.add(colossalTitan1);
 
 			Class wallTrapWeaponClass = Class.forName(wallTrapPath);
 			Constructor<?> wallTrapWeaponConstructor = wallTrapWeaponClass.getConstructor(int.class);
@@ -8124,7 +8160,7 @@ public class Milestone2PublicTests {
 
 			assertTrue("turnAttack Method of WallTrap fails to attack closest Titan which reached the wall",checkAttributesEqualValue(titanClassPath, pureTitan1, 30, "currentHealth"));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -8152,9 +8188,9 @@ public class Milestone2PublicTests {
 			Object colossalTitan1 =  constructor4.newInstance(20,  20, 10,  50, 15, 25, 2);
 
 			laneTitans.add(abnormalTitan1);
-			laneTitans.add(armoredTitan1); 
-			laneTitans.add(pureTitan1); 
-			laneTitans.add(colossalTitan1);  
+			laneTitans.add(armoredTitan1);
+			laneTitans.add(pureTitan1);
+			laneTitans.add(colossalTitan1);
 
 
 			Class wallTrapWeaponClass = Class.forName(wallTrapPath);
@@ -8169,7 +8205,7 @@ public class Milestone2PublicTests {
 			assertTrue("Living titans shouldn't be removed from lane on attack",laneTitans.contains(armoredTitan1));
 			assertTrue("Living titans shouldn't be removed from lane on attack",laneTitans.contains(pureTitan1));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -8195,9 +8231,9 @@ public class Milestone2PublicTests {
 			Object colossalTitan1 =  constructor4.newInstance(20,  20, 10,  50, 15, 25, 2);
 
 			laneTitans.add(abnormalTitan1);
-			laneTitans.add(armoredTitan1); 
-			laneTitans.add(pureTitan1); 
-			laneTitans.add(colossalTitan1);  
+			laneTitans.add(armoredTitan1);
+			laneTitans.add(pureTitan1);
+			laneTitans.add(colossalTitan1);
 
 
 			Class wallTrapWeaponClass = Class.forName(wallTrapPath);
@@ -8207,8 +8243,8 @@ public class Milestone2PublicTests {
 			Method turnAttack = wallTrapWeaponClass.getDeclaredMethod("turnAttack", PriorityQueue.class);
 			int returnedResources = (int) turnAttack.invoke(wallTrapWeapon, laneTitans);
 
-			assertEquals("Method turnAttack should return the total retrieved resources of dead titans",0, returnedResources); 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+			assertEquals("Method turnAttack should return the total retrieved resources of dead titans",0, returnedResources);
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 			fail("Please check the console for the error, its an error from this catch statment."+e.getClass()+" occured");
@@ -8239,9 +8275,9 @@ public class Milestone2PublicTests {
 			Object colossalTitan1 =  constructor4.newInstance(20,  20, 10,  distanceColossalTitan1, 15, 25, 2);
 
 			laneTitans.add(abnormalTitan1);
-			laneTitans.add(armoredTitan1); 
-			laneTitans.add(pureTitan1); 
-			laneTitans.add(colossalTitan1);  
+			laneTitans.add(armoredTitan1);
+			laneTitans.add(pureTitan1);
+			laneTitans.add(colossalTitan1);
 
 
 			Class wallTrapWeaponClass = Class.forName(wallTrapPath);
@@ -8253,7 +8289,7 @@ public class Milestone2PublicTests {
 
 			// check health of closest titan
 			assertTrue("turnAttack Method of WallTrap shouldn't attack closest Titan if he didn't reach the wall",checkAttributesEqualValue(titanClassPath, colossalTitan1, 20, "currentHealth"));
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8285,9 +8321,9 @@ public class Milestone2PublicTests {
 			Object colossalTitan1 =  constructor4.newInstance(20,  20, 10,  distanceColossalTitan1, 15, 25, 2);
 
 			laneTitans.add(abnormalTitan1);
-			laneTitans.add(armoredTitan1); 
-			laneTitans.add(pureTitan1); 
-			laneTitans.add(colossalTitan1);  
+			laneTitans.add(armoredTitan1);
+			laneTitans.add(pureTitan1);
+			laneTitans.add(colossalTitan1);
 
 
 			Class wallTrapWeaponClass = Class.forName(wallTrapPath);
@@ -8301,7 +8337,7 @@ public class Milestone2PublicTests {
 			assertTrue("turnAttack Method of WallTrap shouldn't attack any other titan if they are all far from the all",checkAttributesEqualValue(titanClassPath, pureTitan1, 50, "currentHealth"));
 			assertTrue("turnAttack Method of WallTrap shouldn't attack any other titan if they are all far from the all",checkAttributesEqualValue(titanClassPath, armoredTitan1, 70, "currentHealth"));
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8332,9 +8368,9 @@ public class Milestone2PublicTests {
 			Object colossalTitan1 =  constructor4.newInstance(20,  20, 10,  5, 15, 25, 2);
 
 			laneTitans.add(abnormalTitan1);
-			laneTitans.add(armoredTitan1); 
-			laneTitans.add(pureTitan1); 
-			laneTitans.add(colossalTitan1);  
+			laneTitans.add(armoredTitan1);
+			laneTitans.add(pureTitan1);
+			laneTitans.add(colossalTitan1);
 
 
 			Class wallTrapWeaponClass = Class.forName(wallTrapPath);
@@ -8346,7 +8382,7 @@ public class Milestone2PublicTests {
 
 			assertEquals("turnAttack Method of WallTrap should return resources of attacked titan if he dies",resourcesAbnormalTitan1,returnedResources);
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8375,7 +8411,7 @@ public class Milestone2PublicTests {
 			array.add(titan3);
 
 
-			PriorityQueue<Object> titansPQ= new PriorityQueue<Object>();
+			PriorityQueue<Object> titansPQ= new PriorityQueue<>();
 			titansPQ.add(titan2);
 			titansPQ.add(titan1);
 			titansPQ.add(titan3);
@@ -8389,19 +8425,21 @@ public class Milestone2PublicTests {
 
 
 			int i =0;
-			if(titansPQ.isEmpty())
+			if(titansPQ.isEmpty()) {
 				fail("Non-defeated titans should NOT be removed from the pripority queue during thre attack");
+			}
 			while(!titansPQ.isEmpty()) {
 				Object object= titansPQ.poll();
-				if(object==null)
+				if(object==null) {
 					fail("Non-defeated titans should NOT be removed from the pripority queue during thre attack");
+				}
 				assertTrue("Titans should be sorted correctly",object.equals(array.get(i)));
 				i++;
 
 			}
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8428,7 +8466,7 @@ public class Milestone2PublicTests {
 			array.add(titan2);
 
 
-			PriorityQueue<Object> titansPQ= new PriorityQueue<Object>();
+			PriorityQueue<Object> titansPQ= new PriorityQueue<>();
 			titansPQ.add(titan1);
 			titansPQ.add(titan3);
 			titansPQ.add(titan2);
@@ -8441,18 +8479,20 @@ public class Milestone2PublicTests {
 			turnAttack.invoke(sniperWeapon, titansPQ);
 
 			int i =0;
-			if(titansPQ.isEmpty())
+			if(titansPQ.isEmpty()) {
 				fail("Non-defeated titans should NOT be removed from the pripority queue during thre attack");
+			}
 			while(!titansPQ.isEmpty()) {
 				Object object= titansPQ.poll();
-				if(object==null)
+				if(object==null) {
 					fail("Non-defeated titans should NOT be removed from the pripority queue during thre attack");
+				}
 				assertTrue("Titans should be sorted correctly",object.equals(array.get(i)));
-				i++;	
+				i++;
 			}
 
 
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8509,8 +8549,9 @@ public class Milestone2PublicTests {
 
 			int actualMax = (int) getMaxRange.invoke(actual_obj, null);
 
-			if (expectedCode > 4)
+			if (expectedCode > 4) {
 				return actualCode == expectedCode && actualPrice == expectedPrice && actualDamage == 0 && actualName == null && actualMin == 0 && actualMax == 0;
+			}
 
 			return actualCode == expectedCode && actualPrice == expectedPrice;
 		}
@@ -8551,8 +8592,9 @@ public class Milestone2PublicTests {
 
 			int actualMax = (int) getMaxRange.invoke(actual_obj, null);
 
-			if (expectedCode > 4)
+			if (expectedCode > 4) {
 				return actualCode == expectedCode && actualPrice == expectedPrice && actualDamage == expectedDamage && actualName.equals(expectedName) && actualMin == 0 && actualMax == 0;
+			}
 
 			return actualCode == expectedCode && actualPrice == expectedPrice && actualDamage == expectedDamage && actualName.equals(expectedName);
 		}
@@ -8651,8 +8693,8 @@ public class Milestone2PublicTests {
 		}
 	}
 
-	private int returnResourceGatheredTitans(Object laneObject ) throws NoSuchMethodException, SecurityException, 
-	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException, 
+	private int returnResourceGatheredTitans(Object laneObject ) throws NoSuchMethodException, SecurityException,
+	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException,
 	InvocationTargetException, NoSuchFieldException {
 
 		int rV=0;
@@ -8677,8 +8719,8 @@ public class Milestone2PublicTests {
 
 		return -2;
 	}
-	private int returnResourceGatheredTitans2(Object laneObject ) throws NoSuchMethodException, SecurityException, 
-	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException, 
+	private int returnResourceGatheredTitans2(Object laneObject ) throws NoSuchMethodException, SecurityException,
+	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException,
 	InvocationTargetException, NoSuchFieldException {
 
 		int rV=0;
@@ -8703,8 +8745,8 @@ public class Milestone2PublicTests {
 
 		return 0;
 	}
-	private int returnLaneDangerLevel(Object laneObject ) throws NoSuchMethodException, SecurityException, 
-	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException, 
+	private int returnLaneDangerLevel(Object laneObject ) throws NoSuchMethodException, SecurityException,
+	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException,
 	InvocationTargetException, NoSuchFieldException {
 
 		Field titansField= Class.forName(lanePath).getDeclaredField("titans");
@@ -8738,8 +8780,8 @@ public class Milestone2PublicTests {
 	}
 
 
-	private int returnResourceGathered(Object laneObject ) throws NoSuchMethodException, SecurityException, 
-	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException, 
+	private int returnResourceGathered(Object laneObject ) throws NoSuchMethodException, SecurityException,
+	ClassNotFoundException, IllegalArgumentException, IllegalAccessException, InstantiationException,
 	InvocationTargetException, NoSuchFieldException {
 
 
@@ -8783,7 +8825,7 @@ public class Milestone2PublicTests {
 			Constructor<?> constructor = Class.forName(PureTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
 			Object pureTitan = constructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,dangerLevel,resourcesValue);
 			return pureTitan;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8806,7 +8848,7 @@ public class Milestone2PublicTests {
 			Constructor<?> constructor = Class.forName(AbnormalTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
 			Object abnormalTitan =  constructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			return abnormalTitan;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8828,7 +8870,7 @@ public class Milestone2PublicTests {
 			Constructor<?> constructor = Class.forName(AbnormalTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
 			Object abnormalTitan =  constructor.newInstance(baseHealth, baseDamage, heightInMeters, distanceFromBase,speed,resourcesValue,dangerLevel);
 			return abnormalTitan;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8846,7 +8888,7 @@ public class Milestone2PublicTests {
 			Object piercingCannon =  constructor.newInstance(baseDamage);
 
 			return piercingCannon;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8864,7 +8906,7 @@ public class Milestone2PublicTests {
 			Object piercingCannon =  constructor.newInstance(baseDamage,minDistance,maxDistance);
 
 			return piercingCannon;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8881,7 +8923,7 @@ public class Milestone2PublicTests {
 			Object wall =  constructor.newInstance(baseHealth);
 
 			return wall;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -8897,7 +8939,7 @@ public class Milestone2PublicTests {
 			Object wall =  constructor.newInstance(baseHealth);
 
 			return wall;
-		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException | 
+		} catch (NoSuchMethodException | SecurityException | ClassNotFoundException |
 				InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -9023,8 +9065,9 @@ public class Milestone2PublicTests {
 
 	private static boolean containsMethodName(Method[] methods, String name) {
 		for (Method method : methods) {
-			if (method.getName().equals(name))
+			if (method.getName().equals(name)) {
 				return true;
+			}
 		}
 		return false;
 	}

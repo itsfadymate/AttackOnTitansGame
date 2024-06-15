@@ -1,5 +1,7 @@
 package game.engine.titans;
-import game.engine.interfaces.*;
+import game.engine.interfaces.Attackee;
+import game.engine.interfaces.Attacker;
+import game.engine.interfaces.Mobil;
 
 public abstract class Titan implements Attackee,Attacker,Mobil,Comparable<Titan>{
 	 //read only
@@ -16,7 +18,7 @@ public abstract class Titan implements Attackee,Attacker,Mobil,Comparable<Titan>
       //READ ONLY
       private final int resourcesValue;
       private final int dangerLevel;
-      
+
       public Titan(int baseHealth,int baseDamage,int heightInMeters,int distanceFromBase,int speed,int resourcesValue,int dangerLevel) {
     	  this.baseHealth = baseHealth;
     	  this.currentHealth = baseHealth;
@@ -26,55 +28,67 @@ public abstract class Titan implements Attackee,Attacker,Mobil,Comparable<Titan>
     	  this.distanceFromBase = distanceFromBase;
     	  this.resourcesValue = resourcesValue;
     	  this.dangerLevel = dangerLevel;
-    	  
+
       }
-      
-      public int compareTo(Titan o) {
+
+      @Override
+	public int compareTo(Titan o) {
     	  return this.distanceFromBase - o.distanceFromBase;
       }
 
-      
+
       public int getBaseHealth() {return this.baseHealth;}
-      
-  	  public int getCurrentHealth() {return currentHealth;}
-  	  
+
+  	  @Override
+	public int getCurrentHealth() {return currentHealth;}
+
   	  public int getHeightInMeters() {return this.heightInMeters;}
 
-  	  public void setCurrentHealth(int health) {
-  		
+  	  @Override
+	public void setCurrentHealth(int health) {
+
         if (health < 0 ) {
 	         health = 0;
         }
         this.currentHealth = health;
   	  }
-      
-      public int getResourcesValue() {
+
+      @Override
+	public int getResourcesValue() {
 		return this.resourcesValue;
 	  }
 
-	  public int getDamage() {
+	  @Override
+	public int getDamage() {
 		return this.baseDamage;
 	  }
 
-	  public int getDistance() {
+	  @Override
+	public int getDistance() {
 		return this.distanceFromBase;
 	  }
 
-	  public void setDistance(int distance) {
+	  @Override
+	public void setDistance(int distance) {
 		  if (distance < 0) { distance = 0;}
 	 	  this.distanceFromBase = distance;
 	  }
 
-	  public int getSpeed() {return this.speed;}
+	  @Override
+	public int getSpeed() {return this.speed;}
 
-	  public void setSpeed(int speed) {
-		if (speed<0) speed =0;
+	  @Override
+	public void setSpeed(int speed) {
+		if (speed<0) {
+			speed =0;
+		}
 		this.speed = speed;
-	  } 
+	  }
 
 	  public int getDangerLevel() {return this.dangerLevel;}
-      
-	  public  String toString() {
+
+	  @Override
+	public  String toString() {
 		  return "titan at distance: " + getDistance() + ", health: " +  getCurrentHealth() + ", speed: " + getSpeed() + ", damage: " + getDamage();
 	  }
 }

@@ -4,9 +4,8 @@ package game.gui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Random;
+import java.util.Stack;
 
 import game.engine.titans.ColossalTitan;
 import game.engine.titans.Titan;
@@ -39,10 +38,11 @@ public class WeaponView extends ImageView {
 	private static Image wallTrapImage;
 	private static Image projectileImage;
 	private static Image fireProjectileImage;
+	private static Image cannonProjectileImage;
 	private final int  weaponCode;
 	private final AnchorPane parent;
 	private final WeaponRegistry wr;
-	
+
 	static {
 		try {
 		piercingCannonImage = new Image(WeaponView.class.getResourceAsStream("Images/cannonSpriteSheet90x64.png"));
@@ -51,11 +51,12 @@ public class WeaponView extends ImageView {
 		wallTrapImage = new Image(WeaponView.class.getResourceAsStream("Images/wallTrapSpriteSheet170x245.png"));
 		projectileImage = new Image(WeaponView.class.getResourceAsStream("Images/rockProjectileSpriteSheet.png"));
 		fireProjectileImage = new Image(WeaponView.class.getResourceAsStream("Images/sniperBulletSheet.png"));
+		cannonProjectileImage = new Image(WeaponView.class.getResourceAsStream("Images/CannonProjectile.png"));
 
 		}catch (Exception exc) {
 			System.out.println("failed to load weapon image");
 			System.out.println(exc.getMessage());
-		
+
 		}
 	}
 
@@ -82,7 +83,7 @@ public class WeaponView extends ImageView {
 			this.setViewport(new Rectangle2D(25,50,120,120));
 			this.setFitWidth(41);
 			this.setFitHeight(41);
-			
+
 			break;
 		case WallTrap.WEAPON_CODE:
 			this.setImage(wallTrapImage);
@@ -92,10 +93,10 @@ public class WeaponView extends ImageView {
 			break;
 
 		}
-		
+
 
 	}
-	
+
 	public void fire(PriorityQueue<Titan> titans,HashMap<Titan,TitanView> titanMap) {
 		final int maxX;
 		int cycleCount =0;
@@ -116,9 +117,10 @@ public class WeaponView extends ImageView {
 			Bounds thisBounds = this.localToScene(getBoundsInLocal());
 			Bounds anchorPaneBounds = this.parent.sceneToLocal(thisBounds);
 			ArrayList<Double> firingList= titansInRange(titans,titanMap,wr.getMinRange(),wr.getMaxRange());
-			for (double fireX :firingList )	
+			for (double fireX :firingList ) {
 				this.shootMortarProjectile(anchorPaneBounds.getCenterX(), anchorPaneBounds.getCenterY(), (fireX), anchorPaneBounds.getCenterY() +30, false);
-			
+			}
+
 			break;
 		case WallTrap.WEAPON_CODE:
 			cycleCount =6;
@@ -129,7 +131,9 @@ public class WeaponView extends ImageView {
         	maxX = 100;
 		}
 		Timeline timeline = new Timeline(new KeyFrame(Duration.millis(durationMillis),e->{
-			if (weaponCode==VolleySpreadCannon.WEAPON_CODE) return;
+			if (weaponCode==VolleySpreadCannon.WEAPON_CODE) {
+				return;
+			}
 			this.setViewport(new Rectangle2D(
 					this.getViewport().getMinX() + this.getViewport().getWidth(),
 					this.getViewport().getMinY(),
@@ -151,10 +155,26 @@ public class WeaponView extends ImageView {
 				double titanX = titanMap.get(titans.peek()).localToScene(titanMap.get(titans.peek()).getBoundsInLocal()).getMinX();
 				titanX = (titans.peek() instanceof ColossalTitan)? titanX + 70 : titanX;
 				this.shootFireProjectile(viewAnchorPaneBounds.getMaxX(),titanX, viewAnchorPaneBounds.getMinY(),titanMap.get(titans.peek()).getTitanPixelPerSecondVelocity(),titans.peek().hasReachedTarget());
+			}else if (this.weaponCode ==PiercingCannon.WEAPON_CODE ) { //creates cool animation when invoked in the timelines
+			   ArrayList<Double> titanXs = this.cannonTitansXCoordinates(titans, titanMap);
+			   ArrayList<Double> titanVelocities = this.cannonTitansPixelVelocity(titans, titanMap);
+			   ArrayList<Boolean> titanReached = this.cannonTitanshasReachedTarget(titans, titanMap);
+			    Bounds thisBounds = this.localToScene(getBoundsInLocal());
+				Bounds viewAnchorPaneBounds = this.parent.sceneToLocal(thisBounds);
+			   for (int i =0; i< titanXs.size();i++) {
+				   this.shootCannonProjectile(viewAnchorPaneBounds.getMaxX()
+						   ,titanXs.get(i)
+						   , viewAnchorPaneBounds.getMinY()
+						   ,titanVelocities.get(i)
+						   ,titanReached.get(i)
+						   );
+			   }
 			}
-				
+
 			}
 		));
+		if (this.weaponCode== PiercingCannon.WEAPON_CODE) 
+			soundSystem.playCannonEffect();
 		timeline.setCycleCount(cycleCount);
 		/*if (weaponCode==WallTrap.WEAPON_CODE) {
 			timeline.setAutoReverse(true);
@@ -168,11 +188,11 @@ public class WeaponView extends ImageView {
 					this.getViewport().getHeight()
 					));
 		});
-		
+
 	}
-	private ArrayList<Double>titansInRange(PriorityQueue<Titan> titans, HashMap<Titan, TitanView> titanMap, int minRange,
+	private ArrayList<Double> titansInRange(PriorityQueue<Titan> titans, HashMap<Titan, TitanView> titanMap, int minRange,
 			int maxRange) {
-		ArrayList<Double> list = new ArrayList<Double>();
+		ArrayList<Double> list = new ArrayList<>();
 		for (Titan t : titans) {
 			if (t.getDistance() > minRange && t.getDistance()<maxRange) {
 				if (t instanceof ColossalTitan) {
@@ -185,14 +205,56 @@ public class WeaponView extends ImageView {
 		}
 		return list;
 	}
-
+     
+	private ArrayList<Double> cannonTitansXCoordinates(PriorityQueue<Titan> titans, HashMap<Titan, TitanView> titanMap){
+		ArrayList<Double> list = new ArrayList<>();
+		Stack<Titan> s = new Stack<>();
+		for (int i=0;!titans.isEmpty() && i <5;i++ ) {
+			s.push(titans.poll());
+			double titanX = titanMap.get(s.peek()).localToScene(titanMap.get(s.peek()).getBoundsInLocal()).getCenterX();
+			//titanX = (titans.peek() instanceof ColossalTitan)? titanX + 70 : titanX;
+			list.add(titanX);
+		}
+		while (!s.isEmpty()) {
+			titans.add(s.pop());
+		}
+		System.out.println(list.toString());
+		return list;
+	}
+	private ArrayList<Boolean> cannonTitanshasReachedTarget(PriorityQueue<Titan> titans, HashMap<Titan, TitanView> titanMap){
+		ArrayList<Boolean> list = new ArrayList<>();
+		Stack<Titan> s = new Stack<>();
+		for (int i=0;!titans.isEmpty() && i <5;i++ ) {
+			s.push(titans.poll());
+			list.add((s.peek().hasReachedTarget()));
+			
+		}
+		while (!s.isEmpty()) {
+			titans.add(s.pop());
+		}
+		
+		return list;
+	}
+	private ArrayList<Double> cannonTitansPixelVelocity(PriorityQueue<Titan> titans, HashMap<Titan, TitanView> titanMap){
+		ArrayList<Double> list = new ArrayList<>();
+		Stack<Titan> s = new Stack<>();
+		for (int i=0;!titans.isEmpty() && i <5;i++ ) {
+			s.push(titans.poll());
+			list.add( titanMap.get(s.peek()).getTitanPixelPerSecondVelocity());
+		}
+		while (!s.isEmpty()) {
+			titans.add(s.pop());
+		}
+		return list;
+	}
+	
 	public void shootMortarProjectile(double startX,double startY,double endX,double endY,boolean showpath) {
     	ImageView view = new ImageView(projectileImage);
     	view.setFitWidth(32);
     	view.setFitHeight(32);
    	 view.setViewport(new Rectangle2D(0,0,64,64));
    	 Timeline animate = new Timeline(new KeyFrame(
-   			 Duration.millis(100) , 
+   			 Duration.millis(100) ,
    			 e->{
    		        view.setViewport(new Rectangle2D(view.getViewport().getMinX() + view.getViewport().getWidth(),0,view.getViewport().getWidth(),view.getViewport().getHeight()));
    		        if (view.getViewport().getMinX()> 3*view.getViewport().getWidth()) {
@@ -203,7 +265,7 @@ public class WeaponView extends ImageView {
    	 animate.setCycleCount(15);
    	 view.setViewport(new Rectangle2D(0,4*64,64,64));
    	 Timeline destroyed = new Timeline(new KeyFrame(
-   			 Duration.millis(100) , 
+   			 Duration.millis(100) ,
    			 e->{
    		        view.setViewport(new Rectangle2D(view.getViewport().getMinX() + view.getViewport().getWidth(),0,view.getViewport().getWidth(),view.getViewport().getHeight()));
    		       // System.out.println(view.getViewport().getWidth());
@@ -219,34 +281,34 @@ public class WeaponView extends ImageView {
    	fade.setToValue(0);
    	fade.setDuration(Duration.millis(750));
    	fade.setNode(view);
-        
-        
-        MoveTo moveTo = new MoveTo(); 
-        moveTo.setX(startX); 
-        moveTo.setY(startY); 
-      
-        QuadCurveTo arcTo = new QuadCurveTo(); 
-        arcTo.setX(endX); 
-        arcTo.setY(endY); 
+
+
+        MoveTo moveTo = new MoveTo();
+        moveTo.setX(startX);
+        moveTo.setY(startY);
+
+        QuadCurveTo arcTo = new QuadCurveTo();
+        arcTo.setX(endX);
+        arcTo.setY(endY);
         arcTo.setControlX((startX + endX)/2);
         arcTo.setControlY(50);
-        
-        Path path = new Path();  
+
+        Path path = new Path();
         path.setVisible(showpath);
-        path.getElements().add(moveTo); 
-        path.getElements().add(arcTo);        
-        
-        PathTransition pathTransition = new PathTransition(); 
+        path.getElements().add(moveTo);
+        path.getElements().add(arcTo);
+
+        PathTransition pathTransition = new PathTransition();
         pathTransition.setDuration(Duration.millis(1500));
-        pathTransition.setNode(view);	  
-        pathTransition.setPath(path);  
-        pathTransition.setOrientation(PathTransition.OrientationType.NONE); 
-        pathTransition.setCycleCount(1); 
-        
+        pathTransition.setNode(view);
+        pathTransition.setPath(path);
+        pathTransition.setOrientation(PathTransition.OrientationType.NONE);
+        pathTransition.setCycleCount(1);
+
         ParallelTransition pt  = new ParallelTransition(pathTransition,animate);
         pt.play();
-     
-        this.parent.getChildren().addAll(view,path); 	  
+
+        this.parent.getChildren().addAll(view,path);
         pt.setOnFinished(e->{destroyed.play();});
         destroyed.setOnFinished(r->{fade.play();});
         fade.setOnFinished(e->{parent.getChildren().remove(view);});
@@ -254,7 +316,7 @@ public class WeaponView extends ImageView {
 
 	public void shootFireProjectile(double startX,double titanX,double y,double titanSpeed,boolean hasReachedTarget) {
 		final double speed = 2000;
-		
+		soundSystem.playSniperEffect();
 		double endX = hasReachedTarget? titanX : titanX-50;
 		//double sniperTitanDistance = titanX - startX;
 		//double endX = (sniperTitanDistance * speed) / (titanSpeed + speed);//related to setByX as well. works but creates exception later on so nvm
@@ -282,14 +344,36 @@ public class WeaponView extends ImageView {
     	remove.setToValue(0);
     	remove.setDuration(Duration.seconds(2));
     	remove.setOnFinished(e->{this.parent.getChildren().remove(fireImage);});
-    	
+
     	explosion.setOnFinished(e->{remove.play();});
     	translate.setOnFinished(e->{
             explosion.play();
-    	
+
     	});
     	this.parent.getChildren().add(fireImage);
     	translate.play();
-    	
+
     }
+    
+	public void shootCannonProjectile(double startX,double titanX,double y,double titanSpeed,boolean hasReachedTarget) {
+		final double speed = 1500;
+		double endX = hasReachedTarget? titanX : titanX-50;
+		ImageView projectileImage = new ImageView(fireProjectileImage);
+		projectileImage.setPreserveRatio(true);
+		projectileImage.setFitWidth(32);
+		projectileImage.toFront();
+		projectileImage.setLayoutX(startX);
+		projectileImage.setLayoutY(y);
+		TranslateTransition translate = new TranslateTransition();
+    	translate.setNode(projectileImage);
+    	translate.setFromX(0);
+    	translate.setDuration(Duration.seconds(  (endX-startX) / speed   ));
+    	translate.setByX(endX-startX);
+    	translate.setOnFinished(e->{this.parent.getChildren().remove(projectileImage);});
+    	this.parent.getChildren().add(projectileImage);
+    	translate.play();
+
+		
+	}
+
 }

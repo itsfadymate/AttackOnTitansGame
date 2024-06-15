@@ -1,17 +1,15 @@
 package game.gui;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import game.engine.Battle;
-import javafx.application.Application;import javafx.beans.value.ChangeListener;
+import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -23,7 +21,7 @@ public class AppController extends Application {
 	private final int windowWidth = 1280;
 	private final int windowHeight = 780;
 
-	private GameController gameController = new GameController(); 
+	private GameController gameController = new GameController();
 	private final MainMenuPage mainMenu = new MainMenuPage(windowWidth,windowHeight);
 	private final SettingsPage setting = new SettingsPage(windowWidth,windowHeight);
 	private final HowToPlayPage htp = new HowToPlayPage(windowWidth,windowHeight);
@@ -62,7 +60,7 @@ public class AppController extends Application {
 								startGame();
 							}
 
-						});	
+						});
 //						playerInfo.resetLoadingBar();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -174,7 +172,7 @@ public class AppController extends Application {
 			 * System.nanoTime(); long currentTime; while (!b.isGameOver()) { currentTime =
 			 * System.nanoTime(); delta+= (currentTime - lastTime) / updateInterval; if
 			 * (delta < 1) continue;
-			 * 
+			 *
 			 * b.passTurn(); this.gameController.updateBattleView(); delta--; }
 			 */
 
@@ -222,7 +220,7 @@ public class AppController extends Application {
 	}
 	public static void main(String[] args) {
 		System.out.println("started app");
-		AppController.launch(args);
+		Application.launch(args);
 	}
 
 

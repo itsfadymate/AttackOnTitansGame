@@ -1,8 +1,12 @@
 package game.gui;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -14,15 +18,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 
 public class playerInfo extends Scene {
@@ -39,10 +46,8 @@ public class playerInfo extends Scene {
 	private static ProgressBar progressBar;
 	private static ImageView loadingImage;
 	private static Button submitButton;
+	private static String playerName;
 
-	public static ProgressBar getProgressBar() {
-		return progressBar;
-	}
 
 	public static Parent createRoot(Stage primaryStage,int width, int height) throws Exception {
 		AnchorPane root = new AnchorPane();
@@ -81,7 +86,7 @@ public class playerInfo extends Scene {
 			// Create loading elements
 			progressBar = new ProgressBar(0);
 			progressBar.setPrefWidth(600); // Wider progress bar
-			progressBar.setVisible(true); // Initially hidden
+			progressBar.setVisible(false); // Initially hidden
 			progressBar.setBlendMode(BlendMode.OVERLAY);
 			progressBar.setPadding(new Insets(100,0,0,0));
 			Image loadingImageContent = new Image(playerInfo.class.getResourceAsStream("Images/levi .png"));
@@ -93,12 +98,12 @@ public class playerInfo extends Scene {
 
 			submitButton.setBlendMode(BlendMode.DIFFERENCE);
 			submitButton.setOnMouseClicked(event -> {
-				String playerName = "";
-				playerName = nameInput.getText().trim(); // Trim whitespace
-				if (!(playerName.length() == 0)) { // Check if input is not empty
-					System.out.println("Player Name to be written: " + playerName); // Debugging statement
+				String localPlayerName = "";
+				localPlayerName = nameInput.getText().trim(); // Trim whitespace
+				if (!(localPlayerName.length() == 0)) { // Check if input is not empty
+					System.out.println("Player Name to be written: " + localPlayerName); // Debugging statement
 					// Write the player's name to a CSV file
-					writePlayerNameToCSV(playerName, 0); // Initially set score to 0
+					playerName = localPlayerName;
 					// Show loading elements and start loading animation
 					nameInput.setDisable(true);
 					submitButton.setDisable(true);
@@ -136,6 +141,13 @@ public class playerInfo extends Scene {
 			e.printStackTrace();
 		}
 	}
+	public static String getPlayerName() {
+		return playerName;
+	}
+	public static ProgressBar getProgressBar() {
+		return progressBar;
+	}
+
 
 	private static void startLoadingAnimation(Stage primaryStage) {
 		Timeline timeline = new Timeline();
@@ -144,21 +156,15 @@ public class playerInfo extends Scene {
 			if (progress < 1.0) {
 				progressBar.setProgress(progress + 0.05);
 				loadingImage.setTranslateX((progress * progressBar.getPrefWidth())-280); // Slide image along with the progress bar
+			} else {
+				timeline.stop();
 			}
-			else timeline.stop();
 		});
 		timeline.getKeyFrames().add(keyFrame);
-		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.setCycleCount(Animation.INDEFINITE);
 		timeline.play();
 	}
-	
-//	public static void resetLoadingBar() {
-//		progressBar.setProgress(0);
-//		
-//	}
-	//
-	//    private static void switchToBlankScene(Stage primaryStage) {
-	//        AppController.startgame();
-	//    }
+
+
 
 }

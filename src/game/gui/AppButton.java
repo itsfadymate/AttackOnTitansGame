@@ -1,7 +1,6 @@
 package game.gui;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.CycleMethod;
@@ -90,6 +89,6 @@ import javafx.scene.text.Text;
         setOnMouseReleased(event -> {
             bg.setFill(gradient);
         });
-    	
+
     }
 	}

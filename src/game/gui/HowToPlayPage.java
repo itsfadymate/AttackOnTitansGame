@@ -1,17 +1,8 @@
 package game.gui;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,37 +11,29 @@ import javafx.scene.effect.BlendMode;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 
 
 
 
 
 public class HowToPlayPage extends Scene{
-	
+
 	private static Button mainMenu = new Button("Main Menu");
 	private static Button switchToRoot2 = new Button("Next");
-//	private static Button back = new Button(); 
+//	private static Button back = new Button();
 	private static Button switchToRoot1 = new Button("Back");
 	private static Button switchToRoot3 = new Button("Next");
 //	private static Button next = new Button();
 	private static Button go = new Button("Let's go"); // play the game
 	private int windowWidth;
 	private int windowHeight;
-	
+
 	static Image[] images = {new Image(HowToPlayPage.class.getResourceAsStream("Images/TitansInfo.jpeg")),
 			new Image(HowToPlayPage.class.getResourceAsStream("Images/weaponShop.png")),
 			new Image(HowToPlayPage.class.getResourceAsStream("Images/HTP1.png")),
@@ -72,7 +55,7 @@ public class HowToPlayPage extends Scene{
 		 		"Just press the end turn button on the bottom left corner and leave it for your defenses to do the work for you ;)",
 		 		"The green Labels are the danger levels of each lane.\nThe higher the danger level the more titans there are"
 		 		};
-	
+
 	private static String[] text2 = {"",
 				"You collect resources by defeating a titan so try to defeat them as fast as possible to collect more resources :)",
 				"",
@@ -82,9 +65,9 @@ public class HowToPlayPage extends Scene{
 				"",
 				"",
 				"Titans spawn into the lanes with the least danger level"};
-	
+
 	private static int Imagecounter = 0;
-	
+
 	public HowToPlayPage(int width, int height) {
 		super(createRoot1(width , height),width,height);
 		windowWidth = width;
@@ -99,7 +82,7 @@ public class HowToPlayPage extends Scene{
         	this.setRoot(createRoot3(width, height));
         });
 	}
-	
+
 	public static Parent createRoot1(int width , int height) {
 		StackPane root = new StackPane();
         BorderPane content = new BorderPane();
@@ -116,12 +99,12 @@ public class HowToPlayPage extends Scene{
         subtitle.setTextAlignment(TextAlignment.CENTER);
         subtitle.setPrefSize(width-100, height);
         subtitle.setWrapText(true);
-        
-        
+
+
         switchToRoot2.setPrefSize(250, 100);
         switchToRoot2.setFont(new Font("Comic Sans MS", 32));
-			
-	
+
+
 //        mainMenu = new Button("Back");
         mainMenu.setPrefSize(250, 100);
         mainMenu.setFont(new Font("Comic Sans MS", 32));
@@ -149,20 +132,20 @@ public class HowToPlayPage extends Scene{
         root.getChildren().addAll(bgImageView, content);
 
         return root;
-		
-	}
-	
-	
-	
-	public void setmainMenuOnMouseClicked(EventHandler<MouseEvent> e) {
-		this.mainMenu.setOnMouseClicked(e);
-	}
-	
-	public void setGoOnMouseClicked (EventHandler<MouseEvent> e) {
-		this.go.setOnMouseClicked(e);
+
 	}
 
-	
+
+
+	public void setmainMenuOnMouseClicked(EventHandler<MouseEvent> e) {
+		HowToPlayPage.mainMenu.setOnMouseClicked(e);
+	}
+
+	public void setGoOnMouseClicked (EventHandler<MouseEvent> e) {
+		HowToPlayPage.go.setOnMouseClicked(e);
+	}
+
+
 	public Parent createRoot2(int width , int height) {
 		// Create a new StackPane as the root
 		StackPane root = new StackPane();
@@ -170,7 +153,7 @@ public class HowToPlayPage extends Scene{
 		// Create a BorderPane for the content
 		BorderPane contentPane = new BorderPane();
 		StackPane top = new StackPane();
-		BorderPane bottomroot = new BorderPane(); 
+		BorderPane bottomroot = new BorderPane();
 		StackPane btmright = new StackPane(); btmright.setPrefSize(350, 150);
 		StackPane btmleft = new StackPane(); btmleft.setPrefSize(350, 150);
 		StackPane btmcenter = new StackPane(); btmcenter.setPrefSize(350, 150);
@@ -205,10 +188,11 @@ public class HowToPlayPage extends Scene{
 
 		next.setOnAction(e ->{
 			Imagecounter = Imagecounter + 1 ;
-		    if(Imagecounter >= 0 && Imagecounter < text.length)
-		    	updateUI(centerImage, label1, label2);
-		    else
-		    	this.setRoot(createRoot3(width, height));
+		    if(Imagecounter >= 0 && Imagecounter < text.length) {
+				updateUI(centerImage, label1, label2);
+			} else {
+				this.setRoot(createRoot3(width, height));
+			}
 		});
 
 		Button back = new Button("Back");
@@ -216,9 +200,9 @@ public class HowToPlayPage extends Scene{
 		back.setFont(new Font("Comic Sans MS", 32));
 		back.setOnAction(e ->{
 		    Imagecounter = Imagecounter - 1 ;
-		    if(Imagecounter >= 0 && Imagecounter < text.length)
-		    	updateUI(centerImage, label1, label2);
-		    else {
+		    if(Imagecounter >= 0 && Imagecounter < text.length) {
+				updateUI(centerImage, label1, label2);
+			} else {
 		    	Imagecounter = 0;
 		    	this.setRoot(createRoot1(width, height));
 		    }
@@ -262,7 +246,7 @@ public class HowToPlayPage extends Scene{
 	    label1.setText(text[Imagecounter]);
 	    label2.setText(text2[Imagecounter]);
 	}
-	
+
 	public static Parent createRoot3(int width, int height) {
 		Imagecounter = 0;
 		StackPane root = new StackPane();
@@ -285,7 +269,7 @@ public class HowToPlayPage extends Scene{
         centerBox.setPrefHeight(300);  // Adjust this value as needed
         centerBox.setAlignment(Pos.CENTER);
         content.setTop(centerBox);
-        
+
 
         HBox buttonHolder = new HBox(mainMenu, go);
         buttonHolder.setSpacing(200);
@@ -307,9 +291,9 @@ public class HowToPlayPage extends Scene{
 
         return root;
 	}
-	
-	
-	
-	
+
+
+
+
 }
 

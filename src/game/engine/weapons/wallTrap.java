@@ -14,17 +14,21 @@ public class WallTrap extends Weapon {
 	@Override
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
 		// TODO Auto-generated method stub
-		if (laneTitans.isEmpty()) return 0;
+		if (laneTitans.isEmpty()) {
+			return 0;
+		}
 		Titan titan = laneTitans.remove();
 		int resourcesGathered =0;
 		if (titan.hasReachedTarget()) {
 			resourcesGathered= attack(titan);
 		}
-		if (titan.isDefeated()) return resourcesGathered;
+		if (titan.isDefeated()) {
+			return resourcesGathered;
+		}
 		laneTitans.add(titan);
 		return 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

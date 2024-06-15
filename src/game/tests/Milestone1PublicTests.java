@@ -66,7 +66,7 @@ public class Milestone1PublicTests {
 
 
 	//BaseHealth variable
-	
+
 	@Test(timeout = 1000)
 	public void testWallInstanceVariableBaseHealthIsPrivate() throws ClassNotFoundException, NoSuchFieldException, SecurityException {
 		testInstanceVariableIsPrivate(Class.forName(wallPath), "baseHealth");
@@ -205,7 +205,7 @@ public class Milestone1PublicTests {
 		testInstanceVariableIsPresent(Class.forName(lanePath), "dangerLevel");
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testLaneInstanceVariableDangerLevelOfType() throws ClassNotFoundException {
@@ -321,11 +321,11 @@ public class Milestone1PublicTests {
 
 		Constructor<?> laneConstructor = Class.forName(lanePath).getConstructor(Class.forName(wallPath));
 		Object lane = laneConstructor.newInstance(wall);
-		ArrayList<Object> w = new ArrayList<>();;
+		ArrayList<Object> w = new ArrayList<>();
 		testGetterMethodLogic(lane, "weapons", w);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testLaneConstructorInitialization() throws Exception{
@@ -357,7 +357,7 @@ public class Milestone1PublicTests {
 		Class aClass = Class.forName(lanePath);
 		Method m = null;
 		try {
-			m = aClass.getDeclaredMethod("compareTo", Class.forName(lanePath)); 
+			m = aClass.getDeclaredMethod("compareTo", Class.forName(lanePath));
 		}
 		catch(NoSuchMethodException e) {
 			fail("You have to override the compare method");
@@ -389,7 +389,7 @@ public class Milestone1PublicTests {
 		int actual = (int) m.invoke(createdLane2, createdLane1);
 		actual = actual > 0 ? 1 : (actual < 0 ? -1 : 0);
 		int expected = 1;
-		assertEquals("The method should return a positive value. make sure that you handle the case where the current object danger level is greater than the passed object danger level", 
+		assertEquals("The method should return a positive value. make sure that you handle the case where the current object danger level is greater than the passed object danger level",
 				expected, actual);
 
 		//createdLane2 < createdLane1
@@ -399,7 +399,7 @@ public class Milestone1PublicTests {
 		actual = actual > 0 ? 1 : (actual < 0 ? -1 : 0);
 		expected = -1;
 
-		assertEquals("The method should return a negative value. make sure that you handle the case where the current object danger level is less than the passed object danger level", 
+		assertEquals("The method should return a negative value. make sure that you handle the case where the current object danger level is less than the passed object danger level",
 				expected, actual);
 
 		//createdLane2 == createdLane1
@@ -409,7 +409,7 @@ public class Milestone1PublicTests {
 		actual = actual > 0 ? 1 : (actual < 0 ? -1 : 0);
 		expected = 0;
 
-		assertEquals("The method should return zero. make sure that you handle the case where the current object danger level is equal to the passed object danger level", 
+		assertEquals("The method should return zero. make sure that you handle the case where the current object danger level is equal to the passed object danger level",
 				expected, actual);
 
 	}
@@ -450,8 +450,8 @@ public class Milestone1PublicTests {
 	}
 
 
-	///////////////////////////////////// Mobil Interface //////////////////////////////////// 
-	
+	///////////////////////////////////// Mobil Interface ////////////////////////////////////
+
 
 	@Test(timeout = 1000)
 	public void testGetDistanceInAttackeeInterface() throws ClassNotFoundException {
@@ -814,7 +814,7 @@ public class Milestone1PublicTests {
 		testGetterMethodExistInClass(Class.forName(invalidCSVFormatExceptionPath), "getInputLine", String.class);
 	}
 
-	
+
 
 
 
@@ -917,7 +917,7 @@ public class Milestone1PublicTests {
 			fail("missing class Titan");
 		}
 	}
-	
+
 	@Test(timeout = 1000)
 	public void testClassAbnormalTitanExists() {
 		try {
@@ -954,8 +954,8 @@ public class Milestone1PublicTests {
 		Class[] inputs = { int.class, int.class, int.class,int.class,int.class,int.class , int.class};
 		testConstructorExists(Class.forName(titanClassPath), inputs);
 	}
-	
-	
+
+
 	@Test(timeout = 1000)
 	public void testbaseDamageFinalAttribute() throws NoSuchFieldException, SecurityException, ClassNotFoundException {
 		Field baseDamageField = Class.forName(titanClassPath).getDeclaredField("baseDamage");
@@ -1026,8 +1026,8 @@ public class Milestone1PublicTests {
 		testAttributeExistence("dangerLevel",titanClassPath);
 	}
 
-	
-	
+
+
 	@Test(timeout = 1000)
 	public void testHeightInMetersReadOnly() throws ClassNotFoundException {
 		testGetterMethodExistsInClass(Class.forName(titanClassPath),"getHeightInMeters",int.class,true);
@@ -1048,7 +1048,7 @@ public class Milestone1PublicTests {
 		testGetterMethodExistsInClass(Class.forName(titanClassPath),"getResourcesValue",int.class,true);
 		testSetterMethodExistsInClass(Class.forName(titanClassPath),"setResourcesValue",int.class,false);
 	}
-	
+
 	@Test(timeout = 1000)
 	public void testDangerLevelReadOnly() throws ClassNotFoundException {
 		testGetterMethodExistsInClass(Class.forName(titanClassPath),"getResourcesValue",int.class,true);
@@ -1057,22 +1057,22 @@ public class Milestone1PublicTests {
 
 	@Test(timeout = 1000)
 	public void testTestingPureTitanIsSubClassOfTitan() throws ClassNotFoundException {
-		testClassIsSubclass(Class.forName(PureTitanClassPath), 
+		testClassIsSubclass(Class.forName(PureTitanClassPath),
 				Class.forName(titanClassPath));
 	}
 	@Test(timeout = 1000)
 	public void testTestingAbnormalTitanIsSubClassOfTitan() throws ClassNotFoundException {
-		testClassIsSubclass(Class.forName(AbnormalTitanClassPath), 
+		testClassIsSubclass(Class.forName(AbnormalTitanClassPath),
 				Class.forName(titanClassPath));
 	}
 	@Test(timeout = 1000)
 	public void testTestingArmoredTitanIsSubClassOfTitan() throws ClassNotFoundException {
-		testClassIsSubclass(Class.forName(ArmoredTitanClassPath), 
+		testClassIsSubclass(Class.forName(ArmoredTitanClassPath),
 				Class.forName(titanClassPath));
 	}
 	@Test(timeout = 1000)
 	public void testTestingColossalTitanIsSubClassOfTitan() throws ClassNotFoundException {
-		testClassIsSubclass(Class.forName(ColossalTitanClassPath), 
+		testClassIsSubclass(Class.forName(ColossalTitanClassPath),
 				Class.forName(titanClassPath));
 	}
 
@@ -1088,9 +1088,9 @@ public class Milestone1PublicTests {
 	public void testTitanCodeExistanceInArmoredClass() throws NoSuchFieldException, ClassNotFoundException {
 		testAttributeExistence("TITAN_CODE",ArmoredTitanClassPath);
 	}
-	
-	
-	
+
+
+
 	@Test(timeout = 1000)
 	public void testTitanCodeFinalAttributeInPureTitan() throws NoSuchFieldException, SecurityException, ClassNotFoundException {
 		Field titanCodeField = Class.forName(PureTitanClassPath).getDeclaredField("TITAN_CODE");
@@ -1101,7 +1101,7 @@ public class Milestone1PublicTests {
 		Field titanCodeField = Class.forName(AbnormalTitanClassPath).getDeclaredField("TITAN_CODE");
 		assertTrue("The TITAN_CODE attribute should be final", java.lang.reflect.Modifier.isFinal(titanCodeField.getModifiers()));
 	}
-	
+
 	@Test(timeout = 1000)
 	public void testTitanCodeFinalAttributeInColossalClass() throws NoSuchFieldException, SecurityException, ClassNotFoundException {
 		Field titanCodeField = Class.forName(ColossalTitanClassPath).getDeclaredField("TITAN_CODE");
@@ -1137,8 +1137,8 @@ public class Milestone1PublicTests {
 		Field titanCodeField = Class.forName(AbnormalTitanClassPath).getDeclaredField("TITAN_CODE");
 		assertTrue("The TITAN_CODE attribute should be public", java.lang.reflect.Modifier.isPublic(titanCodeField.getModifiers()));
 	}
-	
-	
+
+
 	@Test(timeout = 1000)
 	public void testTitanCodeValues() throws NoSuchFieldException, SecurityException, ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
 
@@ -1279,9 +1279,9 @@ public class Milestone1PublicTests {
 		testGetterLogic(pureTitan, "heightInMeters", heightInMeters,"getHeightInMeters");
 	}
 
-	
 
-	@Test(timeout = 1000)  
+
+	@Test(timeout = 1000)
 	public void testGetterLogicForInstanceVariableResourcesValueInClassPureTitan() throws Exception {
 		int baseHealth = (int) (Math.random() * 100);
 		int baseDamage = (int) (Math.random() * 100);
@@ -1319,7 +1319,7 @@ public class Milestone1PublicTests {
 		String[] subClasses = { PureTitanClassPath, AbnormalTitanClassPath , ArmoredTitanClassPath ,ColossalTitanClassPath};
 		testSetterAbsentInSubclasses("setDistance", subClasses);
 	}
-	
+
 
 
 	@Test(timeout = 1000)
@@ -1343,7 +1343,7 @@ public class Milestone1PublicTests {
 		assertEquals(new_speed, getterMethod.invoke(pureTitan,null));
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testCurrentHealthSetterLogic() throws Exception {
@@ -1351,7 +1351,7 @@ public class Milestone1PublicTests {
 		int baseDamage = (int) (Math.random() * 100);
 		int heightInMeters = (int) (Math.random() * 5);
 		int distanceFromBase = (int) (Math.random() * 5);
-		int speed = (int) (Math.random() * 5);;
+		int speed = (int) (Math.random() * 5);
 		int dangerLevel = (int) (Math.random() * 5);
 		int resourcesValue = (int) (Math.random() * 5);
 		Constructor<?> constructor = Class.forName(PureTitanClassPath).getConstructor(int.class,int.class,int.class,int.class,int.class,int.class,int.class);
@@ -1408,7 +1408,7 @@ public class Milestone1PublicTests {
 		assertTrue(((int)m.invoke(pureTitan1, pureTitan2)) < 0);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testCompareToEqualLogic() throws ClassNotFoundException, NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
@@ -1442,7 +1442,7 @@ public class Milestone1PublicTests {
 			fail("missing class Weapon");
 		}
 	}
-	
+
 
 	@Test(timeout = 1000)
 	public void testAttributeBaseDamageExists() throws NoSuchFieldException, ClassNotFoundException {
@@ -1460,7 +1460,7 @@ public class Milestone1PublicTests {
 	}
 
 
-	
+
 	@Test(timeout = 1000)
 	public void testPiercingCannonIsSubClassOfWeapon() throws Exception {
 		testClassIsSubclass(Class.forName(piercingCannonPath), Class.forName(weaponPath));
@@ -1475,7 +1475,7 @@ public class Milestone1PublicTests {
 		}
 	}
 
-	
+
 
 
 	@Test(timeout = 1000)
@@ -1502,7 +1502,7 @@ public class Milestone1PublicTests {
 		Field WeaponCodeField = Class.forName(piercingCannonPath).getDeclaredField("WEAPON_CODE");
 		assertTrue("The WEAPON_CODE attribute should be static", (Modifier.isStatic(WeaponCodeField.getModifiers())));
 	}
-	
+
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableWeaponCodeIsPresentInClassSniperCannon() throws Exception {
@@ -1513,7 +1513,7 @@ public class Milestone1PublicTests {
 		Field WeaponCodeField = Class.forName(sniperCannonPath).getDeclaredField("WEAPON_CODE");
 		assertTrue("The WEAPON_CODE attribute should be static", (Modifier.isStatic(WeaponCodeField.getModifiers())));
 	}
-	@Test(timeout = 1000) 
+	@Test(timeout = 1000)
 	public void testAttributeWeaponCodeIsFinalInClassSniperCannon() throws NoSuchFieldException, SecurityException, ClassNotFoundException {
 		Field WeaponCodeField = Class.forName(sniperCannonPath).getDeclaredField("WEAPON_CODE");
 		assertTrue("The WEAPON_CODE attribute should be final", java.lang.reflect.Modifier.isFinal(WeaponCodeField.getModifiers()));
@@ -1535,13 +1535,13 @@ public class Milestone1PublicTests {
 		Field WeaponCodeField = Class.forName(wallTrapPath).getDeclaredField("WEAPON_CODE");
 		assertTrue("The WEAPON_CODE attribute should be static", (Modifier.isStatic(WeaponCodeField.getModifiers())));
 	}
-	@Test(timeout = 1000) 
+	@Test(timeout = 1000)
 	public void testAttributeWeaponCodeIsFinalInClassWallTrap() throws NoSuchFieldException, SecurityException, ClassNotFoundException {
 		Field WeaponCodeField = Class.forName(wallTrapPath).getDeclaredField("WEAPON_CODE");
 		assertTrue("The WEAPON_CODE attribute should be final", java.lang.reflect.Modifier.isFinal(WeaponCodeField.getModifiers()));
 	}
 
-	@Test(timeout = 1000) 
+	@Test(timeout = 1000)
 	public void testWeaponCodeValues() throws NoSuchFieldException, SecurityException, ClassNotFoundException, IllegalArgumentException, IllegalAccessException {
 		Field piercingCode = Class.forName(piercingCannonPath).getDeclaredField("WEAPON_CODE");
 		assertEquals(1, piercingCode.getInt(null));
@@ -1585,7 +1585,7 @@ public class Milestone1PublicTests {
 		testInstanceVariableIsPresent(Class.forName(volleySpreadCannonPath), "minRange", true);
 	}
 
-	
+
 
 
 	@Test(timeout = 1000)
@@ -1600,7 +1600,7 @@ public class Milestone1PublicTests {
 		testSetterMethodExistsInClass(Class.forName(volleySpreadCannonPath), "setMinRange", int.class , false);
 	}
 
-	
+
 	@Test(timeout = 1000)
 	public void testInstanceVariableMaxRangeIsPrivate() throws Exception {
 		Field maxRangeField = Class.forName(volleySpreadCannonPath).getDeclaredField("maxRange");
@@ -1626,7 +1626,7 @@ public class Milestone1PublicTests {
 		testConstructorInitialization(piercingCannon, attributes, values);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testConstructorInitializationVolleySpreadCannon() throws Exception {
@@ -1676,7 +1676,7 @@ public class Milestone1PublicTests {
 		testGetterLogic(sniperCannon, "baseDamage", baseDamage,"getDamage" );
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testGetterLogicForInstanceVariableMaxRangeInClassVolleySpreadCannon() throws Exception {
@@ -1690,7 +1690,7 @@ public class Milestone1PublicTests {
 		testGetterLogic(volley, "maxRange", minRange,"getMaxRange" );
 	}
 
-	
+
 
 
 
@@ -1712,15 +1712,15 @@ public class Milestone1PublicTests {
 		int[][]h = {
 				{ 1, 1, 1, 2, 1, 3, 4 },
 				{ 2, 2, 2, 1, 3, 3, 4 },
-				{ 4, 4, 4, 4, 4, 4, 4 } 
+				{ 4, 4, 4, 4, 4, 4, 4 }
 		};
 
 		testPhasesValues(b, name, h);
 	}
 
-	
 
-	
+
+
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableWallBaseBattleSetter() throws ClassNotFoundException {
@@ -1754,14 +1754,14 @@ public class Milestone1PublicTests {
 
 
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testConstructorInitializationFactoryResponse() throws Exception {
 		Constructor<?> factoryResponseConstructor = Class.forName(factoryResponsePath).getConstructor(Class.forName(weaponPath),int.class);
 		Constructor<?> weaponConstructor = Class.forName(weaponPiercingCannonPath).getConstructor(int.class);
-		int randomRemainingResources = (int) (Math.random() * 10 )+1; 
-		int baseDamage = (int) (Math.random() * 10 )+1; 
+		int randomRemainingResources = (int) (Math.random() * 10 )+1;
+		int baseDamage = (int) (Math.random() * 10 )+1;
 		Object weapon = weaponConstructor.newInstance(baseDamage);
 		Object factoryResponse = factoryResponseConstructor.newInstance(weapon,randomRemainingResources);
 		String[] names = { "weapon", "remainingResources" };
@@ -1797,11 +1797,11 @@ public class Milestone1PublicTests {
 	}
 
 
-	@Test(timeout = 1000) public void testInstanceVariableFactoryResponseWeaponGetterLogic() throws Exception { 
+	@Test(timeout = 1000) public void testInstanceVariableFactoryResponseWeaponGetterLogic() throws Exception {
 		Constructor<?> factoryResponseConstructor = Class.forName(factoryResponsePath).getConstructor(Class.forName(weaponPath),int.class);
 		Constructor<?> weaponConstructor = Class.forName(weaponPiercingCannonPath).getConstructor(int.class);
-		int randomRemainingResources = (int) (Math.random() * 10 )+1; 
-		int baseDamage = (int) (Math.random() * 10 )+1; 
+		int randomRemainingResources = (int) (Math.random() * 10 )+1;
+		int baseDamage = (int) (Math.random() * 10 )+1;
 		Object weapon = weaponConstructor.newInstance(baseDamage);
 		Object c = factoryResponseConstructor.newInstance(weapon,randomRemainingResources);
 		testGetterLogic(c, "weapon", weapon); }
@@ -1838,7 +1838,7 @@ public class Milestone1PublicTests {
 	}
 
 
-	
+
 	@Test(timeout = 1000)
 	public void testWeaponFactoryConstructorInitialization() throws Exception{
 		Constructor<?> weaponFactoryConstructor = Class.forName(weaponFactoryPath).getConstructor();
@@ -1849,10 +1849,10 @@ public class Milestone1PublicTests {
 		Object weaponRegistry3 = weaponRegistryConstructor.newInstance(3,100,5,"Wall Spread Cannon");
 		Object weaponRegistry4 = weaponRegistryConstructor.newInstance(4,75,100,"Proximity Trap");
 		HashMap<Integer, Object> h = new HashMap();
-		h.put(1, (Object) weaponRegistry1);
-		h.put(2, (Object) weaponRegistry2);
-		h.put(3, (Object) weaponRegistry3);
-		h.put(4, (Object) weaponRegistry4);
+		h.put(1, weaponRegistry1);
+		h.put(2, weaponRegistry2);
+		h.put(3, weaponRegistry3);
+		h.put(4, weaponRegistry4);
 		String[] names = {"weaponShop"};
 		Object[] values = {h};
 		testConstructorInitializationWeaponFactory(weaponFactory, names, values);
@@ -1862,14 +1862,14 @@ public class Milestone1PublicTests {
 	@Test(timeout = 1000)
 	public void testConstructorInitializationBattleTitansArchives2()  {
 		try {
-			
-		
+
+
 		Constructor<?> battleConstructor = Class.forName(battlePath).getConstructor(int.class,int.class,int.class,int.class,int.class);
 		int random1 = (int) (Math.random() * 10) + 1;
 		int random2 = (int) (Math.random() * 10) + 1;
 		int random3 = (int) (Math.random() * 10) + 1;
 		int random4 = (int) (Math.random() * 10) + 1;
-		int random5 = (int) (Math.random() * 10) + 1; 
+		int random5 = (int) (Math.random() * 10) + 1;
 		Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 		Constructor<?> weaponFactoryConstructor = Class.forName(weaponFactoryPath).getConstructor();
 		Object weaponFactory = weaponFactoryConstructor.newInstance();
@@ -1923,7 +1923,7 @@ public class Milestone1PublicTests {
 		}
 	}
 
-	
+
 	@Test(timeout = 1000)
 	public void testPhasesInBattleIsPrivate() throws Exception {
 		testInstanceVariableIsPrivate(Class.forName(battlePath), "PHASES_APPROACHING_TITANS");
@@ -2014,7 +2014,7 @@ public class Milestone1PublicTests {
 	}
 
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testBattlePhaseInBattleType() throws Exception {
@@ -2122,7 +2122,7 @@ public class Milestone1PublicTests {
 		testInstanceVariableIsPresent(Class.forName(battlePath), "lanes", true);
 
 	}
-	
+
 	@Test(timeout = 1000)
 	public void testLanesInBattleIsFinal() throws Exception {
 		testInstanceVariableIsFinal(Class.forName(battlePath), "lanes");
@@ -2144,8 +2144,8 @@ public class Milestone1PublicTests {
 		testInstanceVariableIsPrivate(Class.forName(battlePath), "originalLanes");
 
 	}
-	
-	
+
+
 
 
 
@@ -2229,8 +2229,8 @@ public class Milestone1PublicTests {
 		testGetterLogic(battle, "numberOfTitansPerTurn", 1);
 	}
 
-	
-	
+
+
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableWeaponFactoryBattleGetterLogic() throws Exception  {
@@ -2250,7 +2250,7 @@ public class Milestone1PublicTests {
 
 
 	@Test(timeout = 1000)
-	public void testInstanceVariableTitansArchivesBattleGetterLogic() throws Exception { 
+	public void testInstanceVariableTitansArchivesBattleGetterLogic() throws Exception {
 		int nb = (int) (Math.random() * 10) + 1;
 		int score = (int) (Math.random() * 10) + 1;
 		int distance = (int) (Math.random() * 10) + 1;
@@ -2274,14 +2274,14 @@ public class Milestone1PublicTests {
 		Object titanRegistry4 = titanRegistryConstructor.newInstance(4,1000,100,60,5,60,4);
 
 		HashMap<Integer, Object> h = new HashMap();
-		h.put(1, (Object) titanRegistry1);
-		h.put(2, (Object) titanRegistry2);
-		h.put(3, (Object) titanRegistry3);
-		h.put(4, (Object) titanRegistry4);
+		h.put(1, titanRegistry1);
+		h.put(2, titanRegistry2);
+		h.put(3, titanRegistry3);
+		h.put(4, titanRegistry4);
 		testGetterLogic(battle, "titansArchives", h);
 	}
 
-	
+
 	@Test(timeout = 1000)
 	public void testInstanceVariableLanesBattleGetterLogic() throws Exception {
 		int nb = (int) (Math.random() * 10) + 1;
@@ -2313,7 +2313,7 @@ public class Milestone1PublicTests {
 		testSetterMethodExistsInClass(Class.forName(battlePath), "setNumberOfTurns", int.class, true);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableBattlePhaseBattleSetter() throws ClassNotFoundException {
@@ -2353,7 +2353,7 @@ public class Milestone1PublicTests {
 
 
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testBattleNumberOfTitansSetterLogic() throws Exception {
@@ -2397,7 +2397,7 @@ public class Milestone1PublicTests {
 		testSetterLogic(b, "battlePhase", bp, bp, Class.forName(battlePhasePath));
 	}
 
-	
+
 
 
 	@Test(timeout = 1000)
@@ -2407,7 +2407,7 @@ public class Milestone1PublicTests {
 		int random2 = (int) (Math.random() * 10) + 1;
 		int random3 = (int) (Math.random() * 10) + 1;
 		int random4 = (int) (Math.random() * 10) + 1;
-		int random5 = (int) (Math.random() * 10) + 1; 
+		int random5 = (int) (Math.random() * 10) + 1;
 		Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 		Constructor<?> weaponFactoryConstructor = Class.forName(weaponFactoryPath).getConstructor();
 		Constructor<?> weaponRegistryConstructor = Class.forName(weaponRegistryPath).getConstructor(int.class , int.class , int.class , String.class);
@@ -2417,10 +2417,10 @@ public class Milestone1PublicTests {
 		Object weaponRegistry3 = weaponRegistryConstructor.newInstance(3,100,5,"Wall Spread Cannon");
 		Object weaponRegistry4 = weaponRegistryConstructor.newInstance(4,75,100,"Proximity Trap");
 		HashMap<Integer, Object> h = new HashMap();
-		h.put(1, (Object) weaponRegistry1);
-		h.put(2, (Object) weaponRegistry2);
-		h.put(3, (Object) weaponRegistry3);
-		h.put(4, (Object) weaponRegistry4);
+		h.put(1, weaponRegistry1);
+		h.put(2, weaponRegistry2);
+		h.put(3, weaponRegistry3);
+		h.put(4, weaponRegistry4);
 		String[] names = {"weaponShop"};
 		Object[] values = {h};
 		ArrayList<Object> l = new ArrayList<>();
@@ -2438,7 +2438,7 @@ public class Milestone1PublicTests {
 		int random2 = (int) (Math.random() * 10) + 1;
 		int random3 = (int) (Math.random() * 10) + 1;
 		int random4 = (int) (Math.random() * 10) + 1;
-		int random5 = (int) (Math.random() * 10) + 1; 
+		int random5 = (int) (Math.random() * 10) + 1;
 		Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 		Constructor<?> weaponFactoryConstructor = Class.forName(weaponFactoryPath).getConstructor();
 		Object weaponFactory = weaponFactoryConstructor.newInstance();
@@ -2449,10 +2449,10 @@ public class Milestone1PublicTests {
 		Object titanRegistry3 = titanRegistryConstructor.newInstance(3,200,85,15,10,30,3);
 		Object titanRegistry4 = titanRegistryConstructor.newInstance(4,1000,100,60,5,60,4);
 		HashMap<Integer, Object> h2 = new HashMap();
-		h2.put(1, (Object) titanRegistry1);
-		h2.put(2, (Object) titanRegistry2);
-		h2.put(3, (Object) titanRegistry3);
-		h2.put(4, (Object) titanRegistry4);
+		h2.put(1, titanRegistry1);
+		h2.put(2, titanRegistry2);
+		h2.put(3, titanRegistry3);
+		h2.put(4, titanRegistry4);
 		ArrayList<Object> l = new ArrayList<>();
 		ArrayList<Object> Olanes = new ArrayList<>();
 		PriorityQueue<Object> lanes = new PriorityQueue();
@@ -2469,7 +2469,7 @@ public class Milestone1PublicTests {
 		int random2 = (int) (Math.random() * 10) + 1;
 		int random3 = (int) (Math.random() * 10) + 1;
 		int random4 = (int) (Math.random() * 10) + 1;
-		int random5 = (int) (Math.random() * 10) + 1; 
+		int random5 = (int) (Math.random() * 10) + 1;
 		Object battle = battleConstructor.newInstance(random1,random2,random3,random4,random5);
 		Constructor<?> weaponFactoryConstructor = Class.forName(weaponFactoryPath).getConstructor();
 		Object weaponFactory = weaponFactoryConstructor.newInstance();
@@ -2480,10 +2480,10 @@ public class Milestone1PublicTests {
 		Object titanRegistry3 = titanRegistryConstructor.newInstance(3,200,85,15,10,30,3);
 		Object titanRegistry4 = titanRegistryConstructor.newInstance(4,1000,100,60,5,60,4);
 		HashMap<Integer, Object> h2 = new HashMap();
-		h2.put(1, (Object) titanRegistry1);
-		h2.put(2, (Object) titanRegistry2);
-		h2.put(3, (Object) titanRegistry3);
-		h2.put(4, (Object) titanRegistry4);
+		h2.put(1, titanRegistry1);
+		h2.put(2, titanRegistry2);
+		h2.put(3, titanRegistry3);
+		h2.put(4, titanRegistry4);
 		ArrayList<Object> l = new ArrayList<>();
 		ArrayList<Object> Olanes = new ArrayList<>();
 		PriorityQueue<Object> lanes = new PriorityQueue();
@@ -2493,7 +2493,7 @@ public class Milestone1PublicTests {
 	}
 
 
-	
+
 	@Test(timeout = 1000)
 	public void testInitializeLanesBattleClass() throws ClassNotFoundException, NoSuchMethodException,
 	IllegalAccessException, InstantiationException, InvocationTargetException {
@@ -2536,7 +2536,7 @@ public class Milestone1PublicTests {
 		testConstructorExists(Class.forName(titanRegistryPath), inputs);
 	}
 
-	
+
 
 
 
@@ -2550,7 +2550,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(titanRegistryPath).getDeclaredField("code");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -2584,7 +2584,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(titanRegistryPath).getDeclaredField("baseHealth");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -2610,7 +2610,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(titanRegistryPath).getDeclaredField("baseDamage");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -2619,7 +2619,7 @@ public class Milestone1PublicTests {
 		testInstanceVariableOfType(Class.forName(titanRegistryPath), "baseDamage", int.class);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testTitanRegistrySetterBaseDmgDoesNotExist()
@@ -2643,14 +2643,14 @@ public class Milestone1PublicTests {
 		testGetterLogic(c, "baseDamage", randomBaseDmg);
 	}
 
-	
+
 	@Test(timeout = 1000)
 	public void testTitanRegistryInstanceVariableHIMPrivate() throws Exception {
 
 		Field f = Class.forName(titanRegistryPath).getDeclaredField("heightInMeters");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(titanRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 	@Test(timeout = 1000)
@@ -2710,14 +2710,14 @@ public class Milestone1PublicTests {
 
 		Object c = Constructor.newInstance(randomCode,randomBaseHealth,randomBaseDmg,randomHIM,randomSpeed,randomRV,randomDL);
 		testGetterLogic(c, "speed", randomSpeed);
-	}	
+	}
 
 	@Test(timeout = 1000)
 	public void testTitanRegistryInstanceVariableResourcesValuePresent() throws Exception {
 		testInstanceVariableIsPresent(Class.forName(titanRegistryPath), "resourcesValue", true);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testTitanRegistryInstanceVariableResourcesValueType() throws Exception {
@@ -2729,7 +2729,7 @@ public class Milestone1PublicTests {
 		testGetterMethodExistsInClass(Class.forName(titanRegistryPath), "getResourcesValue", int.class, true);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableResourcesValueGetterLogic() throws Exception {
@@ -2744,7 +2744,7 @@ public class Milestone1PublicTests {
 
 		Object c = Constructor.newInstance(randomCode,randomBaseHealth,randomBaseDmg,randomHIM,randomSpeed,randomRV,randomDL);
 		testGetterLogic(c, "resourcesValue", randomRV);
-	}	
+	}
 
 	@Test(timeout = 1000)
 	public void testTitanRegistryInstanceVariableDLPresent() throws Exception {
@@ -2826,7 +2826,7 @@ public class Milestone1PublicTests {
 	}
 
 
-	
+
 
 
 
@@ -2841,7 +2841,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(weaponRegistryPath).getDeclaredField("code");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -2850,7 +2850,7 @@ public class Milestone1PublicTests {
 		testInstanceVariableOfType(Class.forName(weaponRegistryPath), "code", int.class);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testWeaponRegistrySetterCodeDoesNotExist()
@@ -2891,7 +2891,7 @@ public class Milestone1PublicTests {
 		testGetterMethodExistsInClass(Class.forName(weaponRegistryPath), "getPrice", int.class, true);
 	}
 
-	
+
 
 
 	@Test(timeout = 1000)
@@ -2904,7 +2904,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(weaponRegistryPath).getDeclaredField("damage");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -2925,13 +2925,13 @@ public class Milestone1PublicTests {
 		testSetterAbsentInSubclasses("damage", subClasses);
 	}
 
-	
+
 	@Test(timeout = 1000)
 	public void testWeaponRegistryInstanceVariableNamePrivate() throws Exception {
 		Field f = Class.forName(weaponRegistryPath).getDeclaredField("name");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -2954,7 +2954,7 @@ public class Milestone1PublicTests {
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableNameWRGetterLogic() throws Exception {
-		//		
+		//
 		Constructor<?> constructor = Class.forName(weaponRegistryPath).getConstructor( int.class, int.class,int.class, String.class,int.class, int.class);
 		int randomCode = (int) (Math.random() * 10) + 1;
 		int randomPrice = (int) (Math.random() * 20) + 1;
@@ -2978,7 +2978,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(weaponRegistryPath).getDeclaredField("minRange");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -3001,7 +3001,7 @@ public class Milestone1PublicTests {
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableminRangeWRGetterLogic() throws Exception {
-		//		
+		//
 		Constructor<?> constructor = Class.forName(weaponRegistryPath).getConstructor( int.class, int.class,int.class, String.class,int.class, int.class);
 		int randomCode = (int) (Math.random() * 10) + 1;
 		int randomPrice = (int) (Math.random() * 20) + 1;
@@ -3024,7 +3024,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(weaponRegistryPath).getDeclaredField("maxRange");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(weaponRegistryPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 
 
@@ -3038,11 +3038,11 @@ public class Milestone1PublicTests {
 		testGetterMethodExistsInClass(Class.forName(weaponRegistryPath), "getMaxRange", int.class, true);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testInstanceVariableMaxRangeWRGetterLogic() throws Exception {
-		//		
+		//
 		Constructor<?> constructor = Class.forName(weaponRegistryPath).getConstructor( int.class, int.class,int.class, String.class,int.class, int.class);
 		int randomCode = (int) (Math.random() * 10) + 1;
 		int randomPrice = (int) (Math.random() * 20) + 1;
@@ -3067,15 +3067,15 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(dataLoaderPath).getDeclaredField("TITANS_FILE_NAME");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
-	
+
 	@Test(timeout = 1000)
 	public void testDataLoaderTITANS_FILE_NAMEStatic() throws Exception {
 		Field f = Class.forName(dataLoaderPath).getDeclaredField("TITANS_FILE_NAME");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be static",(Modifier.isStatic(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be static",(Modifier.isStatic(modifiers)));
 	}
 
 	@Test(timeout = 1000)
@@ -3102,14 +3102,14 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(dataLoaderPath).getDeclaredField("WEAPONS_FILE_NAME");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be private",(Modifier.isPrivate(modifiers)));
 	}
 	@Test(timeout = 1000)
 	public void testDataLoaderWEAPONS_FILE_NAMEFinal() throws Exception {
 		Field f = Class.forName(dataLoaderPath).getDeclaredField("WEAPONS_FILE_NAME");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be final",(Modifier.isFinal(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be final",(Modifier.isFinal(modifiers)));
 	}
 
 	@Test(timeout = 1000)
@@ -3117,7 +3117,7 @@ public class Milestone1PublicTests {
 		Field f = Class.forName(dataLoaderPath).getDeclaredField("WEAPONS_FILE_NAME");
 		int modifiers = f.getModifiers();
 
-		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be static",(Modifier.isStatic(modifiers)));	
+		assertTrue(f.getName()+" variable in "+Class.forName(dataLoaderPath).getName()+" should be static",(Modifier.isStatic(modifiers)));
 	}
 
 	@Test(timeout = 1000)
@@ -3133,7 +3133,7 @@ public class Milestone1PublicTests {
 		testSetterAbsentInSubclasses("WEAPONS_FILE_NAME", subClasses);
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testCorrectWeaponFileName() {
@@ -3141,7 +3141,7 @@ public class Milestone1PublicTests {
 
 			Field fd = Class.forName(dataLoaderPath).getDeclaredField("WEAPONS_FILE_NAME");
 			fd.setAccessible(true);
-			assertEquals("weapons.csv", ((String)fd.get(null)));
+			assertEquals("weapons.csv", (fd.get(null)));
 		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException
 				| IllegalArgumentException | IllegalAccessException  e) {
 			e.printStackTrace();
@@ -3154,7 +3154,7 @@ public class Milestone1PublicTests {
 
 
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testReadWeaponRegistryisStatic() {
@@ -3232,7 +3232,7 @@ public class Milestone1PublicTests {
 		}
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testLoadbaseDamageTitansCorrectly() {
@@ -3401,7 +3401,7 @@ public class Milestone1PublicTests {
 		}
 	}
 
-	
+
 
 	@Test(timeout = 1000)
 	public void testLoadCodeWeaponRegistryCorrectly() {
@@ -3617,11 +3617,11 @@ public class Milestone1PublicTests {
 		}
 	}
 
-	
+
 
 
 	////////////////////////////////////////////	Helper Methods//////////////////////////////////////////////////////////////
-	
+
 	private void testIsEnum(Class eClass) {
 		assertTrue(eClass.getSimpleName() + " should be an Enum", eClass.isEnum());
 	}
@@ -3629,12 +3629,12 @@ public class Milestone1PublicTests {
 	private void testEnumValues(String path, String name, String[] values) {
 		try {
 			Class eClass = Class.forName(path);
-			for(int i=0;i<values.length;i++) {
+			for (String value : values) {
 				try {
-					Enum.valueOf((Class<Enum>)eClass, values[i]);
+					Enum.valueOf((Class<Enum>)eClass, value);
 				}
 				catch(IllegalArgumentException e) {
-					fail(eClass.getSimpleName() + " enum can be " + values[i]);
+					fail(eClass.getSimpleName() + " enum can be " + value);
 				}
 			}
 		}
@@ -3654,9 +3654,10 @@ public class Milestone1PublicTests {
 
 		while (f == null) {
 
-			if (curr == Object.class)
+			if (curr == Object.class) {
 				fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 						+ name + "\".");
+			}
 			try {
 				f = curr.getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
@@ -3672,8 +3673,9 @@ public class Milestone1PublicTests {
 
 		String methodName = "get" + name2;
 
-		if (value.getClass().equals(Boolean.class))
+		if (value.getClass().equals(Boolean.class)) {
 			methodName = "is" + Character.toUpperCase(c) + name.substring(1, name.length());
+		}
 
 		Method m = createdObject.getClass().getMethod(methodName);
 		assertEquals(
@@ -3684,17 +3686,15 @@ public class Milestone1PublicTests {
 	}
 
 	private boolean checkDoubleArray(int[][]expected,int[][]original) {
-		if(expected.length!=original.length) {
-			return false;
-		}
-		if(expected[0].length!=original[0].length) {
+		if((expected.length!=original.length) || (expected[0].length!=original[0].length)) {
 			return false;
 		}
 		for(int i=0;i<expected.length;i++) {
 			int[]row = expected[i];
 			for(int j=0;j<row.length;j++) {
-				if(expected[i][j]!=original[i][j])
+				if(expected[i][j]!=original[i][j]) {
 					return false;
+				}
 			}
 		}
 		return true;
@@ -3711,9 +3711,10 @@ public class Milestone1PublicTests {
 
 		while (f == null) {
 
-			if (curr == Object.class)
+			if (curr == Object.class) {
 				fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 						+ name + "\".");
+			}
 			try {
 				f = curr.getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
@@ -3740,9 +3741,10 @@ public class Milestone1PublicTests {
 
 		while (f == null) {
 
-			if (curr == Object.class)
+			if (curr == Object.class) {
 				fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 						+ name + "\".");
+			}
 			try {
 				f = curr.getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
@@ -3752,8 +3754,9 @@ public class Milestone1PublicTests {
 		f.setAccessible(true);
 		Object o= f.get(createdObject);
 		boolean equal=true;
-		if(value!=(int)o)
+		if(value!=(int)o) {
 			equal =false;
+		}
 		assertEquals(
 				"The class " + createdObject.getClass().getSimpleName()
 				+ "should initialize the instance variable \"" + name + "\" with 10000.",
@@ -3762,8 +3765,8 @@ public class Milestone1PublicTests {
 	}
 
 
-	
-	
+
+
 	private void writeTitanCSVForDataLoader() throws FileNotFoundException {
 		PrintWriter csvWriter = new PrintWriter("titans.csv");
 		csvWriter.println("5,300,25,25,30,20,8");
@@ -3794,8 +3797,8 @@ public class Milestone1PublicTests {
 
 
 
-	
-	
+
+
 	private void writeWeaponCSVForDataLoader() throws FileNotFoundException {
 		PrintWriter csvWriter = new PrintWriter("weapons.csv");
 		csvWriter.println("5,55,20,Anti Titan Shell");
@@ -3827,48 +3830,48 @@ public class Milestone1PublicTests {
 
 	}
 
-	
+
 	private boolean checkTREqual(Object titan1, Object titan2, String field)
 			throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
 		Class curr1 = Class.forName(titanRegistryPath);
-		
+
 		Field f = null;
-		
+
 		try {
 			f = curr1.getDeclaredField(field);
 			f.setAccessible(true);
-			
+
 			int mh1 = (int) f.get(titan1);
 			int mh2 = (int) f.get(titan2);
 			return mh1 == mh2;
-			
+
 		} catch (NoSuchFieldException e) {
 			curr1 = curr1.getSuperclass();
 			fail("Attributes name error");
 			return false;
 		}
-		
+
 	}
 	private boolean checkWREqual(Object w1, Object w2, String field)
 			throws IllegalArgumentException, IllegalAccessException, ClassNotFoundException {
 		Class curr1 = Class.forName(weaponRegistryPath);
-		
+
 		Field f = null;
-		
+
 		try {
 			f = curr1.getDeclaredField(field);
 			f.setAccessible(true);
-			
+
 			int mh1 = (int) f.get(w1);
 			int mh2 = (int) f.get(w2);
 			return mh1 == mh2;
-			
+
 		} catch (NoSuchFieldException e) {
 			curr1 = curr1.getSuperclass();
 			fail("Attributes name error");
 			return false;
 		}
-		
+
 	}
 
 
@@ -3916,7 +3919,7 @@ public class Milestone1PublicTests {
 
 
 	private void testClassIsSubClass(Class superClass, Class subClass) {
-		assertEquals(subClass.getSimpleName() + " should be a subClass of Class : "+ superClass.getSimpleName(), 
+		assertEquals(subClass.getSimpleName() + " should be a subClass of Class : "+ superClass.getSimpleName(),
 				superClass, subClass.getSuperclass());
 	}
 
@@ -3926,7 +3929,7 @@ public class Milestone1PublicTests {
 
 	private void testInterfaceMethod(Class iClass, String methodName, Class returnType, Class[] parameters) {
 		Method[] methods = iClass.getDeclaredMethods();
-		assertTrue(iClass.getSimpleName()+" interface should have " + methodName + "method", 
+		assertTrue(iClass.getSimpleName()+" interface should have " + methodName + "method",
 				containsMethodName(methods, methodName));
 
 		Method m = null;
@@ -3949,7 +3952,7 @@ public class Milestone1PublicTests {
 	}
 
 	private void testClassImplementsInterface(Class aClass, Class iClass) {
-		assertTrue(aClass.getSimpleName() +" should implement " + iClass.getSimpleName(), 
+		assertTrue(aClass.getSimpleName() +" should implement " + iClass.getSimpleName(),
 				iClass.isAssignableFrom(aClass));
 	}
 
@@ -3961,9 +3964,10 @@ public class Milestone1PublicTests {
 
 			Field f = null;
 			while(f == null) {
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -3975,20 +3979,20 @@ public class Milestone1PublicTests {
 				PriorityQueue<Object> q = (PriorityQueue<Object>) f.get(createdObject);
 				assertEquals("The constructor of the " + createdObject.getClass().getSimpleName()
 						+ " class should initialize the instance variable \"" + currName
-						+ "\" correctly. the size of titans should be equals to the 0 initially.", 
+						+ "\" correctly. the size of titans should be equals to the 0 initially.",
 						currValue, q.size());
 			}
 			else if(currName.equals("weapons")) {
 				ArrayList<Object> w = (ArrayList<Object>) f.get(createdObject);
 				assertEquals("The constructor of the " + createdObject.getClass().getSimpleName()
 						+ " class should initialize the instance variable \"" + currName
-						+ "\" correctly. the size of weapons should be equals to the 0 initially.", 
+						+ "\" correctly. the size of weapons should be equals to the 0 initially.",
 						currValue, w.size());
-			}	
-			else	
+			} else {
 				assertEquals("The constructor of the " + createdObject.getClass().getSimpleName()
-						+ " class should initialize the instance variable \"" + currName + "\" correctly.", 
+						+ " class should initialize the instance variable \"" + currName + "\" correctly.",
 						currValue, f.get(createdObject));
+			}
 
 		}
 	}
@@ -4002,9 +4006,10 @@ public class Milestone1PublicTests {
 
 			Field f = null;
 			while(f == null) {
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4012,22 +4017,23 @@ public class Milestone1PublicTests {
 				}
 			}
 			f.setAccessible(true);
-			if(currName.equals("currentHealth"))
+			if(currName.equals("currentHealth")) {
 				assertEquals("The constructor of the " + createdObject.getClass().getSimpleName()
 						+ " class should initialize the instance variable \"" + currName
-						+ "\" correctly. It should be equals to the baseHealth initially.", 
+						+ "\" correctly. It should be equals to the baseHealth initially.",
 						currValue, f.get(createdObject));
-			else	
+			} else {
 				assertEquals("The constructor of the " + createdObject.getClass().getSimpleName()
-						+ " class should initialize the instance variable \"" + currName + "\" correctly.", 
+						+ " class should initialize the instance variable \"" + currName + "\" correctly.",
 						currValue, f.get(createdObject));
+			}
 
 		}
 	}
 
 
 	private void testClassIsAbstract(Class aClass) {
-		assertTrue(aClass.getSimpleName() + " should be an abtract class.", 
+		assertTrue(aClass.getSimpleName() + " should be an abtract class.",
 				Modifier.isAbstract(aClass.getModifiers()));
 	}
 
@@ -4036,9 +4042,10 @@ public class Milestone1PublicTests {
 		Class curr = createdObject.getClass();
 
 		while(f == null) {
-			if(curr == Object.class)
+			if(curr == Object.class) {
 				fail("you should have " + varName + " as an instance variable in class " + curr.getSimpleName()
 				+" or one of its superclasses");
+			}
 			try {
 				f = curr.getDeclaredField(varName);
 			}
@@ -4057,12 +4064,12 @@ public class Milestone1PublicTests {
 			assertTrue("No such method",false);
 		}
 		m.invoke(createdObject, setValue);
-		if(f.getType().equals(int.class) && (int)setValue < 0 && varName.equals("currentHealth")) 
+		if(f.getType().equals(int.class) && (int)setValue < 0 && varName.equals("currentHealth")) {
 			assertEquals("current health should not be less than 0", 0, f.get(createdObject));
-		else
-
+		} else {
 			assertEquals("The method \"" + MethodName + "\" in class " + createdObject.getClass().getSimpleName()
 					+ " should set the correct value of variable \"", setValue, f.get(createdObject));
+		}
 	}
 
 	private void testGetterMethodLogic(Object createdObject, String varName, Object expectedValue) throws IllegalArgumentException, IllegalAccessException, NoSuchMethodException, SecurityException, ClassNotFoundException, InvocationTargetException {
@@ -4070,9 +4077,10 @@ public class Milestone1PublicTests {
 		Class curr = createdObject.getClass();
 
 		while(f == null) {
-			if(curr == Object.class)
+			if(curr == Object.class) {
 				fail("you should have " + varName + " as an instance variable in class " + curr.getSimpleName()
 				+" or one of its superclasses");
+			}
 			try {
 				f = curr.getDeclaredField(varName);
 			}
@@ -4085,10 +4093,11 @@ public class Milestone1PublicTests {
 		f.set(createdObject, expectedValue);
 
 		String methodName = "";
-		if(expectedValue.getClass().equals(boolean.class))
+		if(expectedValue.getClass().equals(boolean.class)) {
 			methodName = "is" + Character.toUpperCase(varName.charAt(0)) + varName.substring(1);
-		else
+		} else {
 			methodName = "get" + Character.toUpperCase(varName.charAt(0)) + varName.substring(1);
+		}
 
 		Method m = createdObject.getClass().getDeclaredMethod(methodName);
 		m.invoke(createdObject);
@@ -4135,17 +4144,18 @@ public class Milestone1PublicTests {
 			thrown = true;
 		}
 		String varName = "";
-		if(m.getReturnType().equals(boolean.class))
+		if(m.getReturnType().equals(boolean.class)) {
 			varName = methodName.substring(2,3).toLowerCase() + methodName.substring(3);
-		else
+		} else {
 			varName = methodName.substring(3,4).toLowerCase() + methodName.substring(4);
+		}
 		if(!thrown) {
 			assertTrue("Incorrect return type for " + methodName + " method in " + aClass.getSimpleName() + " class.",
 					m.getReturnType().equals(returnType));
-		}
-		else
+		} else {
 			assertTrue("The \"" + varName + "\" instance variable in class " + aClass.getSimpleName()
 			+ " is not a READ variable.", false);
+		}
 	}
 
 
@@ -4162,9 +4172,9 @@ public class Milestone1PublicTests {
 		if(!thrown) {
 			boolean isStatic = Modifier.isStatic(f.getModifiers());
 			assertTrue(varName + " should be static", isStatic);
-		}
-		else
+		} else {
 			assertTrue("you should have" + varName + " as a static variable", false);
+		}
 	}
 
 
@@ -4266,9 +4276,9 @@ public class Milestone1PublicTests {
 		if(!thrown) {
 			boolean isFinal = Modifier.isFinal(f.getModifiers());
 			assertTrue(varName + " should be final", isFinal);
-		}
-		else
+		} else {
 			assertTrue("you should have" + varName + " as a final variable", false);
+		}
 	}
 
 
@@ -4283,10 +4293,11 @@ public class Milestone1PublicTests {
 		}
 
 		String varName = "";
-		if (returnedType == boolean.class)
+		if (returnedType == boolean.class) {
 			varName = methodName.substring(2, 3).toLowerCase() + methodName.substring(3);
-		else
+		} else {
 			varName = methodName.substring(3, 4).toLowerCase() + methodName.substring(4);
+		}
 		if (readvariable) {
 			assertTrue("The \"" + varName + "\" instance variable in class " + aClass.getSimpleName()
 			+ " is a READ variable.", found);
@@ -4306,9 +4317,10 @@ public class Milestone1PublicTests {
 
 		while (f == null) {
 
-			if (curr == Object.class)
+			if (curr == Object.class) {
 				fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 						+ name + "\".");
+			}
 			try {
 				f = curr.getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
@@ -4324,8 +4336,9 @@ public class Milestone1PublicTests {
 
 		String methodName = "get" + Character.toUpperCase(c) + name.substring(1, name.length());
 
-		if (value.getClass().equals(Boolean.class))
+		if (value.getClass().equals(Boolean.class)) {
 			methodName = "is" + Character.toUpperCase(c) + name.substring(1, name.length());
+		}
 
 		Method m = createdObject.getClass().getMethod(methodName);
 		assertEquals(
@@ -4337,8 +4350,9 @@ public class Milestone1PublicTests {
 
 	private static boolean containsMethodName(Method[] methods, String name) {
 		for (Method method : methods) {
-			if (method.getName().equals(name))
+			if (method.getName().equals(name)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -4381,9 +4395,10 @@ public class Milestone1PublicTests {
 
 		while (f == null) {
 
-			if (curr == Object.class)
+			if (curr == Object.class) {
 				fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 						+ name + "\".");
+			}
 			try {
 				f = curr.getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
@@ -4445,10 +4460,11 @@ public class Milestone1PublicTests {
 							+ aClass.getSimpleName() + " class.",
 
 							thrown);
-		} else
+		} else {
 			assertFalse("Missing constructor with zero parameters in " + aClass.getSimpleName() + " class.",
 
 					thrown);
+		}
 
 	}
 
@@ -4464,9 +4480,10 @@ public class Milestone1PublicTests {
 
 			while (f == null) {
 
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4499,9 +4516,10 @@ public class Milestone1PublicTests {
 
 			while (f == null) {
 
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4537,9 +4555,10 @@ public class Milestone1PublicTests {
 
 			while (f == null) {
 
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4576,9 +4595,10 @@ public class Milestone1PublicTests {
 
 			while (f == null) {
 
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4615,9 +4635,10 @@ public class Milestone1PublicTests {
 
 			while (f == null) {
 
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4654,9 +4675,10 @@ public class Milestone1PublicTests {
 
 			while (f == null) {
 
-				if (curr == Object.class)
+				if (curr == Object.class) {
 					fail("Class " + createdObject.getClass().getSimpleName() + " should have the instance variable \""
 							+ currName + "\".");
+				}
 				try {
 					f = curr.getDeclaredField(currName);
 				} catch (NoSuchFieldException e) {
@@ -4688,10 +4710,11 @@ public class Milestone1PublicTests {
 
 		while (f == null) {
 
-			if (curr == Object.class)
+			if (curr == Object.class) {
 				fail("Class " + createdObject.getClass().getSimpleName()
 						+ " should have the instance variable \"" + name
 						+ "\".");
+			}
 			try {
 				f = curr.getDeclaredField(name);
 			} catch (NoSuchFieldException e) {
@@ -4708,13 +4731,14 @@ public class Milestone1PublicTests {
 		String methodName = currentMethodName;
 
 		if (value.getClass().equals(Boolean.class)
-				&& !name.substring(0, 2).equals("is"))
+				&& !name.substring(0, 2).equals("is")) {
 			methodName = "is" + Character.toUpperCase(c)
 			+ name.substring(1, name.length());
-		else if (value.getClass().equals(Boolean.class)
-				&& name.substring(0, 2).equals("is"))
+		} else if (value.getClass().equals(Boolean.class)
+				&& name.substring(0, 2).equals("is")) {
 			methodName = "is" + Character.toUpperCase(name.charAt(2))
 			+ name.substring(3, name.length());
+		}
 
 		Method m = createdObject.getClass().getMethod(methodName);
 		assertEquals("The method \"" + methodName + "\" in class "

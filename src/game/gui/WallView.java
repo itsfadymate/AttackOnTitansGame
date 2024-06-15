@@ -1,9 +1,7 @@
 package game.gui;
 
 import game.engine.base.Wall;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class WallView extends View {
@@ -48,7 +46,7 @@ public class WallView extends View {
 	}
 	public void defeat() {
 		try {
-			this.setImage(new Image(getClass().getResourceAsStream(destoyedWallImageUrl)));	
+			this.setImage(new Image(getClass().getResourceAsStream(destoyedWallImageUrl)));
 		}catch (Exception e) {
 			this.setImage(null);
 			System.out.println("no destoyed wall image was found");

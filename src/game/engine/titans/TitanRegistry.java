@@ -4,7 +4,7 @@ package game.engine.titans;
 
 public class TitanRegistry {
 	//all are int and READ ONLY
-	
+
 	private final int code;
 	private int baseHealth;
 	private int baseDamage;
@@ -22,7 +22,7 @@ public class TitanRegistry {
 		this.resourcesValue = resourcesValue;
 		this.dangerLevel = dangerLevel;
 	}
-	
+
 	public int getCode() {return this.code;}
 	public int getBaseHealth() {return this.baseHealth;}
 	public int getBaseDamage() {return this.baseDamage;}
@@ -30,11 +30,12 @@ public class TitanRegistry {
 	public int getSpeed() {return this.speed;}
 	public int getResourcesValue() {return this.resourcesValue;}
 	public int getDangerLevel() {return this.dangerLevel;}
+	@Override
 	public String toString(){
 		return "code"+ code + "  BaseHealth" +baseHealth + "  baseDamage"+baseDamage +"  heightInMeters"+ heightInMeters
 				+ "   speed"+ speed +"  resourcesValue"+ resourcesValue + "  dangerLevel" +dangerLevel;
 	}
-	
+
 	public Titan spawnTitan(int distanceFromBase) {
 		if (this.code==AbnormalTitan.TITAN_CODE) {
 			return new AbnormalTitan(baseHealth,baseDamage,heightInMeters,distanceFromBase,speed,resourcesValue,dangerLevel);
@@ -46,6 +47,6 @@ public class TitanRegistry {
 			return new PureTitan(baseHealth,baseDamage,heightInMeters,distanceFromBase,speed,resourcesValue,dangerLevel);
 		}
 		return null;
-	} 
-	
+	}
+
 }

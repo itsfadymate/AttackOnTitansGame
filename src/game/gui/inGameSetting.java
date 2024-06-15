@@ -10,10 +10,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 //TODO: Disable Buttons whenever the scene is displayed
 public class inGameSetting extends Scene{
-	
+
 	public inGameSetting() {
 		super(createRoot());
 	}
@@ -23,7 +22,7 @@ public class inGameSetting extends Scene{
 	private static Slider backgroundSlider = new Slider();
 	private static Slider sfxSlider = new Slider();
 	private static Font labelFont = new Font("Comic sans MS" , 40);
-	
+
     public static Parent createRoot() {
         BorderPane root = new BorderPane();
         root.setVisible(true);
@@ -34,23 +33,23 @@ public class inGameSetting extends Scene{
         Label title = new Label("Setting");
         title.setFont(labelFont);
         root.setTop(title);
-        root.setAlignment(title, Pos.CENTER);
+        BorderPane.setAlignment(title, Pos.CENTER);
         root.setCenter(container);
-        
-        //buttons 
+
+        //buttons
         container.getChildren().addAll(resumeButton , quitButton, content);
         container.setAlignment(Pos.CENTER);container.setSpacing(20);
         tazbeetButton(resumeButton);
         tazbeetButton(quitButton);
-        
-        
+
+
         addSliderUI(content , "Music: ", 0 , 100 , 50 , 1);
         addSliderUI(content , "SFX", 0 , 100 , 50 , 2);
-        
-        
+
+
         return root;
     }
-    
+
     private static Slider addSliderUI(GridPane settings, String labelTxt, double min, double max, double defaultValue, int rowNum) {
         Label label = new Label(labelTxt);
         label.setFont(labelFont);
@@ -62,12 +61,12 @@ public class inGameSetting extends Scene{
         settings.add(slider, 1, rowNum);
         return slider;
     }
-    
+
     public static void tazbeetButton(Button button) {
     	button.setPrefSize(300, 100);
 		button.setFont(new Font("Comic Sans MS", 50));
     }
 
-	
+
 }
 

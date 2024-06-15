@@ -10,15 +10,20 @@ public class SniperCannon extends Weapon {
 	public SniperCannon(int baseDamage) {
 		super(baseDamage);
 	}
+	@Override
 	public int turnAttack(PriorityQueue<Titan> laneTitans) {
-		if (laneTitans.isEmpty()) return 0;
+		if (laneTitans.isEmpty()) {
+			return 0;
+		}
 	    Titan titan = laneTitans.remove();
 	    int resources = this.attack(titan);
-	    if (titan.isDefeated()) return resources;
+	    if (titan.isDefeated()) {
+			return resources;
+		}
 	    laneTitans.add(titan);
 	    return 0;
 	}
-	
+
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
